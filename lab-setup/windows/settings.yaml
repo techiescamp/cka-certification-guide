@@ -1,5 +1,5 @@
 # settings.yaml
-box_name: "bento/ubuntu-22.04"
+box_name: "generic/ubuntu2304"
 vm:
 - name: "controlplane"
   ip: "192.168.201.10"
