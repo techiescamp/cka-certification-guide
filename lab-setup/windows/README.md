@@ -31,13 +31,18 @@ Execute the following command to bring up the VMs
 ```
 vagrant up
 ```
+Check the vm status using the following command. You should see three VMs in running state.
+
+```
+vagrant status
+```
 
 Once the VMs are up, you cna login to the VMs using the VM names.
 
 ```
 vagrant ssh controlplane
 vagrant ssh node01
-vagrant ssh node01
+vagrant ssh node02
 ```
 
 ## Halt the VMs
