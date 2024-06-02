@@ -33,12 +33,12 @@ Execute the following command to bring up the VMs
 sudo vagrant up
 ```
 
-Once the VMs are up, you cna login to the VMs using the VM names.
+Once the VMs are up, you can login to the VMs using the VM names.
 
 ```
 vagrant ssh controlplane
 vagrant ssh node01
-vagrant ssh node01
+vagrant ssh node02
 ```
 
 ## Halt the VMs
