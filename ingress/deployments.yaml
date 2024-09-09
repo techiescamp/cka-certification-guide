@@ -1,0 +1,188 @@
+# Create the frontend namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: frontend
+---
+# Create the API namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: api
+---
+# Create the payment namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: payment
+---
+# ConfigMap for frontend nginx
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+  namespace: frontend
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <body>
+    <h1>Hey! I am the website frontend</h1>
+    </body>
+    </html>
+---
+# ConfigMap for API nginx
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+  namespace: api
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <body>
+    <h1>Help I am a API</h1>
+    </body>
+    </html>
+---
+# ConfigMap for payment nginx
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+  namespace: payment
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <body>
+    <h1>Hey I am the payment API</h1>
+    </body>
+    </html>
+---
+# Deployment for frontend nginx
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        volumeMounts:
+        - name: config-volume
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: config-volume
+        configMap:
+          name: nginx-config
+---
+# Service for frontend nginx
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  namespace: frontend
+spec:
+  selector:
+    app: nginx
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: ClusterIP
+---
+# Deployment for API nginx
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        volumeMounts:
+        - name: config-volume
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: config-volume
+        configMap:
+          name: nginx-config
+---
+# Service for API nginx
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-service
+  namespace: api
+spec:
+  selector:
+    app: nginx
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: ClusterIP
+---
+# Deployment for payment nginx
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: payment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        volumeMounts:
+        - name: config-volume
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: config-volume
+        configMap:
+          name: nginx-config
+---
+# Service for payment nginx
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-service
+  namespace: payment
+spec:
+  selector:
+    app: nginx
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: ClusterIP
