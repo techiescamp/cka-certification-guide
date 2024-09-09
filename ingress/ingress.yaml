@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: webserver-ingress
+  namespace: default
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "test.local" # placeholder
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: webserver
+            port:
+              number: 80
