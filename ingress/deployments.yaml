@@ -42,7 +42,7 @@ data:
     <!DOCTYPE html>
     <html>
     <body>
-    <h1>Help I am a API</h1>
+    <h1>Help I am an API</h1>
     </body>
     </html>
 ---
@@ -65,7 +65,7 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: frontend-deployment
   namespace: frontend
 spec:
   replicas: 1
@@ -107,7 +107,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: api-deployment
   namespace: api
 spec:
   replicas: 1
@@ -149,7 +149,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: payment-deployment
   namespace: payment
 spec:
   replicas: 1
