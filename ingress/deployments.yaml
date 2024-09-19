@@ -16,7 +16,7 @@ kind: Namespace
 metadata:
   name: payment
 ---
-# ConfigMap for frontend nginx with custom /cart and /orders pages
+# ConfigMap for frontend nginx with custom /cart and /orders pages using alias
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -70,13 +70,11 @@ data:
         }
 
         location /cart {
-          root /usr/share/nginx/html;
-          index cart.html;
+          alias /usr/share/nginx/html/cart.html;
         }
 
         location /orders {
-          root /usr/share/nginx/html;
-          index orders.html;
+          alias /usr/share/nginx/html/orders.html;
         }
       }
     }
@@ -128,8 +126,7 @@ data:
         }
 
         location /api/inventory {
-          root /usr/share/nginx/html;
-          index inventory.html;
+          alias /usr/share/nginx/html/inventory.html;
         }
       }
     }
