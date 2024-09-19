@@ -43,7 +43,7 @@ data:
     <body>
     <h1>You are accessing the orders page</h1>
     </body>
-    </html
+    </html>
   nginx.conf: |
     server {
       listen 80;
@@ -138,14 +138,20 @@ spec:
         image: nginx
         volumeMounts:
         - name: config-volume
-          mountPath: /etc/nginx/conf.d
-          subPath: nginx.conf
-        - name: config-volume
           mountPath: /usr/share/nginx/html
+        - name: nginx-conf-volume
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
       volumes:
       - name: config-volume
         configMap:
           name: nginx-config
+      - name: nginx-conf-volume
+        configMap:
+          name: nginx-config
+          items:
+          - key: nginx.conf
+            path: nginx.conf
 ---
 # Service for frontend nginx
 apiVersion: v1
@@ -183,14 +189,20 @@ spec:
         image: nginx
         volumeMounts:
         - name: config-volume
-          mountPath: /etc/nginx/conf.d
-          subPath: nginx.conf
-        - name: config-volume
           mountPath: /usr/share/nginx/html
+        - name: nginx-conf-volume
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
       volumes:
       - name: config-volume
         configMap:
           name: nginx-config
+      - name: nginx-conf-volume
+        configMap:
+          name: nginx-config
+          items:
+          - key: nginx.conf
+            path: nginx.conf
 ---
 # Service for API nginx
 apiVersion: v1
