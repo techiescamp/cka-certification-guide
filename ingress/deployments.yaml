@@ -45,23 +45,39 @@ data:
     </body>
     </html>
   nginx.conf: |
-    server {
-      listen 80;
-      server_name localhost;
+    user  nginx;
+    worker_processes  auto;
+    error_log  /var/log/nginx/error.log warn;
+    pid        /var/run/nginx.pid;
 
-      location / {
-        root /usr/share/nginx/html;
-        index index.html;
-      }
+    events {
+      worker_connections  1024;
+    }
 
-      location /cart {
-        root /usr/share/nginx/html;
-        index cart.html;
-      }
+    http {
+      include       /etc/nginx/mime.types;
+      default_type  application/octet-stream;
+      sendfile        on;
+      keepalive_timeout  65;
 
-      location /orders {
-        root /usr/share/nginx/html;
-        index orders.html;
+      server {
+        listen 80;
+        server_name localhost;
+
+        location / {
+          root /usr/share/nginx/html;
+          index index.html;
+        }
+
+        location /cart {
+          root /usr/share/nginx/html;
+          index cart.html;
+        }
+
+        location /orders {
+          root /usr/share/nginx/html;
+          index orders.html;
+        }
       }
     }
 ---
@@ -87,18 +103,34 @@ data:
     </body>
     </html>
   nginx.conf: |
-    server {
-      listen 80;
-      server_name localhost;
+    user  nginx;
+    worker_processes  auto;
+    error_log  /var/log/nginx/error.log warn;
+    pid        /var/run/nginx.pid;
 
-      location / {
-        root /usr/share/nginx/html;
-        index index.html;
-      }
+    events {
+      worker_connections  1024;
+    }
 
-      location /api/inventory {
-        root /usr/share/nginx/html;
-        index inventory.html;
+    http {
+      include       /etc/nginx/mime.types;
+      default_type  application/octet-stream;
+      sendfile        on;
+      keepalive_timeout  65;
+
+      server {
+        listen 80;
+        server_name localhost;
+
+        location / {
+          root /usr/share/nginx/html;
+          index index.html;
+        }
+
+        location /api/inventory {
+          root /usr/share/nginx/html;
+          index inventory.html;
+        }
       }
     }
 ---
