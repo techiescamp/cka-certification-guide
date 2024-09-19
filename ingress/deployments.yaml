@@ -16,7 +16,7 @@ kind: Namespace
 metadata:
   name: payment
 ---
-# ConfigMap for frontend nginx
+# ConfigMap for frontend nginx with custom /cart and /orders pages
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -30,8 +30,42 @@ data:
     <h1>Hey! I am the website frontend</h1>
     </body>
     </html>
+  cart.html: |
+    <!DOCTYPE html>
+    <html>
+    <body>
+    <h1>You are accessing the cart page</h1>
+    </body>
+    </html>
+  orders.html: |
+    <!DOCTYPE html>
+    <html>
+    <body>
+    <h1>You are accessing the orders page</h1>
+    </body>
+    </html
+  nginx.conf: |
+    server {
+      listen 80;
+      server_name localhost;
+
+      location / {
+        root /usr/share/nginx/html;
+        index index.html;
+      }
+
+      location /cart {
+        root /usr/share/nginx/html;
+        index cart.html;
+      }
+
+      location /orders {
+        root /usr/share/nginx/html;
+        index orders.html;
+      }
+    }
 ---
-# ConfigMap for API nginx
+# ConfigMap for API nginx with custom /api/inventory page
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -45,6 +79,28 @@ data:
     <h1>Help I am an API</h1>
     </body>
     </html>
+  inventory.html: |
+    <!DOCTYPE html>
+    <html>
+    <body>
+    <h1>You are accessing the inventory page</h1>
+    </body>
+    </html>
+  nginx.conf: |
+    server {
+      listen 80;
+      server_name localhost;
+
+      location / {
+        root /usr/share/nginx/html;
+        index index.html;
+      }
+
+      location /api/inventory {
+        root /usr/share/nginx/html;
+        index inventory.html;
+      }
+    }
 ---
 # ConfigMap for payment nginx
 apiVersion: v1
@@ -81,6 +137,9 @@ spec:
       - name: nginx
         image: nginx
         volumeMounts:
+        - name: config-volume
+          mountPath: /etc/nginx/conf.d
+          subPath: nginx.conf
         - name: config-volume
           mountPath: /usr/share/nginx/html
       volumes:
@@ -123,6 +182,9 @@ spec:
       - name: nginx
         image: nginx
         volumeMounts:
+        - name: config-volume
+          mountPath: /etc/nginx/conf.d
+          subPath: nginx.conf
         - name: config-volume
           mountPath: /usr/share/nginx/html
       volumes:
