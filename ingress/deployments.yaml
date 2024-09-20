@@ -22,6 +22,11 @@ kind: ConfigMap
 metadata:
   name: nginx-config
   namespace: frontend
+  labels:
+    component: frontend
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 data:
   index.html: |
     <!DOCTYPE html>
@@ -85,12 +90,17 @@ kind: ConfigMap
 metadata:
   name: nginx-config
   namespace: api
+  labels:
+    component: frontend
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 data:
   index.html: |
     <!DOCTYPE html>
     <html>
     <body>
-    <h1>Hey I am the backednd API</h1>
+    <h1>Hey I am the backend API</h1>
     </body>
     </html>
   inventory.html: |
@@ -137,6 +147,11 @@ kind: ConfigMap
 metadata:
   name: nginx-config
   namespace: payment
+  labels:
+    component: frontend
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 data:
   index.html: |
     <!DOCTYPE html>
@@ -146,21 +161,32 @@ data:
     </body>
     </html>
 ---
-# Deployment for frontend nginx
+# Deployment for frontend nginx with labels
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend-deployment
   namespace: frontend
+  labels:
+    app: nginx
+    component: frontend
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: nginx
+      component: frontend
   template:
     metadata:
       labels:
         app: nginx
+        component: frontend
+        env: production
+        project: ecommerce-platform
+        version: "1.0.0"
     spec:
       containers:
       - name: nginx
@@ -188,30 +214,47 @@ kind: Service
 metadata:
   name: frontend-service
   namespace: frontend
+  labels:
+    component: frontend
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 spec:
   selector:
     app: nginx
+    component: frontend
   ports:
   - protocol: TCP
     port: 80
     targetPort: 80
   type: ClusterIP
 ---
-# Deployment for API nginx
+# Deployment for API nginx with labels
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: api-deployment
   namespace: api
+  labels:
+    app: nginx
+    component: frontend
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: nginx
+      component: frontend
   template:
     metadata:
       labels:
         app: nginx
+        component: frontend
+        env: production
+        project: ecommerce-platform
+        version: "1.0.0"
     spec:
       containers:
       - name: nginx
@@ -239,30 +282,47 @@ kind: Service
 metadata:
   name: api-service
   namespace: api
+  labels:
+    component: frontend
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 spec:
   selector:
     app: nginx
+    component: frontend
   ports:
   - protocol: TCP
     port: 80
     targetPort: 80
   type: ClusterIP
 ---
-# Deployment for payment nginx
+# Deployment for payment nginx with labels
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: payment-deployment
   namespace: payment
+  labels:
+    app: nginx
+    component: frontend
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: nginx
+      component: frontend
   template:
     metadata:
       labels:
         app: nginx
+        component: frontend
+        env: production
+        project: ecommerce-platform
+        version: "1.0.0"
     spec:
       containers:
       - name: nginx
@@ -281,9 +341,15 @@ kind: Service
 metadata:
   name: payment-service
   namespace: payment
+  labels:
+    component: frontend
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 spec:
   selector:
     app: nginx
+    component: frontend
   ports:
   - protocol: TCP
     port: 80
