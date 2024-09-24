@@ -1,3 +1,4 @@
+---
 # Create the frontend namespace
 apiVersion: v1
 kind: Namespace
@@ -84,7 +85,7 @@ data:
       }
     }
 ---
-# ConfigMap for API nginx with custom /api/inventory page
+# ConfigMap for API nginx with custom /api page and /api/inventory
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -130,7 +131,7 @@ data:
         listen 80;
         server_name localhost;
 
-        location / {
+        location /api {
           root /usr/share/nginx/html;
           index index.html;
         }
