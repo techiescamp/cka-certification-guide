@@ -1,0 +1,215 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: e-commerce
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage-index
+  namespace: e-commerce
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Homepage</title>
+    </head>
+    <body>
+        <h1>Welcome to the Application Homepage</h1>
+    </body>
+    </html>
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: products-index
+  namespace: e-commerce
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Product Catalog</title>
+    </head>
+    <body>
+        <h1>Welcome to the Product Catalog</h1>
+    </body>
+    </html>
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: users-index
+  namespace: e-commerce
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>User Account</title>
+    </head>
+    <body>
+        <h1>Welcome to the User Account Page</h1>
+    </body>
+    </html>
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homepage-deployment
+  namespace: e-commerce
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: homepage-service
+  template:
+    metadata:
+      labels:
+        app: homepage-service
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: homepage-volume
+          mountPath: /usr/share/nginx/html/index.html
+          subPath: index.html
+      volumes:
+      - name: homepage-volume
+        configMap:
+          name: homepage-index
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: products-deployment
+  namespace: e-commerce
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-service
+  template:
+    metadata:
+      labels:
+        app: product-service
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: products-volume
+          mountPath: /usr/share/nginx/html/index.html
+          subPath: index.html
+      volumes:
+      - name: products-volume
+        configMap:
+          name: products-index
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-deployment
+  namespace: e-commerce
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: users-volume
+          mountPath: /usr/share/nginx/html/index.html
+          subPath: index.html
+      volumes:
+      - name: users-volume
+        configMap:
+          name: users-index
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: homepage-service
+  namespace: e-commerce
+spec:
+  selector:
+    app: homepage-service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-service
+  namespace: e-commerce
+spec:
+  selector:
+    app: product-service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+  namespace: e-commerce
+spec:
+  selector:
+    app: user-service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: e-commerce-ingress
+  namespace: e-commerce
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: homepage-service
+            port:
+              number: 80
+      - path: /products
+        pathType: Prefix
+        backend:
+          service:
+            name: product-service
+            port:
+              number: 80
+      - path: /users
+        pathType: Prefix
+        backend:
+          service:
+            name: user-service
+            port:
+              number: 80
