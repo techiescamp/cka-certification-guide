@@ -1,215 +1,349 @@
+---
+# Create the ecommerce namespace
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: e-commerce
+  name: ecommerce
 ---
+# ConfigMap for frontend nginx (homepage)
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: homepage-index
-  namespace: e-commerce
+  name: frontend-config
+  namespace: ecommerce
+  labels:
+    component: frontend
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 data:
   index.html: |
     <!DOCTYPE html>
     <html>
-    <head>
-        <title>Homepage</title>
-    </head>
     <body>
-        <h1>Welcome to the Application Homepage</h1>
+    <h1>Welcome to the E-commerce Application Homepage</h1>
     </body>
     </html>
+  nginx.conf: |
+    user  nginx;
+    worker_processes  auto;
+    error_log  /var/log/nginx/error.log warn;
+    pid        /var/run/nginx.pid;
+
+    events {
+      worker_connections  1024;
+    }
+
+    http {
+      include       /etc/nginx/mime.types;
+      default_type  application/octet-stream;
+      sendfile        on;
+      keepalive_timeout  65;
+
+      server {
+        listen 80;
+        server_name localhost;
+
+        # Serve the homepage at root
+        location / {
+          root /usr/share/nginx/html;
+          index index.html;
+        }
+      }
+    }
 ---
+# ConfigMap for products nginx
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: products-config
-  namespace: e-commerce
+  namespace: ecommerce
+  labels:
+    component: products
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 data:
   products.html: |
     <!DOCTYPE html>
     <html>
-    <head>
-        <title>Product Catalog</title>
-    </head>
     <body>
-        <h1>Welcome to the Product Page</h1>
+    <h1>Welcome to the Products Page</h1>
     </body>
     </html>
   nginx.conf: |
-    server {
+    user  nginx;
+    worker_processes  auto;
+    error_log  /var/log/nginx/error.log warn;
+    pid        /var/run/nginx.pid;
+
+    events {
+      worker_connections  1024;
+    }
+
+    http {
+      include       /etc/nginx/mime.types;
+      default_type  application/octet-stream;
+      sendfile        on;
+      keepalive_timeout  65;
+
+      server {
         listen 80;
-        location / {
-            root /usr/share/nginx/html;
-            index index.html;
-        }
+        server_name localhost;
+
+        # Serve the /products page using alias
         location /products {
-            alias /usr/share/nginx/html/products.html;
+          alias /usr/share/nginx/html/products.html;
         }
+      }
     }
 ---
+# ConfigMap for users nginx
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: users-config
-  namespace: e-commerce
+  namespace: ecommerce
+  labels:
+    component: users
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 data:
   users.html: |
     <!DOCTYPE html>
     <html>
-    <head>
-        <title>User Account</title>
-    </head>
     <body>
-        <h1>Welcome to the User Page</h1>
+    <h1>Welcome to the Users Page</h1>
     </body>
     </html>
   nginx.conf: |
-    server {
+    user  nginx;
+    worker_processes  auto;
+    error_log  /var/log/nginx/error.log warn;
+    pid        /var/run/nginx.pid;
+
+    events {
+      worker_connections  1024;
+    }
+
+    http {
+      include       /etc/nginx/mime.types;
+      default_type  application/octet-stream;
+      sendfile        on;
+      keepalive_timeout  65;
+
+      server {
         listen 80;
-        location / {
-            root /usr/share/nginx/html;
-            index index.html;
-        }
+        server_name localhost;
+
+        # Serve the /users page using alias
         location /users {
-            alias /usr/share/nginx/html/users.html;
+          alias /usr/share/nginx/html/users.html;
         }
+      }
     }
 ---
+# Deployment for frontend nginx (homepage)
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: homepage-deployment
-  namespace: e-commerce
+  name: frontend-deployment
+  namespace: ecommerce
+  labels:
+    app: nginx
+    component: frontend
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: homepage-service
+      app: nginx
+      component: frontend
   template:
     metadata:
       labels:
-        app: homepage-service
+        app: nginx
+        component: frontend
+        env: production
+        project: ecommerce-platform
+        version: "1.0.0"
     spec:
       containers:
       - name: nginx
-        image: nginx:latest
-        ports:
-        - containerPort: 80
+        image: nginx
         volumeMounts:
-        - name: homepage-volume
-          mountPath: /usr/share/nginx/html/index.html
-          subPath: index.html
+        - name: config-volume
+          mountPath: /usr/share/nginx/html
+        - name: nginx-conf-volume
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
       volumes:
-      - name: homepage-volume
+      - name: config-volume
         configMap:
-          name: homepage-index
+          name: frontend-config
+      - name: nginx-conf-volume
+        configMap:
+          name: frontend-config
+          items:
+          - key: nginx.conf
+            path: nginx.conf
 ---
+# Deployment for products nginx
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: products-deployment
-  namespace: e-commerce
+  namespace: ecommerce
+  labels:
+    app: nginx
+    component: products
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: product-service
+      app: nginx
+      component: products
   template:
     metadata:
       labels:
-        app: product-service
+        app: nginx
+        component: products
+        env: production
+        project: ecommerce-platform
+        version: "1.0.0"
     spec:
       containers:
       - name: nginx
-        image: nginx:latest
-        ports:
-        - containerPort: 80
+        image: nginx
         volumeMounts:
-        - name: products-volume
-          mountPath: /usr/share/nginx/html/products.html
-          subPath: products.html
-        - name: nginx-config-volume
+        - name: config-volume
+          mountPath: /usr/share/nginx/html
+        - name: nginx-conf-volume
           mountPath: /etc/nginx/nginx.conf
           subPath: nginx.conf
       volumes:
-      - name: products-volume
+      - name: config-volume
         configMap:
           name: products-config
-      - name: nginx-config-volume
+      - name: nginx-conf-volume
         configMap:
           name: products-config
+          items:
+          - key: nginx.conf
+            path: nginx.conf
 ---
+# Deployment for users nginx
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: users-deployment
-  namespace: e-commerce
+  namespace: ecommerce
+  labels:
+    app: nginx
+    component: users
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: user-service
+      app: nginx
+      component: users
   template:
     metadata:
       labels:
-        app: user-service
+        app: nginx
+        component: users
+        env: production
+        project: ecommerce-platform
+        version: "1.0.0"
     spec:
       containers:
       - name: nginx
-        image: nginx:latest
-        ports:
-        - containerPort: 80
+        image: nginx
         volumeMounts:
-        - name: users-volume
-          mountPath: /usr/share/nginx/html/users.html
-          subPath: users.html
-        - name: nginx-config-volume
+        - name: config-volume
+          mountPath: /usr/share/nginx/html
+        - name: nginx-conf-volume
           mountPath: /etc/nginx/nginx.conf
           subPath: nginx.conf
       volumes:
-      - name: users-volume
+      - name: config-volume
         configMap:
           name: users-config
-      - name: nginx-config-volume
+      - name: nginx-conf-volume
         configMap:
           name: users-config
+          items:
+          - key: nginx.conf
+            path: nginx.conf
 ---
+# Service for frontend nginx (homepage)
 apiVersion: v1
 kind: Service
 metadata:
-  name: homepage-service
-  namespace: e-commerce
+  name: frontend-service
+  namespace: ecommerce
+  labels:
+    component: frontend
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 spec:
   selector:
-    app: homepage-service
+    app: nginx
+    component: frontend
   ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: ClusterIP
 ---
+# Service for products nginx
 apiVersion: v1
 kind: Service
 metadata:
-  name: product-service
-  namespace: e-commerce
+  name: products-service
+  namespace: ecommerce
+  labels:
+    component: products
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 spec:
   selector:
-    app: product-service
+    app: nginx
+    component: products
   ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: ClusterIP
 ---
+# Service for users nginx
 apiVersion: v1
 kind: Service
 metadata:
-  name: user-service
-  namespace: e-commerce
+  name: users-service
+  namespace: ecommerce
+  labels:
+    component: users
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 spec:
   selector:
-    app: user-service
+    app: nginx
+    component: users
   ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: ClusterIP
