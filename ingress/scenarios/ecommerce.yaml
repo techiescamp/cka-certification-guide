@@ -23,36 +23,58 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: products-index
+  name: products-config
   namespace: e-commerce
 data:
-  index.html: |
+  products.html: |
     <!DOCTYPE html>
     <html>
     <head>
         <title>Product Catalog</title>
     </head>
     <body>
-        <h1>Welcome to the Product Catalog</h1>
+        <h1>Welcome to the Product Page</h1>
     </body>
     </html>
+  nginx.conf: |
+    server {
+        listen 80;
+        location / {
+            root /usr/share/nginx/html;
+            index index.html;
+        }
+        location /products {
+            alias /usr/share/nginx/html/products.html;
+        }
+    }
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: users-index
+  name: users-config
   namespace: e-commerce
 data:
-  index.html: |
+  users.html: |
     <!DOCTYPE html>
     <html>
     <head>
         <title>User Account</title>
     </head>
     <body>
-        <h1>Welcome to the User Account Page</h1>
+        <h1>Welcome to the User Page</h1>
     </body>
     </html>
+  nginx.conf: |
+    server {
+        listen 80;
+        location / {
+            root /usr/share/nginx/html;
+            index index.html;
+        }
+        location /users {
+            alias /usr/share/nginx/html/users.html;
+        }
+    }
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -105,12 +127,18 @@ spec:
         - containerPort: 80
         volumeMounts:
         - name: products-volume
-          mountPath: /usr/share/nginx/html/index.html
-          subPath: index.html
+          mountPath: /usr/share/nginx/html/products.html
+          subPath: products.html
+        - name: nginx-config-volume
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
       volumes:
       - name: products-volume
         configMap:
-          name: products-index
+          name: products-config
+      - name: nginx-config-volume
+        configMap:
+          name: products-config
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -134,12 +162,18 @@ spec:
         - containerPort: 80
         volumeMounts:
         - name: users-volume
-          mountPath: /usr/share/nginx/html/index.html
-          subPath: index.html
+          mountPath: /usr/share/nginx/html/users.html
+          subPath: users.html
+        - name: nginx-config-volume
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
       volumes:
       - name: users-volume
         configMap:
-          name: users-index
+          name: users-config
+      - name: nginx-config-volume
+        configMap:
+          name: users-config
 ---
 apiVersion: v1
 kind: Service
@@ -185,11 +219,9 @@ kind: Ingress
 metadata:
   name: e-commerce-ingress
   namespace: e-commerce
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: example.com
+  - host: ecommerce.techiescamp.com
     http:
       paths:
       - path: /
