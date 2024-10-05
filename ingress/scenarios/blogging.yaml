@@ -1,0 +1,348 @@
+---
+# Create the ecommerce namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: blogging
+---
+# ConfigMap for frontend nginx (homepage)
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+  namespace: blogging
+  labels:
+    component: frontend
+    env: production
+    project: blogging-platform
+    version: "1.0.0"
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <body>
+    <h1>Welcome to the Techiescamp Blogging Site</h1>
+    </body>
+    </html>
+  nginx.conf: |
+    user  nginx;
+    worker_processes  auto;
+    error_log  /var/log/nginx/error.log warn;
+    pid        /var/run/nginx.pid;
+
+    events {
+      worker_connections  1024;
+    }
+
+    http {
+      include       /etc/nginx/mime.types;
+      default_type  application/octet-stream;
+      sendfile        on;
+      keepalive_timeout  65;
+
+      server {
+        listen 80;
+        server_name localhost;
+
+        # Serve the homepage at root
+        location / {
+          root /usr/share/nginx/html;
+          index index.html;
+        }
+      }
+    }
+---
+# ConfigMap for articles nginx
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: articles-config
+  namespace: blogging
+  labels:
+    component: articles
+    env: production
+    project: blogging-platform
+    version: "1.0.0"
+data:
+  articles.html: |
+    <!DOCTYPE html>
+    <html>
+    <body>
+    <h1>Welcome to the Articles Page</h1>
+    </body>
+    </html>
+  nginx.conf: |
+    user  nginx;
+    worker_processes  auto;
+    error_log  /var/log/nginx/error.log warn;
+    pid        /var/run/nginx.pid;
+
+    events {
+      worker_connections  1024;
+    }
+
+    http {
+      include       /etc/nginx/mime.types;
+      default_type  application/octet-stream;
+      sendfile        on;
+      keepalive_timeout  65;
+
+      server {
+        listen 80;
+        server_name localhost;
+
+        # Serve the /products page using alias
+        location /articles {
+          alias /usr/share/nginx/html/articles.html;
+        }
+      }
+    }
+---
+# ConfigMap for authors nginx
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: authors-config
+  namespace: blogging
+  labels:
+    component: authors
+    env: production
+    project: blogging-platform
+    version: "1.0.0"
+data:
+  authors.html: |
+    <!DOCTYPE html>
+    <html>
+    <body>
+    <h1>Welcome to the Authors Page</h1>
+    </body>
+    </html>
+  nginx.conf: |
+    user  nginx;
+    worker_processes  auto;
+    error_log  /var/log/nginx/error.log warn;
+    pid        /var/run/nginx.pid;
+
+    events {
+      worker_connections  1024;
+    }
+
+    http {
+      include       /etc/nginx/mime.types;
+      default_type  application/octet-stream;
+      sendfile        on;
+      keepalive_timeout  65;
+
+      server {
+        listen 80;
+        server_name localhost;
+
+        # Serve the /users page using alias
+        location /authors {
+          alias /usr/share/nginx/html/authors.html;
+        }
+      }
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  namespace: blogging
+  labels:
+    app: nginx
+    component: frontend
+    env: production
+    project: blogging-platform
+    version: "1.0.0"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+      component: frontend
+  template:
+    metadata:
+      labels:
+        app: nginx
+        component: frontend
+        env: production
+        project: blogging-platform
+        version: "1.0.0"
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        volumeMounts:
+        - name: config-volume
+          mountPath: /usr/share/nginx/html
+        - name: nginx-conf-volume
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
+      volumes:
+      - name: config-volume
+        configMap:
+          name: frontend-config
+      - name: nginx-conf-volume
+        configMap:
+          name: frontend-config
+          items:
+          - key: nginx.conf
+            path: nginx.conf
+---
+# Deployment for articles nginx
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: articles-deployment
+  namespace: blogging
+  labels:
+    app: nginx
+    component: articles
+    env: production
+    project: blogging-platform
+    version: "1.0.0"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+      component: articles
+  template:
+    metadata:
+      labels:
+        app: nginx
+        component: articles
+        env: production
+        project: blogging-platform
+        version: "1.0.0"
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        volumeMounts:
+        - name: config-volume
+          mountPath: /usr/share/nginx/html
+        - name: nginx-conf-volume
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
+      volumes:
+      - name: config-volume
+        configMap:
+          name: articles-config
+      - name: nginx-conf-volume
+        configMap:
+          name: articles-config
+          items:
+          - key: nginx.conf
+            path: nginx.conf
+---
+# Deployment for authors nginx
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authors-deployment
+  namespace: blogging
+  labels:
+    app: nginx
+    component: authors
+    env: production
+    project: blogging-platform
+    version: "1.0.0"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+      component: authors
+  template:
+    metadata:
+      labels:
+        app: nginx
+        component: authors
+        env: production
+        project: blogging-platform
+        version: "1.0.0"
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        volumeMounts:
+        - name: config-volume
+          mountPath: /usr/share/nginx/html
+        - name: nginx-conf-volume
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
+      volumes:
+      - name: config-volume
+        configMap:
+          name: authors-config
+      - name: nginx-conf-volume
+        configMap:
+          name: authors-config
+          items:
+          - key: nginx.conf
+            path: nginx.conf
+---
+# Service for frontend nginx (homepage)
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  namespace: blogging
+  labels:
+    component: frontend
+    env: production
+    project: blogging-platform
+    version: "1.0.0"
+spec:
+  selector:
+    app: nginx
+    component: frontend
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: ClusterIP
+---
+# Service for articles nginx
+apiVersion: v1
+kind: Service
+metadata:
+  name: articles-service
+  namespace: blogging
+  labels:
+    component: articles
+    env: production
+    project: blogging-platform
+    version: "1.0.0"
+spec:
+  selector:
+    app: nginx
+    component: articles
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: ClusterIP
+---
+# Service for authors nginx
+apiVersion: v1
+kind: Service
+metadata:
+  name: authors-service
+  namespace: blogging
+  labels:
+    component: authors
+    env: production
+    project: blogging-platform
+    version: "1.0.0"
+spec:
+  selector:
+    app: nginx
+    component: authors
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: ClusterIP
