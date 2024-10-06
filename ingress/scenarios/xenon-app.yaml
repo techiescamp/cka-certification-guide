@@ -1,4 +1,9 @@
 apiVersion: v1
+kind: Namespace
+metadata:
+  name: xenon-app
+---
+apiVersion: v1
 kind: ConfigMap
 metadata:
   name: xenon-config
