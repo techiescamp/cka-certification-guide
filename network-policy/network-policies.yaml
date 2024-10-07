@@ -1,0 +1,102 @@
+# Backend namespace network policy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: backend-network-policy
+  namespace: backend
+spec:
+  podSelector:
+    matchLabels:
+      app: nginx
+      component: backend
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+      - namespaceSelector:
+          matchLabels:
+            name: frontend
+      ports:
+        - protocol: TCP
+          port: 80
+    - from:
+      - namespaceSelector:
+          matchLabels:
+            name: payment
+      ports:
+        - protocol: TCP
+          port: 80
+  egress:
+    - to:
+      - namespaceSelector:
+          matchLabels:
+            name: frontend
+      - namespaceSelector:
+          matchLabels:
+            name: payment
+      ports:
+        - protocol: TCP
+          port: 80
+---
+# Frontend namespace network policy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: frontend-network-policy
+  namespace: frontend
+spec:
+  podSelector:
+    matchLabels:
+      app: nginx
+      component: frontend
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+      - namespaceSelector:
+          matchLabels:
+            name: backend
+      ports:
+        - protocol: TCP
+          port: 80
+  egress:
+    - to:
+      - namespaceSelector:
+          matchLabels:
+            name: backend
+      ports:
+        - protocol: TCP
+          port: 80
+---
+# Payment namespace network policy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: payment-network-policy
+  namespace: payment
+spec:
+  podSelector:
+    matchLabels:
+      app: nginx
+      component: payment
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+      - namespaceSelector:
+          matchLabels:
+            name: backend
+      ports:
+        - protocol: TCP
+          port: 80
+  egress:
+    - to:
+      - namespaceSelector:
+          matchLabels:
+            name: backend
+      ports:
+        - protocol: TCP
+          port: 80
