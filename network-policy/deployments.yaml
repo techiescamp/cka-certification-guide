@@ -4,21 +4,30 @@ kind: Namespace
 metadata:
   name: frontend
   labels:
-    name: frontend
+    component: frontend
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
   name: backend
   labels:
-    name: backend
+    component: backend
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
   name: payment
   labels:
-    name: payment
+    component: payment
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -27,6 +36,9 @@ metadata:
   namespace: frontend
   labels:
     component: frontend
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 data:
   index.html: |
     <!DOCTYPE html>
@@ -69,6 +81,9 @@ metadata:
   namespace: backend
   labels:
     component: backend
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 data:
   index.html: |
     <!DOCTYPE html>
@@ -111,6 +126,9 @@ metadata:
   namespace: payment
   labels:
     component: payment
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 data:
   index.html: |
     <!DOCTYPE html>
@@ -126,8 +144,10 @@ metadata:
   name: frontend-deployment
   namespace: frontend
   labels:
-    app: nginx
     component: frontend
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 spec:
   replicas: 1
   selector:
@@ -167,6 +187,9 @@ metadata:
   namespace: frontend
   labels:
     component: frontend
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 spec:
   selector:
     app: nginx
@@ -183,8 +206,10 @@ metadata:
   name: backend-deployment
   namespace: backend
   labels:
-    app: nginx
     component: backend
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 spec:
   replicas: 1
   selector:
@@ -224,6 +249,9 @@ metadata:
   namespace: backend
   labels:
     component: backend
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 spec:
   selector:
     app: nginx
@@ -240,8 +268,10 @@ metadata:
   name: payment-deployment
   namespace: payment
   labels:
-    app: nginx
     component: payment
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 spec:
   replicas: 1
   selector:
@@ -272,6 +302,9 @@ metadata:
   namespace: payment
   labels:
     component: payment
+    env: production
+    project: ecommerce-platform
+    version: "1.0.0"
 spec:
   selector:
     app: nginx
