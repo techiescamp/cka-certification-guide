@@ -3,74 +3,114 @@
 This guide is part of the [Complete CKA Certification Course](https://techiescamp.com/p/certified-kubernetes-administrator-course)
 
 ---
+## Exam Details
 
+The Certified Kubernetes Administrator (CKA) exam has a duration of 2 hours.
+To pass the exam, candidates need to achieve a score of at least 66%.
+The exam will be on Kubernetes version 1.30.
+Once the certificate is earned, the CKA certification remains valid for 2 years. The cost to take the exam is $395 USD.
+
+---
 ## 📘 Course Overview
 
 This course is covering the following key domains:
 
-- **Storage (10%)**
-  - Understand storage classes, persistent volumes, and claims.
-  - Learn about volume modes, access modes, and reclaim policies.
-  - Configure applications with persistent storage.
+## Storage (10%)
+  - Implement storage classes and dynamic volume provisioning.
+      - [Storage Classes](https://kubernetes.io/docs/concepts/storage/storage-classes/)
+      - [Dynamic Volume Provisioning](https://kubernetes.io/docs/concepts/storage/dynamic-provisioning/)
+  - Configure volume types, access modes and reclaim policies.
+      - [Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
+  - Manage persistent volumes and persistent volume claims.
+      - [Configure a Pod to Use a PersistentVolume for Storage](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/)
 
-- **Troubleshooting (30%)**
-  - Evaluate cluster and node logging.
-  - Monitor applications and manage container logs.
-  - Troubleshoot application failures, cluster component issues, and networking problems.
+Command Shortcuts:
 
-- **Workloads & Scheduling (15%)**
-  - Manage deployments, perform rolling updates, and rollbacks.
-  - Utilize ConfigMaps, Secrets, and understand resource limits.
-  - Explore manifest management and common templating tools.
+```bash
 
-- **Cluster Architecture, Installation & Configuration (25%)**
-  - Manage role-based access control (RBAC).
-  - Install and manage highly-available Kubernetes clusters.
-  - Perform version upgrades and implement etcd backups and restores.
+```
 
-- **Services & Networking (20%)**
-  - Configure host networking and understand connectivity between Pods.
-  - Explore ClusterIP, NodePort, LoadBalancer, Ingress, CoreDNS, and CNI plugins.
+## Workloads & Scheduling (15%)
+  - Understand deployments and how to perform rolling update and rollbacks.
+      - [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
+  - Use ConfigMaps and Secrets to configure applications.
+      - [ConfigMaps](https://kubernetes.io/docs/concepts/configuration/configmap/)
+      - [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
+  - Configure workload autoscaling.
+      - [Autoscaling Workloads](https://kubernetes.io/docs/concepts/workloads/autoscaling/)
+  - Understand the primitives used to create robust, self-healing, application deployments.
+      - [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
+  - Configure Pod admission and scheduling (limits, node affinity, etc.).
+      - [Assigning Pods to Nodes](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/)
+      - [Admission Controllers Reference](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/)
 
-## 📚 Course Curriculum
+Command Shortcuts:
 
-The course is divided into multiple modules, each focusing on a specific area of Kubernetes administration. Below is a snapshot of what you’ll learn in each module:
+```bash
 
-### Cluster Setup
-- **Introduction** to setting up a Kubernetes cluster using Kubeadm.
-- **Provision infrastructure** and install a basic cluster.
-- **Join worker nodes** and deploy the network plugin.
-- **Deploy Metrics Server** and validate the cluster.
+```
 
-### Cluster Configurations
-- **Static Pod Manifests** and API Server configurations.
-- **ETCD Configurations** and TLS Certificates management.
-- **Perform Cluster Version Upgrade** using Kubeadm.
-- **ETCD Backup & Restore** using etcdctl.
+## Services & Networking (20%)
+  - Understand connectivity between Pods.
+      - [Cluster Networking](https://kubernetes.io/docs/concepts/cluster-administration/networking/)
+  - Define and enforce Network Policies.
+      - [Network Policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/)
+  - Use ClusterIP, NodePort, LoadBalancer service types and endpoints.
+      - [Service](https://kubernetes.io/docs/concepts/services-networking/service/)
+  - Use the Gateway API to manage Ingress traffic.
+      - [Gateway API](https://kubernetes.io/docs/concepts/services-networking/gateway/)
+  - Know how to use Ingress controllers and Ingress resources.
+      - [Ingress Controllers](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/)
+      - [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
+  - Understand and use CoreDNS.
+      - [Using CoreDNS for Service Discovery](https://kubernetes.io/docs/tasks/administer-cluster/coredns/)
 
-### Pods
-- **Create Pods** using imperative and declarative commands.
-- Work with **Multi Container Pods** and **Init Containers**.
-- **Static Pods** creation and management.
+Command Shortcuts:
 
-### Deployments
-- **Create Deployments** and perform rolling updates and rollbacks.
-- **Manage ReplicaSets, DaemonSets, Jobs, and CronJobs**.
-- **Scenario-based exercises** to solidify your understanding.
+```bash
 
-### RBAC (Role-Based Access Control)
-- **Authentication & Authorization** methods.
-- **Create Roles, ClusterRoles, and Bindings**.
-- **Scenarios** to implement RBAC in real-world projects.
+```
 
-### Persistent Volumes & Storage Classes
-- **Work with Persistent Volumes, Claims, and Storage Classes**.
-- **Volume Subpath** and **mounting volumes** into Pods.
-- **Scenarios** to set up persistent storage for applications.
+## Troubleshooting (30%)
+  - Troubleshoot clusters and nodes.
+      - [Troubleshooting Clusters](https://kubernetes.io/docs/tasks/debug/debug-cluster/)
+  - Troubleshoot cluster components.
+      - [Troubleshooting kubectl](https://kubernetes.io/docs/tasks/debug/debug-cluster/troubleshoot-kubectl/)
+      - [Troubleshooting kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/troubleshooting-kubeadm/)
+  - Monitor cluster and application resource usage.
+      - [Tools for Monitoring Resources](https://kubernetes.io/docs/tasks/debug/debug-cluster/resource-usage-monitoring/)
+  - Manage and evaluate container output streams.
+      - [Logging Architecture](https://kubernetes.io/docs/concepts/cluster-administration/logging/)
+  - Troubleshoot services and networking.
+      - [Debug Services](https://kubernetes.io/docs/tasks/debug/debug-application/debug-service/)
 
-### Services
-- **Kubernetes Services** and their types (ClusterIP, NodePort, LoadBalancer).
-- **DNS-based Service Discovery** and **ExternalName Service**.
-- **Ingress Controllers** and **CoreDNS** configuration.
+Command Shortcuts:
 
+```bash
 
+```
+
+## Cluster Architecture, Installation & Configuration (25%)
+  - Manage role based access control (RBAC).
+      - [Using RBAC Authorization](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
+  - Prepare underlying infrastructure for installing a Kubernetes cluster.
+      - [Overview](https://kubernetes.io/docs/concepts/overview/)
+  - Create and manage Kubernetes clusters using kubeadm.
+      - [Creating a cluster with kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/)
+  - Manage the lifecycle of Kubernetes clusters.
+      - [Upgrading kubeadm clusters](https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/)
+  - Use Helm and Kustomize to install cluster components.
+      - [Declarative Management of Kubernetes Objects Using Kustomize](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/)
+  - Understand extension interfaces (CNI, CSI, CRI, etc.).
+      - [Container Runtime Interface (CRI)](https://kubernetes.io/docs/concepts/architecture/cri/)
+      - [Network Plugins](https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/)
+      - [Container Storage Interface (CSI) for Kubernetes GA](https://kubernetes.io/blog/2019/01/15/container-storage-interface-ga/)
+  - Understand CRDs, install and configure operators.
+      - [Custom Resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
+      - [Operator pattern](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/)
+
+Command Shortcuts:
+
+```bash
+
+```
