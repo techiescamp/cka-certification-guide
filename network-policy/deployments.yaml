@@ -145,6 +145,7 @@ metadata:
   namespace: frontend
   labels:
     app: webserver
+    tier: frontend
     env: production
     project: ecommerce-platform
     version: "1.0.0"
@@ -153,10 +154,12 @@ spec:
   selector:
     matchLabels:
       app: webserver
+      tier: frontend
   template:
     metadata:
       labels:
         app: webserver
+        tier: frontend
     spec:
       containers:
       - name: nginx
@@ -204,6 +207,7 @@ metadata:
   namespace: backend
   labels:
     app: backend-api
+    tier: backend
     env: production
     project: ecommerce-platform
     version: "1.0.0"
@@ -212,10 +216,12 @@ spec:
   selector:
     matchLabels:
       app: backend-api
+      tier: backend
   template:
     metadata:
       labels:
         app: backend-api
+        tier: backend
     spec:
       containers:
       - name: nginx
@@ -263,6 +269,7 @@ metadata:
   namespace: payment
   labels:
     app: payment-api
+    tier: payment
     env: production
     project: ecommerce-platform
     version: "1.0.0"
@@ -271,10 +278,12 @@ spec:
   selector:
     matchLabels:
       app: payment-api
+      tier: payment
   template:
     metadata:
       labels:
         app: payment-api
+        tier: payment
     spec:
       containers:
       - name: nginx
