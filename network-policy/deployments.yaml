@@ -4,7 +4,7 @@ kind: Namespace
 metadata:
   name: frontend
   labels:
-    tier: frontend
+    name: frontend
     env: production
     project: ecommerce-platform
     version: "1.0.0"
@@ -14,7 +14,7 @@ kind: Namespace
 metadata:
   name: backend
   labels:
-    tier: backend
+    name: backend
     env: production
     project: ecommerce-platform
     version: "1.0.0"
@@ -24,7 +24,7 @@ kind: Namespace
 metadata:
   name: payment
   labels:
-    tier: payment
+    name: payment
     env: production
     project: ecommerce-platform
     version: "1.0.0"
@@ -35,7 +35,7 @@ metadata:
   name: nginx-config
   namespace: frontend
   labels:
-    tier: frontend
+    app: webserver
     env: production
     project: ecommerce-platform
     version: "1.0.0"
@@ -80,7 +80,7 @@ metadata:
   name: nginx-config
   namespace: backend
   labels:
-    tier: backend
+    app: backend-api
     env: production
     project: ecommerce-platform
     version: "1.0.0"
@@ -125,7 +125,7 @@ metadata:
   name: nginx-config
   namespace: payment
   labels:
-    tier: payment
+    app: payment-api
     env: production
     project: ecommerce-platform
     version: "1.0.0"
@@ -144,7 +144,7 @@ metadata:
   name: frontend-deployment
   namespace: frontend
   labels:
-    tier: frontend
+    app: webserver
     env: production
     project: ecommerce-platform
     version: "1.0.0"
@@ -152,13 +152,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx
-      tier: frontend
+      app: webserver
   template:
     metadata:
       labels:
-        app: nginx
-        tier: frontend
+        app: webserver
     spec:
       containers:
       - name: nginx
@@ -186,14 +184,13 @@ metadata:
   name: frontend-service
   namespace: frontend
   labels:
-    tier: frontend
+    app: webserver
     env: production
     project: ecommerce-platform
     version: "1.0.0"
 spec:
   selector:
-    app: nginx
-    tier: frontend
+    app: webserver
   ports:
   - protocol: TCP
     port: 80
@@ -206,7 +203,7 @@ metadata:
   name: backend-deployment
   namespace: backend
   labels:
-    tier: backend
+    app: backend-api
     env: production
     project: ecommerce-platform
     version: "1.0.0"
@@ -214,13 +211,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx
-      tier: backend
+      app: backend-api
   template:
     metadata:
       labels:
-        app: nginx
-        tier: backend
+        app: backend-api
     spec:
       containers:
       - name: nginx
@@ -248,14 +243,13 @@ metadata:
   name: backend-service
   namespace: backend
   labels:
-    tier: backend
+    app: backend-api
     env: production
     project: ecommerce-platform
     version: "1.0.0"
 spec:
   selector:
-    app: nginx
-    tier: backend
+    app: backend-api
   ports:
   - protocol: TCP
     port: 80
@@ -268,7 +262,7 @@ metadata:
   name: payment-deployment
   namespace: payment
   labels:
-    tier: payment
+    app: payment-api
     env: production
     project: ecommerce-platform
     version: "1.0.0"
@@ -276,13 +270,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx
-      tier: payment
+      app: payment-api
   template:
     metadata:
       labels:
-        app: nginx
-        tier: payment
+        app: payment-api
     spec:
       containers:
       - name: nginx
@@ -301,14 +293,13 @@ metadata:
   name: payment-service
   namespace: payment
   labels:
-    tier: payment
+    app: payment-api
     env: production
     project: ecommerce-platform
     version: "1.0.0"
 spec:
   selector:
-    app: nginx
-    tier: payment
+    app: payment-api
   ports:
   - protocol: TCP
     port: 80
