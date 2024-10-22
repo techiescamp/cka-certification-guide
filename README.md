@@ -11,24 +11,37 @@ The exam will be on Kubernetes version 1.30.
 Once the certificate is earned, the CKA certification remains valid for 2 years. The cost to take the exam is $395 USD.
 
 ---
-## 📘 Course Overview
+## 📘 CKA Overview
 
-This course is covering the following key domains:
+CKA Certification Exam has the following key domains:
 
 ## Storage (10%)
-  - Implement storage classes and dynamic volume provisioning.
-      - [Storage Classes](https://kubernetes.io/docs/concepts/storage/storage-classes/)
-      - [Dynamic Volume Provisioning](https://kubernetes.io/docs/concepts/storage/dynamic-provisioning/)
-  - Configure volume types, access modes and reclaim policies.
-      - [Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
-  - Manage persistent volumes and persistent volume claims.
-      - [Configure a Pod to Use a PersistentVolume for Storage](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/)
+
+Following are the subtopics under Storage
+
+### Implement storage classes and dynamic volume provisioning.
+- [Storage Classes](https://kubernetes.io/docs/concepts/storage/storage-classes/)
+- [Dynamic Volume Provisioning](https://kubernetes.io/docs/concepts/storage/dynamic-provisioning/)
 
 Command Shortcuts:
 
 ```bash
 
 ```
+
+### Configure volume types, access modes and reclaim policies.
+- [Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
+
+Command Shortcuts:
+
+```bash
+
+```
+
+### Manage persistent volumes and persistent volume claims.
+- [Configure a Pod to Use a PersistentVolume for Storage](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/)
+
+
 
 ## Workloads & Scheduling (15%)
   - Understand deployments and how to perform rolling update and rollbacks.
