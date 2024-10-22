@@ -26,6 +26,11 @@ Following are the subtopics under Storage
 Command Shortcuts:
 
 ```bash
+# List storageclasses
+k get sc
+
+# Describe storageclass
+k describe sc <storageclass-name>
 
 ```
 
@@ -35,32 +40,139 @@ Command Shortcuts:
 Command Shortcuts:
 
 ```bash
+# List persistentvolume
+k get pv
 
+# Describe persistentvolume
+k describe pv <persistentvolume-name>
+
+# Delete persistentvolume
+k delete pv <persistentvolume-name>
 ```
 
 ### Manage persistent volumes and persistent volume claims.
 - [Configure a Pod to Use a PersistentVolume for Storage](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/)
 
+Command Shortcuts:
 
+```bash
+# List persistentvolumeclaim
+k get pvc
+
+# Describe persistentvolumeclaim
+k describe pc <persistentvolumeclaim-name>
+
+# Delete persistentvolumeclaim
+k delete pvc <persistentvolumeclaim-name>
+```
 
 ## Workloads & Scheduling (15%)
-  - Understand deployments and how to perform rolling update and rollbacks.
-      - [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
-  - Use ConfigMaps and Secrets to configure applications.
-      - [ConfigMaps](https://kubernetes.io/docs/concepts/configuration/configmap/)
-      - [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
-  - Configure workload autoscaling.
-      - [Autoscaling Workloads](https://kubernetes.io/docs/concepts/workloads/autoscaling/)
-  - Understand the primitives used to create robust, self-healing, application deployments.
-      - [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
-  - Configure Pod admission and scheduling (limits, node affinity, etc.).
-      - [Assigning Pods to Nodes](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/)
-      - [Admission Controllers Reference](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/)
+
+Following are the subtopics under Workloads & Scheduling
+
+### Understand deployments and how to perform rolling update and rollbacks.
+- [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
 
 Command Shortcuts:
 
 ```bash
+# Create deployment with 3 replicas
+k create deploy <deployment-name> --image=<image-name> --replicas=3
 
+# Create deployment manifest file
+k create deploy <deployment-name> --image <image-name> --replicas=3  --dry-run=client -o yaml > deploy.yaml
+
+# List deployment
+k get deploy
+
+# Check replicaSet
+k get rs
+
+# Describe the deployment
+k describe deploy <deployment-name>
+
+# Scale deployment replicas
+k scale deploy <deployment-name> --replicas=2
+
+# View Deployments Manifest file
+k get deploy <deployment-name> -o yaml
+
+# Update container image in a deployment
+k set image deploy <deployment-name> nginx=<image-name> --record
+
+# Rollback to previous deployment version
+k rollout undo deploy <deployment-name>
+
+# View deployment rollout history
+k rollout history deploy <deployment-name>
+
+# Rollback to a specific revision
+k rollout undo deploy <deployment-name> --to-revision=1
+
+# Pause deployment rollout
+k rollout pause deploy <deployment-name>
+
+# Resume deployment rollout
+k rollout resume deploy <deployment-name>
+
+# Rollout & restart a deployment
+k rollout restart deploy <deployment-name>
+
+# Delete deployment
+k delete deploy <deployment-name>
+```
+
+### Use ConfigMaps and Secrets to configure applications.
+- [ConfigMaps](https://kubernetes.io/docs/concepts/configuration/configmap/)
+
+```bash
+# Create configmap
+k create cm <configmap-name>
+
+# Edit the configmap
+k edit cm <configmap-name>
+
+# Create configmap manifest file
+k create cm <configmap-name> --dry-run=client -o yaml > cm.yaml
+
+# Create configmap from literal values
+k create cm mycm --from-literal=api=api.techiescamp.com --from-literal=backend_url=api.backend.techiescamp.com
+
+# Create configmap from a file
+k create cm app-config --from-file=app.properties
+
+```
+
+- [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
+
+Command Shortcuts:
+
+```bash
+# Create generic secret from literal values
+k create secret generic db-secret --from-literal=username=admin --from-literal=password=secret
+
+# Create TLS secret from certificate files
+k create secret tls nginx-tls --cert=tls.crt --key=tls.key
+
+```
+
+### Configure workload autoscaling.
+- [Autoscaling Workloads](https://kubernetes.io/docs/concepts/workloads/autoscaling/)
+
+
+### Understand the primitives used to create robust, self-healing, application deployments.
+- [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
+
+
+### Configure Pod admission and scheduling (limits, node affinity, etc.).
+- [Assigning Pods to Nodes](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/)
+- [Admission Controllers Reference](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/)
+
+Command Shortcuts:
+
+```bash
+# Create a Pod
+k run mypod --image=<image-name> --restart=Never
 ```
 
 ## Services & Networking (20%)
