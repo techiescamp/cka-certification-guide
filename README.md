@@ -94,6 +94,9 @@ k describe deploy <deployment-name>
 # Scale deployment replicas
 k scale deploy <deployment-name> --replicas=2
 
+# Using autoscaling
+k autoscale deploy <deployment-name> --min=2 --max=5
+
 # View Deployments Manifest file
 k get deploy <deployment-name> -o yaml
 
@@ -149,10 +152,10 @@ Command Shortcuts:
 
 ```bash
 # Create generic secret from literal values
-k create secret generic db-secret --from-literal=username=admin --from-literal=password=secret
+k create secret generic <secret-name> --from-literal=username=admin --from-literal=password=secret
 
 # Create TLS secret from certificate files
-k create secret tls nginx-tls --cert=tls.crt --key=tls.key
+k create secret tls <secret-name> --cert=tls.crt --key=tls.key
 
 ```
 
@@ -172,67 +175,181 @@ Command Shortcuts:
 
 ```bash
 # Create a Pod
-k run mypod --image=<image-name> --restart=Never
+k run <pod-name> --image=<image-name> --restart=Never
+
+# Get logs of a pod
+k logs <pod-name>
+
+# Get logs of a multi container pod
+k logs <pod-name> -c <container-name>
+
+# Add a label to a pod
+k label pod <pod-name> appversion=v1
+
+# List pods with their labels
+k get po --show-labels
+
+# List pods with specific label
+k get po --selector appversion=v1
+
+# Remove a label from a pod
+k label pod <pod-name> appversion-
+
+# Create a temporary interactive pod
+k run -it testpod --image=busybox --rm --restart=Never -- sh
+
+# Execute shell in a pod
+k exec -it <pod-name> -- /bin/sh
+
+# Execute shell in a specific container within a pod
+k exec -it <pod-name> -c webserver -- sh
+
+# Delete pod immediately
+k delete po <pod-name> --grace-period 0 --force
 ```
 
 ## Services & Networking (20%)
-  - Understand connectivity between Pods.
-      - [Cluster Networking](https://kubernetes.io/docs/concepts/cluster-administration/networking/)
-  - Define and enforce Network Policies.
-      - [Network Policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/)
-  - Use ClusterIP, NodePort, LoadBalancer service types and endpoints.
-      - [Service](https://kubernetes.io/docs/concepts/services-networking/service/)
-  - Use the Gateway API to manage Ingress traffic.
-      - [Gateway API](https://kubernetes.io/docs/concepts/services-networking/gateway/)
-  - Know how to use Ingress controllers and Ingress resources.
-      - [Ingress Controllers](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/)
-      - [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
-  - Understand and use CoreDNS.
-      - [Using CoreDNS for Service Discovery](https://kubernetes.io/docs/tasks/administer-cluster/coredns/)
+
+Following are the subtopics under Services & Networking
+
+### Understand connectivity between Pods.
+- [Cluster Networking](https://kubernetes.io/docs/concepts/cluster-administration/networking/)
 
 Command Shortcuts:
 
 ```bash
+# Get pod IP addresses
+k get pods -o wide
+
+# Check pod-to-pod connectivity
+k exec <pod-name> -- curl <target-service-ip>:<port>
+
+# Check network interfaces inside a pod
+k exec <pod-name> -- ifconfig
+
+# Static pod manifest path
+/etc/kubernetes/manifests
+```
+
+### Define and enforce Network Policies.
+- [Network Policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/)
+
+### Use ClusterIP, NodePort, LoadBalancer service types and endpoints.
+- [Service](https://kubernetes.io/docs/concepts/services-networking/service/)
+
+Command Shortcuts:
+
+```bash
+# Expose deployment as a service
+k expose deploy <deployment-name> --name=<service-name> --port=<port> --target-port=<container-port> --type=<service-type>
+
+# List services
+k get svc
+
+# Describe a service
+k describe svc <service-name>
+
+# List service endpoints
+k get endpoints
 
 ```
+### Use the Gateway API to manage Ingress traffic.
+- [Gateway API](https://kubernetes.io/docs/concepts/services-networking/gateway/)
+
+### Know how to use Ingress controllers and Ingress resources.
+- [Ingress Controllers](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/)
+- [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
+
+### Understand and use CoreDNS.
+- [Using CoreDNS for Service Discovery](https://kubernetes.io/docs/tasks/administer-cluster/coredns/)
 
 ## Troubleshooting (30%)
-  - Troubleshoot clusters and nodes.
-      - [Troubleshooting Clusters](https://kubernetes.io/docs/tasks/debug/debug-cluster/)
-  - Troubleshoot cluster components.
-      - [Troubleshooting kubectl](https://kubernetes.io/docs/tasks/debug/debug-cluster/troubleshoot-kubectl/)
-      - [Troubleshooting kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/troubleshooting-kubeadm/)
-  - Monitor cluster and application resource usage.
-      - [Tools for Monitoring Resources](https://kubernetes.io/docs/tasks/debug/debug-cluster/resource-usage-monitoring/)
-  - Manage and evaluate container output streams.
-      - [Logging Architecture](https://kubernetes.io/docs/concepts/cluster-administration/logging/)
-  - Troubleshoot services and networking.
-      - [Debug Services](https://kubernetes.io/docs/tasks/debug/debug-application/debug-service/)
+
+Following are the subtopics under Troubleshooting
+
+### Troubleshoot clusters and nodes.
+- [Troubleshooting Clusters](https://kubernetes.io/docs/tasks/debug/debug-cluster/)
 
 Command Shortcuts:
 
 ```bash
+# List all available nodes
+k get no
+
+# Describe nodes
+k describe no <node-name>
+
+# Drain a node
+k drain <node-name> --ignore-daemonsets
+
+# Cordon/uncordon a node
+k cordon <node-name>
+k uncordon <node-name>
 
 ```
 
+### Troubleshoot cluster components.
+- [Troubleshooting kubectl](https://kubernetes.io/docs/tasks/debug/debug-cluster/troubleshoot-kubectl/)
+- [Troubleshooting kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/troubleshooting-kubeadm/)
+
+Command Shortcuts:
+
+```bash
+# Check kubectl configuration
+k config view
+
+# Get logs of kubectl
+journalctl -u kubelet
+
+# Check status of kubectl
+k get --raw /healthz
+
+# Check status of API server
+k get componentstatuses
+
+```
+
+### Monitor cluster and application resource usage.
+- [Tools for Monitoring Resources](https://kubernetes.io/docs/tasks/debug/debug-cluster/resource-usage-monitoring/)
+
+Command Shortcuts:
+
+```bash
+# Get no cpu and memory usage
+k top no
+
+# Get pod cpu and memory usage
+k top pod
+
+```
+
+### Manage and evaluate container output streams.
+- [Logging Architecture](https://kubernetes.io/docs/concepts/cluster-administration/logging/)
+
+### Troubleshoot services and networking.
+- [Debug Services](https://kubernetes.io/docs/tasks/debug/debug-application/debug-service/)
+
 ## Cluster Architecture, Installation & Configuration (25%)
-  - Manage role based access control (RBAC).
-      - [Using RBAC Authorization](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
-  - Prepare underlying infrastructure for installing a Kubernetes cluster.
-      - [Overview](https://kubernetes.io/docs/concepts/overview/)
-  - Create and manage Kubernetes clusters using kubeadm.
-      - [Creating a cluster with kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/)
-  - Manage the lifecycle of Kubernetes clusters.
-      - [Upgrading kubeadm clusters](https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/)
-  - Use Helm and Kustomize to install cluster components.
-      - [Declarative Management of Kubernetes Objects Using Kustomize](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/)
-  - Understand extension interfaces (CNI, CSI, CRI, etc.).
-      - [Container Runtime Interface (CRI)](https://kubernetes.io/docs/concepts/architecture/cri/)
-      - [Network Plugins](https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/)
-      - [Container Storage Interface (CSI) for Kubernetes GA](https://kubernetes.io/blog/2019/01/15/container-storage-interface-ga/)
-  - Understand CRDs, install and configure operators.
-      - [Custom Resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
-      - [Operator pattern](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/)
+
+Following are the subtopics under Cluster Architecture, Installation & Configuration
+
+### Manage role based access control (RBAC).
+- [Using RBAC Authorization](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
+### Prepare underlying infrastructure for installing a Kubernetes cluster.
+- [Overview](https://kubernetes.io/docs/concepts/overview/)
+### Create and manage Kubernetes clusters using kubeadm.
+- [Creating a cluster with kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/)
+### Manage the lifecycle of Kubernetes clusters.
+- [Upgrading kubeadm clusters](https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/)
+### Use Helm and Kustomize to install cluster components.
+- [Declarative Management of Kubernetes Objects Using Kustomize](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/)
+### Understand extension interfaces (CNI, CSI, CRI, etc.).
+- [Container Runtime Interface (CRI)](https://kubernetes.io/docs/concepts/architecture/cri/)
+- [Network Plugins](https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/)
+- [Container Storage Interface (CSI) for Kubernetes GA](https://kubernetes.io/blog/2019/01/15/container-storage-interface-ga/)
+### Understand CRDs, install and configure operators.
+- [Custom Resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
+- [Operator pattern](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/)
 
 Command Shortcuts:
 
