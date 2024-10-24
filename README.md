@@ -11,6 +11,46 @@ Once the certificate is earned, the CKA certification remains valid for 2 years.
 
 >**Important Note:** The CKA exam is updating after November 25, 2024, with new topics and a focus on real-world Kubernetes skills like Gateway API, Helm, Kustomize, CRDs & Operators. This guide is based on the new CKA syllabus. You can read more about the exam changes here [CKA Exam Changes](https://blog.techiescamp.com/cka-exam-updates/)
 
+## Table of Contents
+
+1. [Storage (10%)](#1-storage-10)
+   - [Implement storage classes and dynamic volume provisioning](#implement-storage-classes-and-dynamic-volume-provisioning)
+   - [Configure volume types, access modes and reclaim policies](#configure-volume-types-access-modes-and-reclaim-policies)
+   - [Manage persistent volumes and persistent volume claims](#manage-persistent-volumes-and-persistent-volume-claims)
+
+2. [Workloads & Scheduling (15%)](#2-workloads--scheduling-15)
+   - [Understand deployments and how to perform rolling update and rollbacks](#understand-deployments-and-how-to-perform-rolling-update-and-rollbacks)
+   - [Use ConfigMaps and Secrets to configure applications](#use-configmaps-and-secrets-to-configure-applications)
+   - [Configure workload autoscaling](#configure-workload-autoscaling)
+   - [Understand the primitives used to create robust self-healing application deployments](#understand-the-primitives-used-to-create-robust-self-healing-application-deployments)
+   - [Configure Pod admission and scheduling (limits, node affinity, etc.)](#configure-pod-admission-and-scheduling-limits-node-affinity-etc)
+
+3. [Services & Networking (20%)](#3-services--networking-20)
+   - [Understand connectivity between Pods](#understand-connectivity-between-pods)
+   - [Define and enforce Network Policies](#define-and-enforce-network-policies)
+   - [Use ClusterIP, NodePort, LoadBalancer service types and endpoints](#use-clusterip-nodeport-loadbalancer-service-types-and-endpoints)
+   - [Use the Gateway API to manage Ingress traffic](#use-the-gateway-api-to-manage-ingress-traffic)
+   - [Know how to use Ingress controllers and Ingress resources](#know-how-to-use-ingress-controllers-and-ingress-resources)
+   - [Understand and use CoreDNS](#understand-and-use-coredns)
+
+4. [Troubleshooting (30%)](#4-troubleshooting-30)
+   - [Troubleshoot clusters and nodes](#troubleshoot-clusters-and-nodes)
+   - [Troubleshoot cluster components](#troubleshoot-cluster-components)
+   - [Monitor cluster and application resource usage](#monitor-cluster-and-application-resource-usage)
+   - [Manage and evaluate container output streams](#manage-and-evaluate-container-output-streams)
+   - [Troubleshoot services and networking](#troubleshoot-services-and-networking)
+
+5. [Cluster Architecture, Installation & Configuration (25%)](#5-cluster-architecture-installation--configuration-25)
+   - [Manage role based access control (RBAC)](#manage-role-based-access-control-rbac)
+   - [Prepare underlying infrastructure for installing a Kubernetes cluster](#prepare-underlying-infrastructure-for-installing-a-kubernetes-cluster)
+   - [Create and manage Kubernetes clusters using kubeadm](#create-and-manage-kubernetes-clusters-using-kubeadm)
+   - [Manage the lifecycle of Kubernetes clusters](#manage-the-lifecycle-of-kubernetes-clusters)
+   - [Use Helm and Kustomize to install cluster components](#use-helm-and-kustomize-to-install-cluster-components)
+   - [Understand extension interfaces (CNI, CSI, CRI, etc.)](#understand-extension-interfaces-cni-csi-cri-etc)
+   - [Understand CRDs, install and configure operators](#understand-crds-install-and-configure-operators)
+
+
+
 ## CKA Exam Detailed Study Guide & References
 
 CKA Certification Exam has the following key domains:
