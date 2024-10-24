@@ -335,18 +335,81 @@ Following are the subtopics under Cluster Architecture, Installation & Configura
 
 ### Manage role based access control (RBAC).
 - [Using RBAC Authorization](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
+
+Command Shortcuts:
+
+```bash
+# Create a service account
+k create sa <sa-name> -n <namespace>
+
+# Create a role
+k create role <role-name> --verb=<verbs> --resource=<resources> -n <namespace>
+
+# Create rolebinding
+k create rolebinding <binding-name> --role=<role-name> --user=<username> -n <namespace>
+
+# Create a clusterrole
+k create clusterrole <clusterrole-name> --verb=<verbs> --resource=<resources>
+
+# Create clusterrolebinding
+k create clusterrolebinding <binding-name> --clusterrole=<clusterrole-name> --user=<username>
+
+# Check RBAC authorization
+k auth can-i <verb> <resource> --as=<username>
+
+```
+
 ### Prepare underlying infrastructure for installing a Kubernetes cluster.
 - [Overview](https://kubernetes.io/docs/concepts/overview/)
+
 ### Create and manage Kubernetes clusters using kubeadm.
 - [Creating a cluster with kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/)
+
 ### Manage the lifecycle of Kubernetes clusters.
 - [Upgrading kubeadm clusters](https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/)
+
 ### Use Helm and Kustomize to install cluster components.
 - [Declarative Management of Kubernetes Objects Using Kustomize](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/)
+
+Command Shortcuts:
+
+```bash
+# Install a helm chart
+helm install <release-name> <chart-name>
+
+# List helm releases
+helm list
+
+# Upgrade a helm release
+helm upgrade <release-name> <chart-name>
+
+# Install helm chart
+helm install <release-name> <chart-name>
+
+# Uninstall a helm release
+helm uninstall <release-name>
+
+# Use Kustomize to apply resources
+k apply -k kustomization.yaml
+
+```
+
 ### Understand extension interfaces (CNI, CSI, CRI, etc.).
 - [Container Runtime Interface (CRI)](https://kubernetes.io/docs/concepts/architecture/cri/)
 - [Network Plugins](https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/)
 - [Container Storage Interface (CSI) for Kubernetes GA](https://kubernetes.io/blog/2019/01/15/container-storage-interface-ga/)
+
+Command Shortcuts:
+
+```bash
+# List installed CNI plugins
+ls /etc/cni/net.d/
+
+# Check container runtime
+crictl info
+
+```
+
 ### Understand CRDs, install and configure operators.
 - [Custom Resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
 - [Operator pattern](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/)
@@ -354,5 +417,10 @@ Following are the subtopics under Cluster Architecture, Installation & Configura
 Command Shortcuts:
 
 ```bash
+# List CRDs
+k get crd
+
+# Describe a CRD
+kubectl describe crd <crd-name>
 
 ```
