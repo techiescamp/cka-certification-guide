@@ -302,7 +302,7 @@ k get ep
 
 ### Know how to use Ingress controllers and Ingress resources.
 > [Ingress Controllers](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/)
-<br>
+
 > [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
 
 ```bash
