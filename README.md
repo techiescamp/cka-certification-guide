@@ -2,28 +2,24 @@
 
 This guide is part of the [Complete CKA Certification Course](https://techiescamp.com/p/certified-kubernetes-administrator-course)
 
----
-## Exam Details
+## CKA Exam Overview
 
 The Certified Kubernetes Administrator (CKA) exam has a duration of 2 hours.
 To pass the exam, candidates need to achieve a score of at least 66%.
 The exam will be on Kubernetes version 1.30.
 Once the certificate is earned, the CKA certification remains valid for 2 years. The cost to take the exam is $395 USD.
 
----
-## 📘 CKA Overview
+## CKA Exam Detailed Study Guide & References
 
 CKA Certification Exam has the following key domains:
 
-## Storage (10%)
+## 1. Storage (10%)
 
 Following are the subtopics under Storage
 
 ### Implement storage classes and dynamic volume provisioning.
-- [Storage Classes](https://kubernetes.io/docs/concepts/storage/storage-classes/)
-- [Dynamic Volume Provisioning](https://kubernetes.io/docs/concepts/storage/dynamic-provisioning/)
+> [Storage Classes](https://kubernetes.io/docs/concepts/storage/storage-classes/) : Understand the difference between default storage class and other classes
 
-Command Shortcuts:
 
 ```bash
 # List storageclasses
@@ -33,6 +29,17 @@ k get sc
 k describe sc <storageclass-name>
 
 ```
+> [Dynamic Volume Provisioning](https://kubernetes.io/docs/concepts/storage/dynamic-provisioning/)
+Understand which type of persistent storage is supported (like AWS EBS, GCE Persistent Disks) and practice using them.
+
+```bash
+
+k get pv  #List all persistent volumes.
+k describe pv <persistentvolume-name>  # Inspect details of a persistent volume.
+k delete pv <persistentvolume-name>  # Delete a persistent volume.
+
+```
+
 
 ### Configure volume types, access modes and reclaim policies.
 - [Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
