@@ -347,12 +347,12 @@ k edit cm coredns -n kube-system
 k logs -n kube-system -l k8s-app=kube-dns
 ```
 
-## Troubleshooting (30%)
+## 4. Troubleshooting (30%)
 
 Following are the subtopics under Troubleshooting
 
 ### Troubleshoot clusters and nodes.
-- [Troubleshooting Clusters](https://kubernetes.io/docs/tasks/debug/debug-cluster/)
+> [Troubleshooting Clusters](https://kubernetes.io/docs/tasks/debug/debug-cluster/) : When draining a node, use --ignore-daemonsets to safely move workloads that can be moved while ignoring daemonsets.
 
 ```bash
 # List all available nodes
@@ -371,10 +371,8 @@ k uncordon <node-name>
 ```
 
 ### Troubleshoot cluster components.
-- [Troubleshooting kubectl](https://kubernetes.io/docs/tasks/debug/debug-cluster/troubleshoot-kubectl/)
-- [Troubleshooting kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/troubleshooting-kubeadm/)
-
-Command Shortcuts:
+> [Troubleshooting kubectl](https://kubernetes.io/docs/tasks/debug/debug-cluster/troubleshoot-kubectl/)
+> [Troubleshooting kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/troubleshooting-kubeadm/)
 
 ```bash
 # Check kubectl configuration
@@ -392,9 +390,7 @@ k get componentstatuses
 ```
 
 ### Monitor cluster and application resource usage.
-- [Tools for Monitoring Resources](https://kubernetes.io/docs/tasks/debug/debug-cluster/resource-usage-monitoring/)
-
-Command Shortcuts:
+> [Tools for Monitoring Resources](https://kubernetes.io/docs/tasks/debug/debug-cluster/resource-usage-monitoring/) : Use kubectl top to monitor resource utilization.
 
 ```bash
 # Get no cpu and memory usage
@@ -406,19 +402,17 @@ k top pod
 ```
 
 ### Manage and evaluate container output streams.
-- [Logging Architecture](https://kubernetes.io/docs/concepts/cluster-administration/logging/)
+> [Logging Architecture](https://kubernetes.io/docs/concepts/cluster-administration/logging/)
 
 ### Troubleshoot services and networking.
-- [Debug Services](https://kubernetes.io/docs/tasks/debug/debug-application/debug-service/)
+> [Debug Services](https://kubernetes.io/docs/tasks/debug/debug-application/debug-service/) : Practice using the describe and logs commands to inspect failed services or pods.
 
-## Cluster Architecture, Installation & Configuration (25%)
+## 5. Cluster Architecture, Installation & Configuration (25%)
 
 Following are the subtopics under Cluster Architecture, Installation & Configuration
 
 ### Manage role based access control (RBAC).
-- [Using RBAC Authorization](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
-
-Command Shortcuts:
+> [Using RBAC Authorization](https://kubernetes.io/docs/reference/access-authn-authz/rbac/) : Understand the difference between Roles (namespace level) and ClusterRoles (cluster level).
 
 ```bash
 # Create a service account
@@ -442,18 +436,16 @@ k auth can-i <verb> <resource> --as=<username>
 ```
 
 ### Prepare underlying infrastructure for installing a Kubernetes cluster.
-- [Overview](https://kubernetes.io/docs/concepts/overview/)
+> [Overview](https://kubernetes.io/docs/concepts/overview/)
 
 ### Create and manage Kubernetes clusters using kubeadm.
-- [Creating a cluster with kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/)
+> [Creating a cluster with kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/)
 
 ### Manage the lifecycle of Kubernetes clusters.
-- [Upgrading kubeadm clusters](https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/)
+> [Upgrading kubeadm clusters](https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/)
 
 ### Use Helm and Kustomize to install cluster components.
-- [Declarative Management of Kubernetes Objects Using Kustomize](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/)
-
-Command Shortcuts:
+> [Declarative Management of Kubernetes Objects Using Kustomize](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/) : Helm makes it easier to package and deploy Kubernetes applications. Practice installing, upgrading, and uninstalling releases.
 
 ```bash
 # Install a helm chart
@@ -477,11 +469,9 @@ k apply -k kustomization.yaml
 ```
 
 ### Understand extension interfaces (CNI, CSI, CRI, etc.).
-- [Container Runtime Interface (CRI)](https://kubernetes.io/docs/concepts/architecture/cri/)
-- [Network Plugins](https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/)
-- [Container Storage Interface (CSI) for Kubernetes GA](https://kubernetes.io/blog/2019/01/15/container-storage-interface-ga/)
-
-Command Shortcuts:
+> [Container Runtime Interface (CRI)](https://kubernetes.io/docs/concepts/architecture/cri/)
+> [Network Plugins](https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/)
+> [Container Storage Interface (CSI) for Kubernetes GA](https://kubernetes.io/blog/2019/01/15/container-storage-interface-ga/)
 
 ```bash
 # List installed CNI plugins
@@ -493,8 +483,8 @@ crictl info
 ```
 
 ### Understand CRDs, install and configure operators.
-- [Custom Resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
-- [Operator pattern](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/)
+> [Custom Resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
+> [Operator pattern](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/)
 
 Command Shortcuts:
 
