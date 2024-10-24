@@ -85,7 +85,7 @@ k auth can-i <verb> <resource> --as=<username>
 > [Overview](https://kubernetes.io/docs/concepts/overview/)
 
 ### Create and manage Kubernetes clusters using kubeadm.
-> [Creating a cluster with kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/) : kubeadm is a tool used for easy cluster bootstrap, be familiar with creating a cluster control plane node and adding worker nodes.
+> [Creating a cluster with kubeadm](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55288346) : kubeadm is a tool used for easy cluster bootstrap, be familiar with creating a cluster control plane node and adding worker nodes.
 
 ```bash
 # Set Up kubeconfig
@@ -95,7 +95,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
 ### Manage the lifecycle of Kubernetes clusters.
-> [Upgrading kubeadm clusters](https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/) : Managing the lifecycle involves upgrading clusters, managing control plane nodes, and ensuring consistency across versions.
+> [Upgrading kubeadm clusters](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55120133) : Managing the lifecycle involves upgrading clusters, managing control plane nodes, and ensuring consistency across versions.
 
 ### Use Helm and Kustomize to install cluster components.
 > [Helm](https://helm.sh/docs/intro/using_helm/) : Helm makes it easier to package and deploy Kubernetes applications. Practice installing, upgrading, and uninstalling releases.
@@ -189,7 +189,7 @@ k delete <resource-name> <name>
 Following are the subtopics under Workloads & Scheduling
 
 ### Understand deployments and how to perform rolling update and rollbacks.
-> [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) : Understand the use of --record for version history, which is crucial for rollbacks.
+> [Deployments](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55402667) : Understand the use of --record for version history, which is crucial for rollbacks.
 
 ```bash
 # Create deployment with 3 replicas
@@ -239,7 +239,7 @@ k delete deploy <deployment-name>
 ```
 
 ### Use ConfigMaps and Secrets to configure applications.
-> [ConfigMaps](https://kubernetes.io/docs/concepts/configuration/configmap/) : Use ConfigMaps to separate environment-specific configurations from the container image.
+> [ConfigMaps](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55993034) : Use ConfigMaps to separate environment-specific configurations from the container image.
 
 ```bash
 # Create configmap
@@ -258,7 +258,7 @@ k create cm <configmap-name> --from-literal=<key1>=<value1> --from-literal=<key2
 k create cm <configmap-name> --from-file=<file-name>
 ```
 
-> [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/) : Remember that Secrets are base64-encoded and not encrypted and they are for storing sensitive data.
+> [Secrets](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55993473) : Remember that Secrets are base64-encoded and not encrypted and they are for storing sensitive data.
 
 ```bash
 # Create generic secret from literal values
