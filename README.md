@@ -31,22 +31,7 @@ k get sc
 k describe sc <storageclass-name>
 
 ```
-> [Dynamic Volume Provisioning](https://kubernetes.io/docs/concepts/storage/dynamic-provisioning/)
-Understand which type of persistent storage is supported (like AWS EBS, GCE Persistent Disks) and practice using them.
-
-```bash
-
-k get pv  #List all persistent volumes.
-k describe pv <persistentvolume-name>  # Inspect details of a persistent volume.
-k delete pv <persistentvolume-name>  # Delete a persistent volume.
-
-```
-
-
-### Configure volume types, access modes and reclaim policies.
-- [Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
-
-Command Shortcuts:
+> [Dynamic Volume Provisioning](https://kubernetes.io/docs/concepts/storage/dynamic-provisioning/) : Understand which type of persistent storage is supported (like AWS EBS, GCE Persistent Disks) and practice using them.
 
 ```bash
 # List persistentvolume
@@ -59,30 +44,30 @@ k describe pv <persistentvolume-name>
 k delete pv <persistentvolume-name>
 ```
 
-### Manage persistent volumes and persistent volume claims.
-- [Configure a Pod to Use a PersistentVolume for Storage](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/)
 
-Command Shortcuts:
+### Configure volume types, access modes and reclaim policies.
+> [Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) : Remember to know the different reclaim policies: Retain, Delete, and Recycle. Understand access modes like ReadWriteOnce, ReadOnlyMany.
 
 ```bash
 # List persistentvolumeclaim
 k get pvc
 
 # Describe persistentvolumeclaim
-k describe pc <persistentvolumeclaim-name>
+k describe pvc <persistentvolumeclaim-name>
 
 # Delete persistentvolumeclaim
 k delete pvc <persistentvolumeclaim-name>
 ```
 
-## Workloads & Scheduling (15%)
+### Manage persistent volumes and persistent volume claims.
+> [Configure a Pod to Use a PersistentVolume for Storage](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/) : Practice creating a pod with persistent storage defined in a YAML manifest. Ensure familiarity with both bindings and mounting.
+
+## 2. Workloads & Scheduling (15%)
 
 Following are the subtopics under Workloads & Scheduling
 
 ### Understand deployments and how to perform rolling update and rollbacks.
-- [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
-
-Command Shortcuts:
+> [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) : Understand the use of --record for version history, which is crucial for rollbacks.
 
 ```bash
 # Create deployment with 3 replicas
@@ -102,9 +87,6 @@ k describe deploy <deployment-name>
 
 # Scale deployment replicas
 k scale deploy <deployment-name> --replicas=2
-
-# Using autoscaling
-k autoscale deploy <deployment-name> --min=2 --max=5
 
 # View Deployments Manifest file
 k get deploy <deployment-name> -o yaml
@@ -135,7 +117,7 @@ k delete deploy <deployment-name>
 ```
 
 ### Use ConfigMaps and Secrets to configure applications.
-- [ConfigMaps](https://kubernetes.io/docs/concepts/configuration/configmap/)
+> [ConfigMaps](https://kubernetes.io/docs/concepts/configuration/configmap/) : Use ConfigMaps to separate environment-specific configurations from the container image.
 
 ```bash
 # Create configmap
@@ -154,7 +136,7 @@ k create cm <configmap-name> --from-literal=<key1>=<value1> --from-literal=<key2
 k create cm <configmap-name> --from-file=<file-name>
 ```
 
-- [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
+> [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/) : Remember that Secrets are base64-encoded and not encrypted and they are for storing sensitive data.
 
 Command Shortcuts:
 
@@ -168,18 +150,45 @@ k create secret tls <secret-name> --cert=tls.crt --key=tls.key
 ```
 
 ### Configure workload autoscaling.
-- [Autoscaling Workloads](https://kubernetes.io/docs/concepts/workloads/autoscaling/)
+> [Autoscaling Workloads](https://kubernetes.io/docs/concepts/workloads/autoscaling/) : Practice setting up Horizontal Pod Autoscaler (HPA).
 
+```bash
+# Using autoscaling
+k autoscale deploy <deployment-name> --min=2 --max=5
+```
 
 ### Understand the primitives used to create robust, self-healing, application deployments.
-- [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
+> [Configure Liveness, Readiness and Startup Probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) : Using liveness and readiness probes in your deployment ensure that your applications are self-healing and automatically recover from failures.
 
+```bash
+# Startup probe
+startupProbe:
+    httpGet:
+    path: /startup
+    port: 8080
+    failureThreshold: 30
+    periodSeconds: 10
+
+# Liveness probe
+livenessProbe:
+    httpGet:
+    path: /healthz
+    port: 8080
+    initialDelaySeconds: 15
+    failureThreshold: 1
+    periodSeconds: 10
+
+# Readiness probe
+readinessProbe:
+    httpGet:
+    path: /ready
+    port: 8080
+    failureThreshold: 30
+    periodSeconds: 10
+```
 
 ### Configure Pod admission and scheduling (limits, node affinity, etc.).
-- [Assigning Pods to Nodes](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/)
-- [Admission Controllers Reference](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/)
-
-Command Shortcuts:
+> [Assigning Pods to Nodes](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/) : Use node affinity and anti-affinity to control the placement of your pods, ensuring that workloads are distributed efficiently across nodes as per there requirements.
 
 ```bash
 # Create a Pod
@@ -206,26 +215,49 @@ k label po <pod-name> <label-key>-
 # Create a temporary interactive pod
 k run -it <pod-name> --image=<image-name> --rm --restart=Never -- sh
 
-# Execute shell in a pod
-k exec -it <pod-name> -- /bin/sh
-
-# Execute shell in a specific container within a pod
-k exec -it <pod-name> -c webserver -- sh
-
 # Delete pod immediately
 k delete po <pod-name> --grace-period 0 --force
+
+# Pod resource limits
+resources:
+    requests:
+    memory: "64Mi"
+    cpu: "250m"
+    limits:
+    memory: "128Mi"
+    cpu: "500m"
+
+# Label a node
+k label no <pod-name> <label-key>=<label-value>
+
+# Node affinity
+affinity:
+nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+    nodeSelectorTerms:
+    - matchExpressions:
+        - key: <label-key>
+        operator: In
+        values:
+        - <label-value>
 ```
+
+> [Admission Controllers Reference](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/) : Use admission controllers to enforce policies such as resource quotas, pod security policies, and image validation.
 
 ## Services & Networking (20%)
 
 Following are the subtopics under Services & Networking
 
 ### Understand connectivity between Pods.
-- [Cluster Networking](https://kubernetes.io/docs/concepts/cluster-administration/networking/)
-
-Command Shortcuts:
+> [Cluster Networking](https://kubernetes.io/docs/concepts/cluster-administration/networking/) : Use kubectl exec to test network connectivity between pods.
 
 ```bash
+# Execute shell in a pod
+k exec -it <pod-name> -- /bin/sh
+
+# Execute shell in a specific container within a pod
+k exec -it <pod-name> -c webserver -- sh
+
 # Get pod IP addresses
 k get po -o wide
 
@@ -240,12 +272,18 @@ k exec <pod-name> -- ifconfig
 ```
 
 ### Define and enforce Network Policies.
-- [Network Policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/)
+> [Network Policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/) : Practice setting up network policies to restrict traffic flow between pods.
 
-### Use ClusterIP, NodePort, LoadBalancer service types and endpoints.
-- [Service](https://kubernetes.io/docs/concepts/services-networking/service/)
+```bash
+# List network policies
+k get netpol
 
-Command Shortcuts:
+# Description network policies
+k describe netpol <policy-name>
+```
+
+### Use ClusterIP, NodePort, LoadBalancer service types and endpoints. 
+> [Service](https://kubernetes.io/docs/concepts/services-networking/service/) : Practice exposing deployments using all types of services: ClusterIP, NodePort, and LoadBalancer.
 
 ```bash
 # Expose deployment as a service
@@ -262,14 +300,53 @@ k get ep
 
 ```
 ### Use the Gateway API to manage Ingress traffic.
-- [Gateway API](https://kubernetes.io/docs/concepts/services-networking/gateway/)
+> [Gateway API](https://kubernetes.io/docs/concepts/services-networking/gateway/) : The Gateway API provides more flexibility and extensibility compared to traditional Ingress. Use it when you need advanced traffic routing, such as assigning multiple gateways with different capabilities to different services.
 
 ### Know how to use Ingress controllers and Ingress resources.
-- [Ingress Controllers](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/)
-- [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
+> [Ingress Controllers](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/)
+> [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
+
+```bash
+# Example manifest file to create ingress object
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx-example
+  rules:
+  - http:
+      paths:
+      - path: /examplepath
+        pathType: Prefix
+        backend:
+          service:
+            name: example
+            port:
+              number: 80
+
+# List all ingress resources
+k get ing
+
+# Describe an ingress resource
+k describe ing <ingress-name>
+```
 
 ### Understand and use CoreDNS.
-- [Using CoreDNS for Service Discovery](https://kubernetes.io/docs/tasks/administer-cluster/coredns/)
+> [Using CoreDNS for Service Discovery](https://kubernetes.io/docs/tasks/administer-cluster/coredns/) : CoreDNS is used for service discovery within the Kubernetes cluster. Familiarize yourself with modifying the Corefile configuration to add custom DNS behaviors like forwarding queries for specific domains outside the cluster.
+
+```bash
+# Get CoreDNS ConfigMap in the kube-system namespace
+k get cm coredns -n kube-system
+
+# Edit CoreDNS ConfigMap for custom DNS configurations
+k edit cm coredns -n kube-system
+
+# Get logs of CoreDNS pods
+k logs -n kube-system -l k8s-app=kube-dns
+```
 
 ## Troubleshooting (30%)
 
