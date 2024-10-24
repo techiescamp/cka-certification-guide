@@ -13,34 +13,7 @@ Once the certificate is earned, the CKA certification remains valid for 2 years.
 
 ## Table of Contents
 
-1. [Storage (10%)](#1-storage-10)
-   - [Implement storage classes and dynamic volume provisioning](#implement-storage-classes-and-dynamic-volume-provisioning)
-   - [Configure volume types, access modes and reclaim policies](#configure-volume-types-access-modes-and-reclaim-policies)
-   - [Manage persistent volumes and persistent volume claims](#manage-persistent-volumes-and-persistent-volume-claims)
-
-2. [Workloads & Scheduling (15%)](#2-workloads--scheduling-15)
-   - [Understand deployments and how to perform rolling update and rollbacks](#understand-deployments-and-how-to-perform-rolling-update-and-rollbacks)
-   - [Use ConfigMaps and Secrets to configure applications](#use-configmaps-and-secrets-to-configure-applications)
-   - [Configure workload autoscaling](#configure-workload-autoscaling)
-   - [Understand the primitives used to create robust self-healing application deployments](#understand-the-primitives-used-to-create-robust-self-healing-application-deployments)
-   - [Configure Pod admission and scheduling (limits, node affinity, etc.)](#configure-pod-admission-and-scheduling-limits-node-affinity-etc)
-
-3. [Services & Networking (20%)](#3-services--networking-20)
-   - [Understand connectivity between Pods](#understand-connectivity-between-pods)
-   - [Define and enforce Network Policies](#define-and-enforce-network-policies)
-   - [Use ClusterIP, NodePort, LoadBalancer service types and endpoints](#use-clusterip-nodeport-loadbalancer-service-types-and-endpoints)
-   - [Use the Gateway API to manage Ingress traffic](#use-the-gateway-api-to-manage-ingress-traffic)
-   - [Know how to use Ingress controllers and Ingress resources](#know-how-to-use-ingress-controllers-and-ingress-resources)
-   - [Understand and use CoreDNS](#understand-and-use-coredns)
-
-4. [Troubleshooting (30%)](#4-troubleshooting-30)
-   - [Troubleshoot clusters and nodes](#troubleshoot-clusters-and-nodes)
-   - [Troubleshoot cluster components](#troubleshoot-cluster-components)
-   - [Monitor cluster and application resource usage](#monitor-cluster-and-application-resource-usage)
-   - [Manage and evaluate container output streams](#manage-and-evaluate-container-output-streams)
-   - [Troubleshoot services and networking](#troubleshoot-services-and-networking)
-
-5. [Cluster Architecture, Installation & Configuration (25%)](#5-cluster-architecture-installation--configuration-25)
+1. [Cluster Architecture, Installation & Configuration (25%)](#1-cluster-architecture-installation--configuration-25)
    - [Manage role based access control (RBAC)](#manage-role-based-access-control-rbac)
    - [Prepare underlying infrastructure for installing a Kubernetes cluster](#prepare-underlying-infrastructure-for-installing-a-kubernetes-cluster)
    - [Create and manage Kubernetes clusters using kubeadm](#create-and-manage-kubernetes-clusters-using-kubeadm)
@@ -49,58 +22,167 @@ Once the certificate is earned, the CKA certification remains valid for 2 years.
    - [Understand extension interfaces (CNI, CSI, CRI, etc.)](#understand-extension-interfaces-cni-csi-cri-etc)
    - [Understand CRDs, install and configure operators](#understand-crds-install-and-configure-operators)
 
+2. [Workloads & Scheduling (15%)](#2-workloads--scheduling-15)
+   - [Understand deployments and how to perform rolling update and rollbacks](#understand-deployments-and-how-to-perform-rolling-update-and-rollbacks)
+   - [Use ConfigMaps and Secrets to configure applications](#use-configmaps-and-secrets-to-configure-applications)
+   - [Configure workload autoscaling](#configure-workload-autoscaling)
+   - [Understand the primitives used to create robust, self-healing, application deployments](#understand-the-primitives-used-to-create-robust-self-healing-application-deployments)
+   - [Configure Pod admission and scheduling (limits, node affinity, etc.)](#configure-pod-admission-and-scheduling-limits-node-affinity-etc)
 
+3. [Storage (10%)](#3-storage-10)
+   - [Implement storage classes and dynamic volume provisioning](#implement-storage-classes-and-dynamic-volume-provisioning)
+   - [Configure volume types, access modes and reclaim policies](#configure-volume-types-access-modes-and-reclaim-policies)
+   - [Manage persistent volumes and persistent volume claims](#manage-persistent-volumes-and-persistent-volume-claims)
+
+4. [Services & Networking (20%)](#4-services--networking-20)
+   - [Understand connectivity between Pods](#understand-connectivity-between-pods)
+   - [Define and enforce Network Policies](#define-and-enforce-network-policies)
+   - [Use ClusterIP, NodePort, LoadBalancer service types and endpoints](#use-clusterip-nodeport-loadbalancer-service-types-and-endpoints)
+   - [Use the Gateway API to manage Ingress traffic](#use-the-gateway-api-to-manage-ingress-traffic)
+   - [Know how to use Ingress controllers and Ingress resources](#know-how-to-use-ingress-controllers-and-ingress-resources)
+   - [Understand and use CoreDNS](#understand-and-use-coredns)
+
+5. [Troubleshooting (30%)](#5-troubleshooting-30)
+   - [Troubleshoot clusters and nodes](#troubleshoot-clusters-and-nodes)
+   - [Troubleshoot cluster components](#troubleshoot-cluster-components)
+   - [Monitor cluster and application resource usage](#monitor-cluster-and-application-resource-usage)
+   - [Manage and evaluate container output streams](#manage-and-evaluate-container-output-streams)
+   - [Troubleshoot services and networking](#troubleshoot-services-and-networking)
 
 ## CKA Exam Detailed Study Guide & References
 
 CKA Certification Exam has the following key domains:
 
-## 1. Storage (10%)
+## 1. Cluster Architecture, Installation & Configuration (25%)
 
-Following are the subtopics under Storage
+Following are the subtopics under Cluster Architecture, Installation & Configuration
 
-### Implement storage classes and dynamic volume provisioning.
-> [Storage Classes](https://kubernetes.io/docs/concepts/storage/storage-classes/) : Understand the difference between default storage class and other classes
-
-
-```bash
-# List storageclasses
-k get sc
-
-# Describe storageclass
-k describe sc <storageclass-name>
-
-```
-> [Dynamic Volume Provisioning](https://kubernetes.io/docs/concepts/storage/dynamic-provisioning/) : Understand which type of persistent storage is supported (like AWS EBS, GCE Persistent Disks) and practice using them.
+### Manage role based access control (RBAC).
+> [Using RBAC Authorization](https://kubernetes.io/docs/reference/access-authn-authz/rbac/) : Understand the difference between Roles (namespace level) and ClusterRoles (cluster level).
 
 ```bash
-# List persistentvolume
-k get pv
+# Create a service account
+k create sa <sa-name> -n <namespace>
 
-# Describe persistentvolume
-k describe pv <persistentvolume-name>
+# Create a role
+k create role <role-name> --verb=<verbs> --resource=<resources> -n <namespace>
 
-# Delete persistentvolume
-k delete pv <persistentvolume-name>
+# Create rolebinding
+k create rolebinding <binding-name> --role=<role-name> --user=<username> -n <namespace>
+
+# Create a clusterrole
+k create clusterrole <clusterrole-name> --verb=<verbs> --resource=<resources>
+
+# Create clusterrolebinding
+k create clusterrolebinding <binding-name> --clusterrole=<clusterrole-name> --user=<username>
+
+# Check RBAC authorization
+k auth can-i <verb> <resource> --as=<username>
+
 ```
 
+### Prepare underlying infrastructure for installing a Kubernetes cluster.
+> [Overview](https://kubernetes.io/docs/concepts/overview/)
 
-### Configure volume types, access modes and reclaim policies.
-> [Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) : Remember to know the different reclaim policies: Retain, Delete, and Recycle. Understand access modes like ReadWriteOnce, ReadOnlyMany.
+### Create and manage Kubernetes clusters using kubeadm.
+> [Creating a cluster with kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/) : kubeadm is a tool used for easy cluster bootstrap, be familiar with creating a cluster control plane node and adding worker nodes.
 
 ```bash
-# List persistentvolumeclaim
-k get pvc
-
-# Describe persistentvolumeclaim
-k describe pvc <persistentvolumeclaim-name>
-
-# Delete persistentvolumeclaim
-k delete pvc <persistentvolumeclaim-name>
+# Set Up kubeconfig
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
-### Manage persistent volumes and persistent volume claims.
-> [Configure a Pod to Use a PersistentVolume for Storage](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/) : Practice creating a pod with persistent storage defined in a YAML manifest. Ensure familiarity with both bindings and mounting.
+### Manage the lifecycle of Kubernetes clusters.
+> [Upgrading kubeadm clusters](https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/) : Managing the lifecycle involves upgrading clusters, managing control plane nodes, and ensuring consistency across versions.
+
+### Use Helm and Kustomize to install cluster components.
+> [Helm](https://helm.sh/docs/intro/using_helm/) : Helm makes it easier to package and deploy Kubernetes applications. Practice installing, upgrading, and uninstalling releases.
+
+```bash
+# Install a helm chart
+helm install <release-name> <chart-name>
+
+# List helm releases
+helm list
+
+# Upgrade a helm release
+helm upgrade <release-name> <chart-name>
+
+# Search for a chart
+helm search repo <chart-name>
+
+# Install helm chart
+helm install <release-name> <chart-name>
+
+# Uninstall a helm release
+helm uninstall <release-name>
+```
+
+> [Declarative Management of Kubernetes Objects Using Kustomize](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/) : Start by creating a directory containing all the Kubernetes manifests you want to manage with Kustomize.
+
+```bash
+# Example directory structure
+example-app/
+  ├── deployment.yaml
+  ├── service.yaml
+  └── kustomization.yaml
+
+# Use Kustomize to apply resources
+k apply -k kustomization.yaml
+
+```
+
+### Understand extension interfaces (CNI, CSI, CRI, etc.).
+> [Container Runtime Interface (CRI)](https://kubernetes.io/docs/concepts/architecture/cri/) : Kubernetes uses the CRI to communicate with container runtimes.
+
+```bash
+# Check container runtime
+crictl info
+
+# List all containers
+crictl ps
+
+# View specific container details
+crictl inspect <container-id>
+
+# View container logs
+crictl logs <container-id>
+
+```
+
+> [Network Plugins](https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/) : Kubernetes uses network plugins (CNI) to manage pod networking, get a good understanding of  popular plugins like Calico, Flannel, and Weave Net, and understand the role of CNIs in providing network connectivity, security policies, and IPAM.
+
+```bash
+# List installed CNI plugins
+ls /etc/cni/net.d/
+```
+
+> [Container Storage Interface (CSI) for Kubernetes GA](https://kubernetes.io/blog/2019/01/15/container-storage-interface-ga/) : The CSIs is a standardized mechanism that allows storage providers to provide persistent storage support for Kubernetes.
+
+```bash
+# List CSI drivers
+k get csidrivers
+
+```
+
+### Understand CRDs, install and configure operators.
+> [Custom Resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) : CRDs allows you to extend Kubernetes APIs to create new kinds of Kubernetes objects beyond the built-in ones.
+
+```bash
+# List CRDs
+k get crd
+
+# Describe a CRD
+k describe crd <crd-name>
+
+# Delete a CRD
+k delete <resource-name> <name>
+
+```
+
+> [Operator pattern](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/) : The Operator pattern allows you to automate the lifecycle of applications running on Kubernetes by packaging operational knowledge into Kubernetes-native applications.
 
 ## 2. Workloads & Scheduling (15%)
 
@@ -276,7 +358,53 @@ nodeAffinity:
 
 > [Admission Controllers Reference](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/) : Use admission controllers to enforce policies such as resource quotas, pod security policies, and image validation.
 
-## 3. Services & Networking (20%)
+## 3. Storage (10%)
+
+Following are the subtopics under Storage
+
+### Implement storage classes and dynamic volume provisioning.
+> [Storage Classes](https://kubernetes.io/docs/concepts/storage/storage-classes/) : Understand the difference between default storage class and other classes
+
+
+```bash
+# List storageclasses
+k get sc
+
+# Describe storageclass
+k describe sc <storageclass-name>
+
+```
+> [Dynamic Volume Provisioning](https://kubernetes.io/docs/concepts/storage/dynamic-provisioning/) : Understand which type of persistent storage is supported (like AWS EBS, GCE Persistent Disks) and practice using them.
+
+```bash
+# List persistentvolume
+k get pv
+
+# Describe persistentvolume
+k describe pv <persistentvolume-name>
+
+# Delete persistentvolume
+k delete pv <persistentvolume-name>
+```
+
+### Configure volume types, access modes and reclaim policies.
+> [Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) : Remember to know the different reclaim policies: Retain, Delete, and Recycle. Understand access modes like ReadWriteOnce, ReadOnlyMany.
+
+```bash
+# List persistentvolumeclaim
+k get pvc
+
+# Describe persistentvolumeclaim
+k describe pvc <persistentvolumeclaim-name>
+
+# Delete persistentvolumeclaim
+k delete pvc <persistentvolumeclaim-name>
+```
+
+### Manage persistent volumes and persistent volume claims.
+> [Configure a Pod to Use a PersistentVolume for Storage](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/) : Practice creating a pod with persistent storage defined in a YAML manifest. Ensure familiarity with both bindings and mounting.
+
+## 4. Services & Networking (20%)
 
 Following are the subtopics under Services & Networking
 
@@ -378,7 +506,7 @@ k edit cm coredns -n kube-system
 k logs -n kube-system -l k8s-app=kube-dns
 ```
 
-## 4. Troubleshooting (30%)
+## 5. Troubleshooting (30%)
 
 Following are the subtopics under Troubleshooting
 
@@ -470,156 +598,3 @@ k describe svc <service-name>
 # Check recent events in the cluster
 k get events
 ```
-
-## 5. Cluster Architecture, Installation & Configuration (25%)
-
-Following are the subtopics under Cluster Architecture, Installation & Configuration
-
-### Manage role based access control (RBAC).
-> [Using RBAC Authorization](https://kubernetes.io/docs/reference/access-authn-authz/rbac/) : Understand the difference between Roles (namespace level) and ClusterRoles (cluster level).
-
-```bash
-# Create a service account
-k create sa <sa-name> -n <namespace>
-
-# Create a role
-k create role <role-name> --verb=<verbs> --resource=<resources> -n <namespace>
-
-# Create rolebinding
-k create rolebinding <binding-name> --role=<role-name> --user=<username> -n <namespace>
-
-# Create a clusterrole
-k create clusterrole <clusterrole-name> --verb=<verbs> --resource=<resources>
-
-# Create clusterrolebinding
-k create clusterrolebinding <binding-name> --clusterrole=<clusterrole-name> --user=<username>
-
-# Check RBAC authorization
-k auth can-i <verb> <resource> --as=<username>
-
-```
-
-### Prepare underlying infrastructure for installing a Kubernetes cluster.
-> [Overview](https://kubernetes.io/docs/concepts/overview/)
-
-### Create and manage Kubernetes clusters using kubeadm.
-> [Creating a cluster with kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/) : kubeadm is a tool used for easy cluster bootstrap, be familiar with creating a cluster control plane node and adding worker nodes.
-
-```bash
-# Set Up kubeconfig
-mkdir -p $HOME/.kube
-sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-sudo chown $(id -u):$(id -g) $HOME/.kube/config
-```
-
-### Manage the lifecycle of Kubernetes clusters.
-> [Upgrading kubeadm clusters](https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/) : Managing the lifecycle involves upgrading clusters, managing control plane nodes, and ensuring consistency across versions.
-
-```bash
-# Drain nodes
-k drain <node-name> --ignore-daemonsets
-
-# ETCD backup
-ETCDCTL_API=3 etcdctl \
-  --endpoints=<etcd endpoint> \
-  --cacert=<ca-file> \
-  --cert=<cert-file> \
-  --key=<key-file> \
-  snapshot save <backup-file-location>
-
-# ETCD restore
-ETCDCTL_API=3 etcdctl \
-  --data-dir <backup-file-location> \
-  --endpoints=<etcd endpoint> \
-  --cacert=<ca-file> \
-  --cert=<cert-file> \
-  --key=<key-file> \
-  snapshot restore <file-restore-location>
-```
-
-### Use Helm and Kustomize to install cluster components.
-> [Helm](https://helm.sh/docs/intro/using_helm/) : Helm makes it easier to package and deploy Kubernetes applications. Practice installing, upgrading, and uninstalling releases.
-
-```bash
-# Install a helm chart
-helm install <release-name> <chart-name>
-
-# List helm releases
-helm list
-
-# Upgrade a helm release
-helm upgrade <release-name> <chart-name>
-
-# Search for a chart
-helm search repo <chart-name>
-
-# Install helm chart
-helm install <release-name> <chart-name>
-
-# Uninstall a helm release
-helm uninstall <release-name>
-```
-
-> [Declarative Management of Kubernetes Objects Using Kustomize](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/) : Start by creating a directory containing all the Kubernetes manifests you want to manage with Kustomize.
-
-```bash
-# Example directory structure
-example-app/
-  ├── deployment.yaml
-  ├── service.yaml
-  └── kustomization.yaml
-
-# Use Kustomize to apply resources
-k apply -k kustomization.yaml
-
-```
-
-### Understand extension interfaces (CNI, CSI, CRI, etc.).
-> [Container Runtime Interface (CRI)](https://kubernetes.io/docs/concepts/architecture/cri/) : Kubernetes uses the CRI to communicate with container runtimes.
-
-```bash
-# Check container runtime
-crictl info
-
-# List all containers
-crictl ps
-
-# View specific container details
-crictl inspect <container-id>
-
-# View container logs
-crictl logs <container-id>
-
-```
-
-> [Network Plugins](https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/) : Kubernetes uses network plugins (CNI) to manage pod networking, get a good understanding of  popular plugins like Calico, Flannel, and Weave Net, and understand the role of CNIs in providing network connectivity, security policies, and IPAM.
-
-```bash
-# List installed CNI plugins
-ls /etc/cni/net.d/
-```
-
-> [Container Storage Interface (CSI) for Kubernetes GA](https://kubernetes.io/blog/2019/01/15/container-storage-interface-ga/) : The CSIs is a standardized mechanism that allows storage providers to provide persistent storage support for Kubernetes.
-
-```bash
-# List CSI drivers
-k get csidrivers
-
-```
-
-### Understand CRDs, install and configure operators.
-> [Custom Resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) : CRDs allows you to extend Kubernetes APIs to create new kinds of Kubernetes objects beyond the built-in ones.
-
-```bash
-# List CRDs
-k get crd
-
-# Describe a CRD
-k describe crd <crd-name>
-
-# Delete a CRD
-k delete <resource-name> <name>
-
-```
-
-> [Operator pattern](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/) : The Operator pattern allows you to automate the lifecycle of applications running on Kubernetes by packaging operational knowledge into Kubernetes-native applications.
