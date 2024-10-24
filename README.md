@@ -303,7 +303,7 @@ k get ep
 ### Know how to use Ingress controllers and Ingress resources.
 > [Ingress Controllers](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/)
 
-> [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
+> [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) : Practice creating Ingress resources with different rules to route traffic to services based on hostnames and paths.
 
 ```bash
 # Example manifest file to create ingress object
