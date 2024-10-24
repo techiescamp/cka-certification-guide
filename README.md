@@ -139,11 +139,10 @@ k edit cm <configmap-name>
 k create cm <configmap-name> --dry-run=client -o yaml > cm.yaml
 
 # Create configmap from literal values
-k create cm mycm --from-literal=api=api.techiescamp.com --from-literal=backend_url=api.backend.techiescamp.com
+k create cm <configmap-name> --from-literal=<key1>=<value1> --from-literal=<key2>=<value2>
 
 # Create configmap from a file
-k create cm app-config --from-file=app.properties
-
+k create cm <configmap-name> --from-file=<file-name>
 ```
 
 - [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
@@ -152,7 +151,7 @@ Command Shortcuts:
 
 ```bash
 # Create generic secret from literal values
-k create secret generic <secret-name> --from-literal=username=admin --from-literal=password=secret
+k create secret generic <secret-name> --from-literal=<key1>=<value1> --from-literal=<key2>=<value2>
 
 # Create TLS secret from certificate files
 k create secret tls <secret-name> --cert=tls.crt --key=tls.key
@@ -184,19 +183,19 @@ k logs <pod-name>
 k logs <pod-name> -c <container-name>
 
 # Add a label to a pod
-k label pod <pod-name> appversion=v1
+k label pod <pod-name> <label-key>=<label-value>
 
 # List pods with their labels
 k get po --show-labels
 
 # List pods with specific label
-k get po --selector appversion=v1
+k get po --selector <label-key>=<label-value>
 
 # Remove a label from a pod
-k label pod <pod-name> appversion-
+k label po <pod-name> <label-key>-
 
 # Create a temporary interactive pod
-k run -it testpod --image=busybox --rm --restart=Never -- sh
+k run -it <pod-name> --image=<image-name> --rm --restart=Never -- sh
 
 # Execute shell in a pod
 k exec -it <pod-name> -- /bin/sh
@@ -219,7 +218,7 @@ Command Shortcuts:
 
 ```bash
 # Get pod IP addresses
-k get pods -o wide
+k get po -o wide
 
 # Check pod-to-pod connectivity
 k exec <pod-name> -- curl <target-service-ip>:<port>
@@ -250,7 +249,7 @@ k get svc
 k describe svc <service-name>
 
 # List service endpoints
-k get endpoints
+k get ep
 
 ```
 ### Use the Gateway API to manage Ingress traffic.
@@ -421,6 +420,6 @@ Command Shortcuts:
 k get crd
 
 # Describe a CRD
-kubectl describe crd <crd-name>
+k describe crd <crd-name>
 
 ```
