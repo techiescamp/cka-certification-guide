@@ -192,12 +192,6 @@ readinessProbe:
 # Create a Pod
 k run <pod-name> --image=<image-name> --restart=Never
 
-# Get logs of a pod
-k logs <pod-name>
-
-# Get logs of a multi container pod
-k logs <pod-name> -c <container-name>
-
 # Add a label to a pod
 k label pod <pod-name> <label-key>=<label-value>
 
@@ -280,7 +274,7 @@ k get netpol
 k describe netpol <policy-name>
 ```
 
-### Use ClusterIP, NodePort, LoadBalancer service types and endpoints. 
+### Use ClusterIP, NodePort, LoadBalancer service types and endpoints.
 > [Service](https://kubernetes.io/docs/concepts/services-networking/service/) : Practice exposing deployments using all types of services: ClusterIP, NodePort, and LoadBalancer.
 
 ```bash
@@ -290,9 +284,6 @@ k expose deploy <deployment-name> --name=<service-name> --port=<port> --target-p
 # List services
 k get svc
 
-# Describe a service
-k describe svc <service-name>
-
 # List service endpoints
 k get ep
 
@@ -301,9 +292,9 @@ k get ep
 > [Gateway API](https://kubernetes.io/docs/concepts/services-networking/gateway/) : The Gateway API provides more flexibility and extensibility compared to traditional Ingress. Use it when you need advanced traffic routing, such as assigning multiple gateways with different capabilities to different services.
 
 ### Know how to use Ingress controllers and Ingress resources.
-> [Ingress Controllers](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/)
+> [Ingress Controllers](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/) : Practice creating Ingress resources with different rules to route traffic to services based on hostnames and paths.
 
-> [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) : Practice creating Ingress resources with different rules to route traffic to services based on hostnames and paths.
+> [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) : You can define multiple services under a single Ingress resource by utilizing both path-based and host-based rules.
 
 ```bash
 # Example manifest file to create ingress object
@@ -371,10 +362,14 @@ k uncordon <node-name>
 ```
 
 ### Troubleshoot cluster components.
-> [Troubleshooting kubectl](https://kubernetes.io/docs/tasks/debug/debug-cluster/troubleshoot-kubectl/)
-> [Troubleshooting kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/troubleshooting-kubeadm/)
+> [Troubleshooting kubectl](https://kubernetes.io/docs/tasks/debug/debug-cluster/troubleshoot-kubectl/) : Make sure your kubectl is configured to connect to the correct cluster context.
+
+> [Troubleshooting kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/troubleshooting-kubeadm/) : Monitor control plane components such as API server, etcd, controller-manager for potential issues during the cluster lifecycle and make sure proper certificate expiration and connectivity between components.
 
 ```bash
+# Cluster components manifest file location
+/etc/kubernetes/manifests
+
 # Check kubectl configuration
 k config view
 
@@ -396,16 +391,45 @@ k get componentstatuses
 # Get no cpu and memory usage
 k top no
 
+# Sort pods based on cpu utilization
+k top po --sort-by=cpu
+
+# Sort pods based on memory usage
+k top po --sort-by=memory
+
 # Get pod cpu and memory usage
 k top pod
 
 ```
 
 ### Manage and evaluate container output streams.
-> [Logging Architecture](https://kubernetes.io/docs/concepts/cluster-administration/logging/)
+> [Logging Architecture](https://kubernetes.io/docs/concepts/cluster-administration/logging/) : Logs are vital for understanding what's happening inside containers. Use kubectl logs to access logs from running containers.
+
+```bash
+# Get logs of a pod
+k logs <pod-name>
+
+# Get logs of a multi container pod
+k logs <pod-name> -c <container-name>
+
+# Get live logs of a pod
+k logs <pod-name> -f
+
+```
 
 ### Troubleshoot services and networking.
 > [Debug Services](https://kubernetes.io/docs/tasks/debug/debug-application/debug-service/) : Practice using the describe and logs commands to inspect failed services or pods.
+
+```bash
+# Describe a pod
+k describe pod <pod-name> 
+
+# Describe a service
+k describe svc <service-name>
+
+# Check recent events in the cluster
+k get events
+```
 
 ## 5. Cluster Architecture, Installation & Configuration (25%)
 
@@ -439,13 +463,42 @@ k auth can-i <verb> <resource> --as=<username>
 > [Overview](https://kubernetes.io/docs/concepts/overview/)
 
 ### Create and manage Kubernetes clusters using kubeadm.
-> [Creating a cluster with kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/)
+> [Creating a cluster with kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/) : kubeadm is a tool used for easy cluster bootstrap, be familiar with creating a cluster control plane node and adding worker nodes.
+
+```bash
+# Set Up kubeconfig
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
 
 ### Manage the lifecycle of Kubernetes clusters.
-> [Upgrading kubeadm clusters](https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/)
+> [Upgrading kubeadm clusters](https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/) : Managing the lifecycle involves upgrading clusters, managing control plane nodes, and ensuring consistency across versions.
+
+```bash
+# Drain nodes
+k drain <node-name> --ignore-daemonsets
+
+# ETCD backup
+ETCDCTL_API=3 etcdctl \
+  --endpoints=<etcd endpoint> \
+  --cacert=<ca-file> \
+  --cert=<cert-file> \
+  --key=<key-file> \
+  snapshot save <backup-file-location>
+
+# ETCD restore
+ETCDCTL_API=3 etcdctl \
+  --data-dir <backup-file-location> \
+  --endpoints=<etcd endpoint> \
+  --cacert=<ca-file> \
+  --cert=<cert-file> \
+  --key=<key-file> \
+  snapshot restore <file-restore-location>
+```
 
 ### Use Helm and Kustomize to install cluster components.
-> [Declarative Management of Kubernetes Objects Using Kustomize](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/) : Helm makes it easier to package and deploy Kubernetes applications. Practice installing, upgrading, and uninstalling releases.
+> [Helm](https://helm.sh/docs/intro/using_helm/) : Helm makes it easier to package and deploy Kubernetes applications. Practice installing, upgrading, and uninstalling releases.
 
 ```bash
 # Install a helm chart
@@ -457,11 +510,24 @@ helm list
 # Upgrade a helm release
 helm upgrade <release-name> <chart-name>
 
+# Search for a chart
+helm search repo <chart-name>
+
 # Install helm chart
 helm install <release-name> <chart-name>
 
 # Uninstall a helm release
 helm uninstall <release-name>
+```
+
+> [Declarative Management of Kubernetes Objects Using Kustomize](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/) : Start by creating a directory containing all the Kubernetes manifests you want to manage with Kustomize.
+
+```bash
+# Example directory structure
+example-app/
+  ├── deployment.yaml
+  ├── service.yaml
+  └── kustomization.yaml
 
 # Use Kustomize to apply resources
 k apply -k kustomization.yaml
@@ -469,24 +535,40 @@ k apply -k kustomization.yaml
 ```
 
 ### Understand extension interfaces (CNI, CSI, CRI, etc.).
-> [Container Runtime Interface (CRI)](https://kubernetes.io/docs/concepts/architecture/cri/)
-> [Network Plugins](https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/)
-> [Container Storage Interface (CSI) for Kubernetes GA](https://kubernetes.io/blog/2019/01/15/container-storage-interface-ga/)
+> [Container Runtime Interface (CRI)](https://kubernetes.io/docs/concepts/architecture/cri/) : Kubernetes uses the CRI to communicate with container runtimes.
+
+```bash
+# Check container runtime
+crictl info
+
+# List all containers
+crictl ps
+
+# View specific container details
+crictl inspect <container-id>
+
+# View container logs
+crictl logs <container-id>
+
+```
+
+> [Network Plugins](https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/) : Kubernetes uses network plugins (CNI) to manage pod networking, get a good understanding of  popular plugins like Calico, Flannel, and Weave Net, and understand the role of CNIs in providing network connectivity, security policies, and IPAM.
 
 ```bash
 # List installed CNI plugins
 ls /etc/cni/net.d/
+```
 
-# Check container runtime
-crictl info
+> [Container Storage Interface (CSI) for Kubernetes GA](https://kubernetes.io/blog/2019/01/15/container-storage-interface-ga/) : The CSIs is a standardized mechanism that allows storage providers to provide persistent storage support for Kubernetes.
+
+```bash
+# List CSI drivers
+k get csidrivers
 
 ```
 
 ### Understand CRDs, install and configure operators.
-> [Custom Resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
-> [Operator pattern](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/)
-
-Command Shortcuts:
+> [Custom Resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) : CRDs allows you to extend Kubernetes APIs to create new kinds of Kubernetes objects beyond the built-in ones.
 
 ```bash
 # List CRDs
@@ -495,4 +577,9 @@ k get crd
 # Describe a CRD
 k describe crd <crd-name>
 
+# Delete a CRD
+k delete <resource-name> <name>
+
 ```
+
+> [Operator pattern](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/) : The Operator pattern allows you to automate the lifecycle of applications running on Kubernetes by packaging operational knowledge into Kubernetes-native applications.
