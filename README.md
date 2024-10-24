@@ -58,7 +58,7 @@ CKA Certification Exam has the following key domains:
 Following are the subtopics under Cluster Architecture, Installation & Configuration
 
 ### Manage role based access control (RBAC).
-> [Using RBAC Authorization](https://kubernetes.io/docs/reference/access-authn-authz/rbac/) : Understand the difference between Roles (namespace level) and ClusterRoles (cluster level).
+> [Using RBAC Authorization](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55733267) | [Roles & ClusterRoles](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55997133) : Understand the difference between Roles (namespace level) and ClusterRoles (cluster level).
 
 ```bash
 # Create a service account
