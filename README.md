@@ -138,8 +138,6 @@ k create cm <configmap-name> --from-file=<file-name>
 
 > [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/) : Remember that Secrets are base64-encoded and not encrypted and they are for storing sensitive data.
 
-Command Shortcuts:
-
 ```bash
 # Create generic secret from literal values
 k create secret generic <secret-name> --from-literal=<key1>=<value1> --from-literal=<key2>=<value2>
@@ -244,7 +242,7 @@ nodeAffinity:
 
 > [Admission Controllers Reference](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/) : Use admission controllers to enforce policies such as resource quotas, pod security policies, and image validation.
 
-## Services & Networking (20%)
+## 3. Services & Networking (20%)
 
 Following are the subtopics under Services & Networking
 
@@ -304,6 +302,7 @@ k get ep
 
 ### Know how to use Ingress controllers and Ingress resources.
 > [Ingress Controllers](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/)
+<br>
 > [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
 
 ```bash
@@ -354,8 +353,6 @@ Following are the subtopics under Troubleshooting
 
 ### Troubleshoot clusters and nodes.
 - [Troubleshooting Clusters](https://kubernetes.io/docs/tasks/debug/debug-cluster/)
-
-Command Shortcuts:
 
 ```bash
 # List all available nodes
