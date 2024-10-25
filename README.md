@@ -58,7 +58,7 @@ CKA Certification Exam has the following key domains:
 Following are the subtopics under Cluster Architecture, Installation & Configuration
 
 ### Manage role based access control (RBAC).
-> [Using RBAC Authorization](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55733267) | [Roles & ClusterRoles](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55997133) : Understand the difference between Roles (namespace level) and ClusterRoles (cluster level).
+> [RBAC](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55733267) | [Service Accounts](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55724447) | [Roles & ClusterRoles](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55997133) : Understand the difference between Roles (namespace level) and ClusterRoles (cluster level).
 
 ```bash
 # Create a service account
@@ -82,10 +82,12 @@ k auth can-i <verb> <resource> --as=<username>
 ```
 
 ### Prepare underlying infrastructure for installing a Kubernetes cluster.
-> [Overview](https://kubernetes.io/docs/concepts/overview/)
+> [Setup Virtual Machines](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/54923684) : Ensure that each virtual machine (VM) meets the minimum system requirements for setting up a Kubernetes cluster.
+> [Kubeadm Cluster Prerequisites](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55288352) : Ensure that all VMs can communicate with each other, as Kubernetes requires all nodes to have unrestricted communication for pod-to-pod networking.
+> [Provision underlying infrastructure to deploy a Kubernetes cluster](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55287065) : Tools like VirtualBox, VMware, or KVM can be used to set up virtual machines locally and for cloud environments, consider providers like AWS, GCP, or Azure for flexibility and scalability.
 
 ### Create and manage Kubernetes clusters using kubeadm.
-> [Creating a cluster with kubeadm](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55288346) : kubeadm is a tool used for easy cluster bootstrap, be familiar with creating a cluster control plane node and adding worker nodes.
+> [Cluster Setup](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55288346) : kubeadm is a tool used for easy cluster bootstrap, be familiar with creating a cluster control plane node and adding worker nodes.
 
 ```bash
 # Set Up kubeconfig
@@ -95,10 +97,10 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
 ### Manage the lifecycle of Kubernetes clusters.
-> [Upgrading kubeadm clusters](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55120133) : Managing the lifecycle involves upgrading clusters, managing control plane nodes, and ensuring consistency across versions.
+> [Perform Cluster Version upgrade Using Kubeadm](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55120133) : Managing the lifecycle involves upgrading clusters, managing control plane nodes, and ensuring consistency across versions.
 
 ### Use Helm and Kustomize to install cluster components.
-> [Helm](https://helm.sh/docs/intro/using_helm/) : Helm makes it easier to package and deploy Kubernetes applications. Practice installing, upgrading, and uninstalling releases.
+> [Helm]() : Helm makes it easier to package and deploy Kubernetes applications. Practice installing, upgrading, and uninstalling releases.
 
 ```bash
 # Install a helm chart
@@ -120,7 +122,7 @@ helm install <release-name> <chart-name>
 helm uninstall <release-name>
 ```
 
-> [Declarative Management of Kubernetes Objects Using Kustomize](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/) : Start by creating a directory containing all the Kubernetes manifests you want to manage with Kustomize.
+> [Kustomize]() : Start by creating a directory containing all the Kubernetes manifests you want to manage with Kustomize.
 
 ```bash
 # Example directory structure
@@ -135,7 +137,7 @@ k apply -k kustomization.yaml
 ```
 
 ### Understand extension interfaces (CNI, CSI, CRI, etc.).
-> [Container Runtime Interface (CRI)](https://kubernetes.io/docs/concepts/architecture/cri/) : Kubernetes uses the CRI to communicate with container runtimes.
+> [Container Runtime Interface (CRI)]() : Kubernetes uses the CRI to communicate with container runtimes.
 
 ```bash
 # Check container runtime
@@ -152,7 +154,7 @@ crictl logs <container-id>
 
 ```
 
-> [Network Plugins](https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/) : Kubernetes uses network plugins (CNI) to manage pod networking, get a good understanding of  popular plugins like Calico, Flannel, and Weave Net, and understand the role of CNIs in providing network connectivity, security policies, and IPAM.
+> [Network Plugin](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55287071) : Kubernetes uses network plugins (CNI) to manage pod networking, get a good understanding of  popular plugins like Calico, Flannel, and Weave Net, and understand the role of CNIs in providing network connectivity, security policies, and IPAM.
 
 ```bash
 # List installed CNI plugins
@@ -168,7 +170,7 @@ k get csidrivers
 ```
 
 ### Understand CRDs, install and configure operators.
-> [Custom Resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) : CRDs allows you to extend Kubernetes APIs to create new kinds of Kubernetes objects beyond the built-in ones.
+> [Custom Resources]() : CRDs allows you to extend Kubernetes APIs to create new kinds of Kubernetes objects beyond the built-in ones.
 
 ```bash
 # List CRDs
@@ -182,7 +184,7 @@ k delete <resource-name> <name>
 
 ```
 
-> [Operator pattern](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/) : The Operator pattern allows you to automate the lifecycle of applications running on Kubernetes by packaging operational knowledge into Kubernetes-native applications.
+> [Operator pattern]() : The Operator pattern allows you to automate the lifecycle of applications running on Kubernetes by packaging operational knowledge into Kubernetes-native applications.
 
 ## 2. Workloads & Scheduling (15%)
 
@@ -270,7 +272,7 @@ k create secret tls <secret-name> --cert=tls.crt --key=tls.key
 ```
 
 ### Configure workload autoscaling.
-> [Autoscaling Workloads](https://kubernetes.io/docs/concepts/workloads/autoscaling/) : Practice setting up Horizontal Pod Autoscaler (HPA).
+> [Autoscaling Workloads]() : Practice setting up Horizontal Pod Autoscaler (HPA).
 
 ```bash
 # Using autoscaling
@@ -278,7 +280,7 @@ k autoscale deploy <deployment-name> --min=2 --max=5
 ```
 
 ### Understand the primitives used to create robust, self-healing, application deployments.
-> [Configure Liveness, Readiness and Startup Probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) : Using liveness and readiness probes in your deployment ensure that your applications are self-healing and automatically recover from failures.
+> [Configure Liveness, Readiness and Startup Probes]() : Using liveness and readiness probes in your deployment ensure that your applications are self-healing and automatically recover from failures.
 
 ```bash
 # Startup probe
@@ -308,23 +310,11 @@ readinessProbe:
 ```
 
 ### Configure Pod admission and scheduling (limits, node affinity, etc.).
-> [Assigning Pods to Nodes](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/) : Use node affinity and anti-affinity to control the placement of your pods, ensuring that workloads are distributed efficiently across nodes as per there requirements.
+> [Pods](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55219547) : Always remember that a Pod may contain one or more containers, and they share storage/network resources, making communication between containers in the same Pod fast and efficient.
 
 ```bash
 # Create a Pod
 k run <pod-name> --image=<image-name> --restart=Never
-
-# Add a label to a pod
-k label pod <pod-name> <label-key>=<label-value>
-
-# List pods with their labels
-k get po --show-labels
-
-# List pods with specific label
-k get po --selector <label-key>=<label-value>
-
-# Remove a label from a pod
-k label po <pod-name> <label-key>-
 
 # Create a temporary interactive pod
 k run -it <pod-name> --image=<image-name> --rm --restart=Never -- sh
@@ -340,11 +330,72 @@ resources:
     limits:
     memory: "128Mi"
     cpu: "500m"
+```
 
+> [Static Pods](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55279551) : To create a static pod, place the manifest in /etc/kubernetes/manifests on the desired node.
+
+```bash
+# Static pod manifest path
+/etc/kubernetes/manifests
+```
+
+> [Labels and Selectors](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55658123) : When using selectors, you can filter Kubernetes resources by these labels to perform operations like scaling or applying configuration changes.
+
+```bash
+# Add a label to a pod
+k label pod <pod-name> <label-key>=<label-value>
+
+# List pods with their labels
+k get po --show-labels
+
+# List pods with specific label
+k get po --selector <label-key>=<label-value>
+
+# Remove a label from a pod
+k label po <pod-name> <label-key>-
+```
+
+> [Taints and Tolerations](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55659898) : Use taints on critical nodes like control plane nodes or nodes to prevent general-purpose workloads from being scheduled on them.
+
+```bash
+# Check taints on nodes
+k describe no <node-name> | egrep "Name:|Taints:"
+
+# Taint a node
+k taint nodes <node-name> <key>=<value>:<effect>
+
+# Add toleration to a pod
+tolerations:
+- key: <key>
+  operator: <operator>
+  value: <value>
+  effect: <effect>
+  tolerationSeconds: <in seconds>
+
+# Remove taint from a node
+k taint no <node-name> <key>=<value>-
+
+```
+
+> [Node Name & Node Selector](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55686799) : Node Selectors are used to schedule pods onto specific nodes by using labels on the nodes.
+
+```bash
 # Label a node
 k label no <pod-name> <label-key>=<label-value>
 
-# Node affinity
+# Use node selector on pod
+nodeSelector:
+  <label-key>: <label-value>
+
+# Remove labels from a node
+k label no <pod-name> <label-key>-
+
+```
+
+[Node Affinity](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55687979) : Use node affinity to control the placement of your pods, ensuring that workloads are distributed efficiently across nodes as per there requirements.
+
+```bash
+# Example Node affinity
 affinity:
 nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
@@ -363,10 +414,18 @@ nodeAffinity:
 Following are the subtopics under Storage
 
 ### Implement storage classes and dynamic volume provisioning.
-> [Storage Classes](https://kubernetes.io/docs/concepts/storage/storage-classes/) : Understand the difference between default storage class and other classes
-
+> [Storage Classes](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55786335) : Understand the difference between default storage class and other classes
 
 ```bash
+# Example storage class manifest file
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: local-storage
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+reclaimPolicy: Delete
+
 # List storageclasses
 k get sc
 
@@ -374,7 +433,14 @@ k get sc
 k describe sc <storageclass-name>
 
 ```
-> [Dynamic Volume Provisioning](https://kubernetes.io/docs/concepts/storage/dynamic-provisioning/) : Understand which type of persistent storage is supported (like AWS EBS, GCE Persistent Disks) and practice using them.
+
+> [Dynamic Volume Provisioning] (Understand which type of persistent storage is supported (like AWS EBS, GCE Persistent Disks) and practice using them.)
+
+### Configure volume types, access modes and reclaim policies.
+
+> [Volumes](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55791431) : Understand which type of persistent storage is supported (like AWS EBS, GCE Persistent Disks) and practice using them.
+
+> [Persistent Volumes](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55792087) : Remember to know the different reclaim policies: Retain, Delete, and Recycle. Understand access modes like ReadWriteOnce, ReadOnlyMany.
 
 ```bash
 # List persistentvolume
@@ -385,12 +451,7 @@ k describe pv <persistentvolume-name>
 
 # Delete persistentvolume
 k delete pv <persistentvolume-name>
-```
 
-### Configure volume types, access modes and reclaim policies.
-> [Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) : Remember to know the different reclaim policies: Retain, Delete, and Recycle. Understand access modes like ReadWriteOnce, ReadOnlyMany.
-
-```bash
 # List persistentvolumeclaim
 k get pvc
 
@@ -402,14 +463,25 @@ k delete pvc <persistentvolumeclaim-name>
 ```
 
 ### Manage persistent volumes and persistent volume claims.
-> [Configure a Pod to Use a PersistentVolume for Storage](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/) : Practice creating a pod with persistent storage defined in a YAML manifest. Ensure familiarity with both bindings and mounting.
+> [Configure a Pod to Use a PersistentVolume for Storage](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55792290) : Practice creating a pod with persistent storage defined in a YAML manifest. Ensure familiarity with both bindings and mounting.
+
+```bash
+# Example volume bindings and mounting
+volumeMounts:
+- name: mysql-storage
+  mountPath: /var/lib/mysql
+volumes:
+- name: mysql-storage
+persistentVolumeClaim:
+  claimName: mysql-pvc
+```
 
 ## 4. Services & Networking (20%)
 
 Following are the subtopics under Services & Networking
 
 ### Understand connectivity between Pods.
-> [Cluster Networking](https://kubernetes.io/docs/concepts/cluster-administration/networking/) : Use kubectl exec to test network connectivity between pods.
+> [Cluster Configurations](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55120218) : Use kubectl exec to test network connectivity between pods.
 
 ```bash
 # Execute shell in a pod
@@ -426,13 +498,10 @@ k exec <pod-name> -- curl <target-service-ip>:<port>
 
 # Check network interfaces inside a pod
 k exec <pod-name> -- ifconfig
-
-# Static pod manifest path
-/etc/kubernetes/manifests
 ```
 
 ### Define and enforce Network Policies.
-> [Network Policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/) : Practice setting up network policies to restrict traffic flow between pods.
+> [Network Policies](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/57421520) : Practice setting up network policies to restrict traffic flow between pods.
 
 ```bash
 # List network policies
@@ -443,7 +512,7 @@ k describe netpol <policy-name>
 ```
 
 ### Use ClusterIP, NodePort, LoadBalancer service types and endpoints.
-> [Service](https://kubernetes.io/docs/concepts/services-networking/service/) : Practice exposing deployments using all types of services: ClusterIP, NodePort, and LoadBalancer.
+> [Service](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55809546) : Practice exposing deployments using all types of services: ClusterIP, NodePort, and LoadBalancer.
 
 ```bash
 # Expose deployment as a service
@@ -457,12 +526,10 @@ k get ep
 
 ```
 ### Use the Gateway API to manage Ingress traffic.
-> [Gateway API](https://kubernetes.io/docs/concepts/services-networking/gateway/) : The Gateway API provides more flexibility and extensibility compared to traditional Ingress. Use it when you need advanced traffic routing, such as assigning multiple gateways with different capabilities to different services.
+> [Gateway API]() : The Gateway API provides more flexibility and extensibility compared to traditional Ingress. Use it when you need advanced traffic routing, such as assigning multiple gateways with different capabilities to different services.
 
 ### Know how to use Ingress controllers and Ingress resources.
-> [Ingress Controllers](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/) : Practice creating Ingress resources with different rules to route traffic to services based on hostnames and paths.
-
-> [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) : You can define multiple services under a single Ingress resource by utilizing both path-based and host-based rules.
+> [Ingress](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/56659356) : Practice creating Ingress resources with different rules to route traffic to services based on hostnames and paths, you can also define multiple services under a single Ingress resource by utilizing both path-based and host-based rules.
 
 ```bash
 # Example manifest file to create ingress object
@@ -493,7 +560,7 @@ k describe ing <ingress-name>
 ```
 
 ### Understand and use CoreDNS.
-> [Using CoreDNS for Service Discovery](https://kubernetes.io/docs/tasks/administer-cluster/coredns/) : CoreDNS is used for service discovery within the Kubernetes cluster. Familiarize yourself with modifying the Corefile configuration to add custom DNS behaviors like forwarding queries for specific domains outside the cluster.
+> [CoreDNS](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55120286) : CoreDNS is used for service discovery within the Kubernetes cluster. Familiarize yourself with modifying the Corefile configuration to add custom DNS behaviors like forwarding queries for specific domains outside the cluster.
 
 ```bash
 # Get CoreDNS ConfigMap in the kube-system namespace
