@@ -83,7 +83,9 @@ k auth can-i <verb> <resource> --as=<username>
 
 ### Prepare underlying infrastructure for installing a Kubernetes cluster.
 > [Setup Virtual Machines](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/54923684) : Ensure that each virtual machine (VM) meets the minimum system requirements for setting up a Kubernetes cluster.
+
 > [Kubeadm Cluster Prerequisites](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55288352) : Ensure that all VMs can communicate with each other, as Kubernetes requires all nodes to have unrestricted communication for pod-to-pod networking.
+
 > [Provision underlying infrastructure to deploy a Kubernetes cluster](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55287065) : Tools like VirtualBox, VMware, or KVM can be used to set up virtual machines locally and for cloud environments, consider providers like AWS, GCP, or Azure for flexibility and scalability.
 
 ### Create and manage Kubernetes clusters using kubeadm.
@@ -578,7 +580,7 @@ k logs -n kube-system -l k8s-app=kube-dns
 Following are the subtopics under Troubleshooting
 
 ### Troubleshoot clusters and nodes.
-> [Troubleshooting Clusters](https://kubernetes.io/docs/tasks/debug/debug-cluster/) : When draining a node, use --ignore-daemonsets to safely move workloads that can be moved while ignoring daemonsets.
+> Troubleshooting Clusters : When draining a node, use --ignore-daemonsets to safely move workloads that can be moved while ignoring daemonsets.
 
 ```bash
 # List all available nodes
