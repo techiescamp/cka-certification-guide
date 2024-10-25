@@ -580,7 +580,7 @@ k logs -n kube-system -l k8s-app=kube-dns
 Following are the subtopics under Troubleshooting
 
 ### Troubleshoot clusters and nodes.
-Troubleshooting Clusters > When draining a node, use --ignore-daemonsets to safely move workloads that can be moved while ignoring daemonsets.
+> <b>Troubleshooting Clusters<b/> : When draining a node, use --ignore-daemonsets to safely move workloads that can be moved while ignoring daemonsets.
 
 ```bash
 # List all available nodes
