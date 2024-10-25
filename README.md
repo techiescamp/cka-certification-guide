@@ -580,7 +580,7 @@ k logs -n kube-system -l k8s-app=kube-dns
 Following are the subtopics under Troubleshooting
 
 ### Troubleshoot clusters and nodes.
-> (Troubleshooting Clusters) : When draining a node, use --ignore-daemonsets to safely move workloads that can be moved while ignoring daemonsets.
+> Troubleshooting Clusters : When draining a node, use --ignore-daemonsets to safely move workloads that can be moved while ignoring daemonsets.
 
 ```bash
 # List all available nodes
@@ -599,9 +599,9 @@ k uncordon <node-name>
 ```
 
 ### Troubleshoot cluster components.
-> [Troubleshooting kubectl](https://kubernetes.io/docs/tasks/debug/debug-cluster/troubleshoot-kubectl/) : Make sure your kubectl is configured to connect to the correct cluster context.
+> Troubleshooting kubectl : Make sure your kubectl is configured to connect to the correct cluster context.
 
-> [Troubleshooting kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/troubleshooting-kubeadm/) : Monitor control plane components such as API server, etcd, controller-manager for potential issues during the cluster lifecycle and make sure proper certificate expiration and connectivity between components.
+> Troubleshooting kubeadm : Monitor control plane components such as API server, etcd, controller-manager for potential issues during the cluster lifecycle and make sure proper certificate expiration and connectivity between components.
 
 ```bash
 # Cluster components manifest file location
@@ -622,7 +622,7 @@ k get componentstatuses
 ```
 
 ### Monitor cluster and application resource usage.
-> [Tools for Monitoring Resources](https://kubernetes.io/docs/tasks/debug/debug-cluster/resource-usage-monitoring/) : Use kubectl top to monitor resource utilization.
+> [Metrics Server](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55287074) : Use kubectl top to monitor resource utilization.
 
 ```bash
 # Get no cpu and memory usage
@@ -640,7 +640,7 @@ k top pod
 ```
 
 ### Manage and evaluate container output streams.
-> [Logging Architecture](https://kubernetes.io/docs/concepts/cluster-administration/logging/) : Logs are vital for understanding what's happening inside containers. Use kubectl logs to access logs from running containers.
+> Logging Architecture : Logs are vital for understanding what's happening inside containers. Use kubectl logs to access logs from running containers.
 
 ```bash
 # Get logs of a pod
@@ -655,7 +655,7 @@ k logs <pod-name> -f
 ```
 
 ### Troubleshoot services and networking.
-> [Debug Services](https://kubernetes.io/docs/tasks/debug/debug-application/debug-service/) : Practice using the describe and logs commands to inspect failed services or pods.
+> [Debugging a ReplicaSet](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55300118) | [Debug a Deployment](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55403687) : Practice using the describe and logs commands to inspect failed services or pods.
 
 ```bash
 # Describe a pod
