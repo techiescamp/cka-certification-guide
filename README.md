@@ -102,7 +102,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 > [Perform Cluster Version upgrade Using Kubeadm](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55120133) : Managing the lifecycle involves upgrading clusters, managing control plane nodes, and ensuring consistency across versions.
 
 ### Use Helm and Kustomize to install cluster components.
-> [Helm]() : Helm makes it easier to package and deploy Kubernetes applications. Practice installing, upgrading, and uninstalling releases.
+> Helm : Helm makes it easier to package and deploy Kubernetes applications. Practice installing, upgrading, and uninstalling releases.
 
 ```bash
 # Install a helm chart
@@ -124,7 +124,7 @@ helm install <release-name> <chart-name>
 helm uninstall <release-name>
 ```
 
-> [Kustomize]() : Start by creating a directory containing all the Kubernetes manifests you want to manage with Kustomize.
+> Kustomize : Start by creating a directory containing all the Kubernetes manifests you want to manage with Kustomize.
 
 ```bash
 # Example directory structure
@@ -139,7 +139,7 @@ k apply -k kustomization.yaml
 ```
 
 ### Understand extension interfaces (CNI, CSI, CRI, etc.).
-> [Container Runtime Interface (CRI)]() : Kubernetes uses the CRI to communicate with container runtimes.
+> Container Runtime Interface (CRI) : Kubernetes uses the CRI to communicate with container runtimes.
 
 ```bash
 # Check container runtime
@@ -163,7 +163,7 @@ crictl logs <container-id>
 ls /etc/cni/net.d/
 ```
 
-> [Container Storage Interface (CSI) for Kubernetes GA](https://kubernetes.io/blog/2019/01/15/container-storage-interface-ga/) : The CSIs is a standardized mechanism that allows storage providers to provide persistent storage support for Kubernetes.
+> Container Storage Interface (CSI) for Kubernetes GA : The CSIs is a standardized mechanism that allows storage providers to provide persistent storage support for Kubernetes.
 
 ```bash
 # List CSI drivers
@@ -172,7 +172,7 @@ k get csidrivers
 ```
 
 ### Understand CRDs, install and configure operators.
-> [Custom Resources]() : CRDs allows you to extend Kubernetes APIs to create new kinds of Kubernetes objects beyond the built-in ones.
+> Custom Resources : CRDs allows you to extend Kubernetes APIs to create new kinds of Kubernetes objects beyond the built-in ones.
 
 ```bash
 # List CRDs
@@ -186,7 +186,7 @@ k delete <resource-name> <name>
 
 ```
 
-> [Operator pattern]() : The Operator pattern allows you to automate the lifecycle of applications running on Kubernetes by packaging operational knowledge into Kubernetes-native applications.
+> Operator pattern : The Operator pattern allows you to automate the lifecycle of applications running on Kubernetes by packaging operational knowledge into Kubernetes-native applications.
 
 ## 2. Workloads & Scheduling (15%)
 
@@ -274,7 +274,7 @@ k create secret tls <secret-name> --cert=tls.crt --key=tls.key
 ```
 
 ### Configure workload autoscaling.
-> [Autoscaling Workloads]() : Practice setting up Horizontal Pod Autoscaler (HPA).
+> Autoscaling Workloads : Practice setting up Horizontal Pod Autoscaler (HPA).
 
 ```bash
 # Using autoscaling
@@ -282,7 +282,7 @@ k autoscale deploy <deployment-name> --min=2 --max=5
 ```
 
 ### Understand the primitives used to create robust, self-healing, application deployments.
-> [Configure Liveness, Readiness and Startup Probes]() : Using liveness and readiness probes in your deployment ensure that your applications are self-healing and automatically recover from failures.
+> Configure Liveness, Readiness and Startup Probes : Using liveness and readiness probes in your deployment ensure that your applications are self-healing and automatically recover from failures.
 
 ```bash
 # Startup probe
@@ -436,7 +436,7 @@ k describe sc <storageclass-name>
 
 ```
 
-> [Dynamic Volume Provisioning] (Understand which type of persistent storage is supported (like AWS EBS, GCE Persistent Disks) and practice using them.)
+> Dynamic Volume Provisioning : Understand which type of persistent storage is supported (like AWS EBS, GCE Persistent Disks) and practice using them.
 
 ### Configure volume types, access modes and reclaim policies.
 
@@ -528,7 +528,7 @@ k get ep
 
 ```
 ### Use the Gateway API to manage Ingress traffic.
-> [Gateway API]() : The Gateway API provides more flexibility and extensibility compared to traditional Ingress. Use it when you need advanced traffic routing, such as assigning multiple gateways with different capabilities to different services.
+> Gateway API : The Gateway API provides more flexibility and extensibility compared to traditional Ingress. Use it when you need advanced traffic routing, such as assigning multiple gateways with different capabilities to different services.
 
 ### Know how to use Ingress controllers and Ingress resources.
 > [Ingress](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/56659356) : Practice creating Ingress resources with different rules to route traffic to services based on hostnames and paths, you can also define multiple services under a single Ingress resource by utilizing both path-based and host-based rules.
