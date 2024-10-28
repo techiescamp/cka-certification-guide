@@ -11,6 +11,14 @@ Once the certificate is earned, the CKA certification remains valid for 2 years.
 
 >**Important Note:** The CKA exam is updating after November 25, 2024, with new topics and a focus on real-world Kubernetes skills like Gateway API, Helm, Kustomize, CRDs & Operators. This guide is based on the new CKA syllabus. You can read more about the exam changes here [CKA Exam Changes](https://blog.techiescamp.com/cka-exam-updates/)
 
+## CKA Exam Coupon (35% discount)
+
+To save on CKA exam registration, use the following coupon code.
+
+**Coupon:** Use code **SPOOKY35CT** at [kube.promo/cka](https://kube.promo/cka)
+
+Save 40% on CKA + CKS bundle using same coupon at [kube.promo/bundle](https://kube.promo/bundle)
+
 ## Table of Contents
 
 1. [Cluster Architecture, Installation & Configuration (25%)](#1-cluster-architecture-installation--configuration-25)
