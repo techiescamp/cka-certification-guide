@@ -9,7 +9,7 @@ To pass the exam, candidates need to achieve a score of at least 66%.
 The exam will be on Kubernetes version 1.31.
 Once the certificate is earned, the CKA certification remains valid for 2 years. The cost to take the exam is $395 USD.
 
->**Important Note:** The CKA exam is updating after November 25, 2024, with new topics and a focus on real-world Kubernetes skills like Gateway API, Helm, Kustomize, CRDs & Operators. This guide is based on the new CKA syllabus. You can read more about the exam changes here [CKA Exam Changes](https://blog.techiescamp.com/cka-exam-updates/)
+>**Important Note:** The CKA exam is updating after January 15, 2025, with new topics and a focus on real-world Kubernetes skills like Gateway API, Helm, Kustomize, CRDs & Operators. This guide is based on the new CKA syllabus. You can read more about the exam changes here [CKA Exam Changes](https://blog.techiescamp.com/cka-exam-updates/)
 
 ## CKA Exam Coupon (45% discount)
 
