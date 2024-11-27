@@ -1,6 +1,6 @@
 # Ultimate Certified Kubernetes Administrator (CKA) Exam Preparation Guide - V1.31 (2024)
 
-This guide is part of the [Complete CKA Certification Course](https://techiescamp.com/p/certified-kubernetes-administrator-course)
+This guide is part of the [Complete CKA Certification Course](https://techiescamp.com/p/cka-complete-prep-course-practice-tests)
 
 ## CKA Exam Overview
 
@@ -15,7 +15,7 @@ Once the certificate is earned, the CKA certification remains valid for 2 years.
 
 To save on CKA exam registration, use the following coupon code.
 
-**Coupon:** Use code **NOV24KUBECT** at [kube.promo/cka](https://kube.promo/cka)
+**Coupon:** Use code **40NOV24CT** at [kube.promo/cka](https://kube.promo/cka)
 
 Save 45% on CKA + CKS bundle using same coupon at [kube.promo/bundle](https://kube.promo/bundle)
 
