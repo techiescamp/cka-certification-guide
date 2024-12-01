@@ -21,7 +21,11 @@ To save on CKA exam registration, use the following coupon code.
 
 **Coupon:** Use code **CYBER24CCTECHIES** at [kube.promo/cka](https://kube.promo/cka)
 
-Save 45% on CKA + CKS bundle using same coupon at [kube.promo/bundle](https://kube.promo/bundle)
+Use code **CYBER24BUNDLECT** to save 65% on folowing bundles.
+
+- KCNA + KCSA + CKA + CKAD + CKS (65% - $1087 Savings): [kube.promo/kubestronaut](https://kube.promo/kubestronaut)
+- CKA + CKAD + CKS Exam bundle (63% - $747 Savings): [kube.promo/k8s-bundle](https://kube.promo/k8s-bundle)
+- CKA + CKS Bundle (63% - $500 Savings) [kube.promo/bundle](https://kube.promo/bundle)
 
 >Note: If you want to give the CKA exam before the syllabus change on November 25th, dont delay booking your CKA Exam. If you're planning to take the Certified Kubernetes Administrator (CKA) exam, be aware that the syllabus is changing soon. Plan and book your exam as early as possible to avoid last-minute slot issues.
 
