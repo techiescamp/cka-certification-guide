@@ -15,7 +15,7 @@ Once the certificate is earned, the CKA certification remains valid for 2 years.
 
 >**Important Note:** The CKA exam is updating after January 15, 2025, with new topics and a focus on real-world Kubernetes skills like Gateway API, Helm, Kustomize, CRDs & Operators. This guide is based on the new CKA syllabus. You can read more about the exam changes here [CKA Exam Changes](https://blog.techiescamp.com/cka-exam-updates/)
 
-## CKA Exam Coupon (50% OFF Cyber MOnday Discount)
+## CKA Exam Coupon (50% OFF Cyber Monday Discount)
 
 > **CKA Price Update:** The CKA exam price will increase to $435 in January 2025. Take advantage of the current Cyber Monday discount and complete the exam within 12 months to maximize your savings.
 
