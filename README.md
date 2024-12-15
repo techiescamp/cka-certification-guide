@@ -21,7 +21,7 @@ Once the certificate is earned, the CKA certification remains valid for 2 years.
 
 To save on CKA exam registration, use the following coupon code.
 
-**Coupon:** Use code **CYBER24CCTECHIES** at [kube.promo/cka](https://kube.promo/cka)
+**Coupon:** Use code **DCUBE30** at [kube.promo/cka](https://kube.promo/cka)
 
 Use code **CYBER24BUNDLECT** to save 65% on folowing bundles.
 
