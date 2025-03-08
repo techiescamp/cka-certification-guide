@@ -3,13 +3,13 @@ settings = YAML.load_file(File.join(File.dirname(__FILE__), 'settings.yaml'))
 
 Vagrant.configure("2") do |config|
   config.vm.box = settings['box_name']
-  # config.vm.box_version = settings['box_version']
   config.vm.box_check_update = false
 
   settings['vm'].each do |vm_config|
     config.vm.define vm_config['name'] do |vm|
       vm.vm.hostname = vm_config['name']
-      vm.vm.network "private_network", ip: vm_config['ip']
+      # Changed from static IP to DHCP
+      vm.vm.network "private_network", type: "dhcp"
       vm.vm.synced_folder ".", "/vagrant", disabled: false
 
       vm.vm.provider "vmware_fusion" do |vb|
@@ -18,15 +18,28 @@ Vagrant.configure("2") do |config|
         vb.cpus = vm_config['cpus']
       end
 
+      # Modified provisioning script to use hostname-based networking
       vm.vm.provision "shell", inline: <<-SHELL
         apt update
         apt upgrade -y
         apt install -y wget vim net-tools gcc make tar git unzip sysstat tree
-        echo "192.168.201.10 controlplane" >> /etc/hosts
-        echo "192.168.201.11 node01" >> /etc/hosts
-        echo "192.168.201.12 node02" >> /etc/hosts
+        
+        # Get the IP addresses dynamically
+        CONTROLPLANE_IP=$(getent hosts controlplane | awk '{ print $1 }')
+        NODE01_IP=$(getent hosts node01 | awk '{ print $1 }')
+        NODE02_IP=$(getent hosts node02 | awk '{ print $1 }')
+        
+        # Only add hosts entries if they don't exist
+        if [ -n "$CONTROLPLANE_IP" ]; then
+          grep -q "controlplane" /etc/hosts || echo "$CONTROLPLANE_IP controlplane" >> /etc/hosts
+        fi
+        if [ -n "$NODE01_IP" ]; then
+          grep -q "node01" /etc/hosts || echo "$NODE01_IP node01" >> /etc/hosts
+        fi
+        if [ -n "$NODE02_IP" ]; then
+          grep -q "node02" /etc/hosts || echo "$NODE02_IP node02" >> /etc/hosts
+        fi
       SHELL
-      # vm.vm.provision "shell", path: "scripts/common.sh"
     end
   end
 end
