@@ -281,6 +281,9 @@ k create cm <configmap-name> --from-literal=<key1>=<value1> --from-literal=<key2
 
 # Create configmap from a file
 k create cm <configmap-name> --from-file=<file-name>
+
+# Create an immutable configmap
+k create cm <configmap-name> --from-literal=<key>=<value> --immutable
 ```
 
 > [Secrets](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55993473) : Remember that Secrets are base64-encoded and not encrypted and they are for storing sensitive data.
