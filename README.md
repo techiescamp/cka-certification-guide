@@ -303,6 +303,44 @@ k autoscale deploy <deployment-name> --min=2 --max=5
 ```
 
 ### Understand the primitives used to create robust, self-healing, application deployments.
+> Configure Pod Priorities using Priority Class to ensure mission critial applications are available and handled during resource crunch.
+
+**Detailed Lesson:** [Pod Priority & Priority Class](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/60175740)
+
+Here is how you can create and apply Pod Priorities to a Deployment.
+
+```yaml
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: high-priority
+value: 100000
+globalDefault: false
+description: "High priority for important workloads"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      priorityClassName: high-priority
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+```
+
 > Configure Liveness, Readiness and Startup Probes : Using liveness and readiness probes in your deployment ensure that your applications are self-healing and automatically recover from failures.
 
 ```bash
