@@ -18,8 +18,6 @@ Once the certificate is earned, the CKA certification remains valid for 2 years.
 
 ## CKA Exam Coupon (30% Off Exclusive Discount)
 
-> **CKA Price Update:** The CKA exam price will increase to $435 in January 2025. Take advantage of the current Cyber Monday discount and complete the exam within 12 months to maximize your savings.
-
 To save on CKA exam registration, use the following coupon code.
 
 **Coupon:** Use code **DCUBE30** at [kube.promo/cka](https://kube.promo/cka)
