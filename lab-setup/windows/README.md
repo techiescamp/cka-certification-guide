@@ -61,7 +61,7 @@ You can destroy the VMs usin the following command.
 vagrant destroy -f
 ```
 
-## Accessing The Shared Foler
+## Accessing The Shared Folder
 
 The `/vagrant` folder inside the VM is shared with the host operating system.
 
