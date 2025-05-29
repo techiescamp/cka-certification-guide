@@ -1,0 +1,234 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.16.5
+  name: nginxproxies.gateway.nginx.org
+spec:
+  group: gateway.nginx.org
+  names:
+    categories:
+    - nginx-gateway-fabric
+    kind: NginxProxy
+    listKind: NginxProxyList
+    plural: nginxproxies
+    singular: nginxproxy
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: |-
+          NginxProxy is a configuration object that is attached to a GatewayClass parametersRef. It provides a way
+          to configure global settings for all Gateways defined from the GatewayClass.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: Spec defines the desired state of the NginxProxy.
+            properties:
+              disableHTTP2:
+                description: |-
+                  DisableHTTP2 defines if http2 should be disabled for all servers.
+                  Default is false, meaning http2 will be enabled for all servers.
+                type: boolean
+              ipFamily:
+                default: dual
+                description: |-
+                  IPFamily specifies the IP family to be used by the NGINX.
+                  Default is "dual", meaning the server will use both IPv4 and IPv6.
+                enum:
+                - dual
+                - ipv4
+                - ipv6
+                type: string
+              logging:
+                description: Logging defines logging related settings for NGINX.
+                properties:
+                  errorLevel:
+                    default: info
+                    description: |-
+                      ErrorLevel defines the error log level. Possible log levels listed in order of increasing severity are
+                      debug, info, notice, warn, error, crit, alert, and emerg. Setting a certain log level will cause all messages
+                      of the specified and more severe log levels to be logged. For example, the log level 'error' will cause error,
+                      crit, alert, and emerg messages to be logged. https://nginx.org/en/docs/ngx_core_module.html#error_log
+                    enum:
+                    - debug
+                    - info
+                    - notice
+                    - warn
+                    - error
+                    - crit
+                    - alert
+                    - emerg
+                    type: string
+                type: object
+              rewriteClientIP:
+                description: RewriteClientIP defines configuration for rewriting the
+                  client IP to the original client's IP.
+                properties:
+                  mode:
+                    description: |-
+                      Mode defines how NGINX will rewrite the client's IP address.
+                      There are two possible modes:
+                      - ProxyProtocol: NGINX will rewrite the client's IP using the PROXY protocol header.
+                      - XForwardedFor: NGINX will rewrite the client's IP using the X-Forwarded-For header.
+                      Sets NGINX directive real_ip_header: https://nginx.org/en/docs/http/ngx_http_realip_module.html#real_ip_header
+                    enum:
+                    - ProxyProtocol
+                    - XForwardedFor
+                    type: string
+                  setIPRecursively:
+                    description: |-
+                      SetIPRecursively configures whether recursive search is used when selecting the client's address from
+                      the X-Forwarded-For header. It is used in conjunction with TrustedAddresses.
+                      If enabled, NGINX will recurse on the values in X-Forwarded-Header from the end of array
+                      to start of array and select the first untrusted IP.
+                      For example, if X-Forwarded-For is [11.11.11.11, 22.22.22.22, 55.55.55.1],
+                      and TrustedAddresses is set to 55.55.55.1/32, NGINX will rewrite the client IP to 22.22.22.22.
+                      If disabled, NGINX will select the IP at the end of the array.
+                      In the previous example, 55.55.55.1 would be selected.
+                      Sets NGINX directive real_ip_recursive: https://nginx.org/en/docs/http/ngx_http_realip_module.html#real_ip_recursive
+                    type: boolean
+                  trustedAddresses:
+                    description: |-
+                      TrustedAddresses specifies the addresses that are trusted to send correct client IP information.
+                      If a request comes from a trusted address, NGINX will rewrite the client IP information,
+                      and forward it to the backend in the X-Forwarded-For* and X-Real-IP headers.
+                      If the request does not come from a trusted address, NGINX will not rewrite the client IP information.
+                      TrustedAddresses only supports CIDR blocks: 192.33.21.1/24, fe80::1/64.
+                      To trust all addresses (not recommended for production), set to 0.0.0.0/0.
+                      If no addresses are provided, NGINX will not rewrite the client IP information.
+                      Sets NGINX directive set_real_ip_from: https://nginx.org/en/docs/http/ngx_http_realip_module.html#set_real_ip_from
+                      This field is required if mode is set.
+                    items:
+                      description: Address is a struct that specifies address type
+                        and value.
+                      properties:
+                        type:
+                          description: Type specifies the type of address.
+                          enum:
+                          - CIDR
+                          - IPAddress
+                          - Hostname
+                          type: string
+                        value:
+                          description: Value specifies the address value.
+                          type: string
+                      required:
+                      - type
+                      - value
+                      type: object
+                    maxItems: 16
+                    type: array
+                    x-kubernetes-list-map-keys:
+                    - type
+                    x-kubernetes-list-type: map
+                type: object
+                x-kubernetes-validations:
+                - message: if mode is set, trustedAddresses is a required field
+                  rule: '!(has(self.mode) && (!has(self.trustedAddresses) || size(self.trustedAddresses)
+                    == 0))'
+              telemetry:
+                description: Telemetry specifies the OpenTelemetry configuration.
+                properties:
+                  exporter:
+                    description: Exporter specifies OpenTelemetry export parameters.
+                    properties:
+                      batchCount:
+                        description: |-
+                          BatchCount is the number of pending batches per worker, spans exceeding the limit are dropped.
+                          Default: https://nginx.org/en/docs/ngx_otel_module.html#otel_exporter
+                        format: int32
+                        minimum: 0
+                        type: integer
+                      batchSize:
+                        description: |-
+                          BatchSize is the maximum number of spans to be sent in one batch per worker.
+                          Default: https://nginx.org/en/docs/ngx_otel_module.html#otel_exporter
+                        format: int32
+                        minimum: 0
+                        type: integer
+                      endpoint:
+                        description: |-
+                          Endpoint is the address of OTLP/gRPC endpoint that will accept telemetry data.
+                          Format: alphanumeric hostname with optional http scheme and optional port.
+                        pattern: ^(?:http?:\/\/)?[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)*(?::\d{1,5})?$
+                        type: string
+                      interval:
+                        description: |-
+                          Interval is the maximum interval between two exports.
+                          Default: https://nginx.org/en/docs/ngx_otel_module.html#otel_exporter
+                        pattern: ^[0-9]{1,4}(ms|s|m|h)?$
+                        type: string
+                    required:
+                    - endpoint
+                    type: object
+                  serviceName:
+                    description: |-
+                      ServiceName is the "service.name" attribute of the OpenTelemetry resource.
+                      Default is 'ngf:<gateway-namespace>:<gateway-name>'. If a value is provided by the user,
+                      then the default becomes a prefix to that value.
+                    maxLength: 127
+                    pattern: ^[a-zA-Z0-9_-]+$
+                    type: string
+                  spanAttributes:
+                    description: SpanAttributes are custom key/value attributes that
+                      are added to each span.
+                    items:
+                      description: SpanAttribute is a key value pair to be added to
+                        a tracing span.
+                      properties:
+                        key:
+                          description: |-
+                            Key is the key for a span attribute.
+                            Format: must have all '"' escaped and must not contain any '$' or end with an unescaped '\'
+                          maxLength: 255
+                          minLength: 1
+                          pattern: ^([^"$\\]|\\[^$])*$
+                          type: string
+                        value:
+                          description: |-
+                            Value is the value for a span attribute.
+                            Format: must have all '"' escaped and must not contain any '$' or end with an unescaped '\'
+                          maxLength: 255
+                          minLength: 1
+                          pattern: ^([^"$\\]|\\[^$])*$
+                          type: string
+                      required:
+                      - key
+                      - value
+                      type: object
+                    maxItems: 64
+                    type: array
+                    x-kubernetes-list-map-keys:
+                    - key
+                    x-kubernetes-list-type: map
+                type: object
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources: {}
