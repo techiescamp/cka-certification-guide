@@ -16,7 +16,7 @@ nginxGateway:
   # -- The name of the GatewayClass that will be created as part of this release. Every NGINX Gateway
   # Fabric must have a unique corresponding GatewayClass resource. NGINX Gateway Fabric only processes resources that
   # belong to its class - i.e. have the "gatewayClassName" field resource equal to the class.
-  gatewayClassName: nginx
+  gatewayClassName: nginx-gateway-class
 
   # -- Set of custom annotations for the NGINX Gateway Fabric pods.
   podAnnotations: {}
