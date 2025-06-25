@@ -11,13 +11,31 @@ else
   echo "Gateway API CRDs already installed. Skipping..."
 fi
 
-# Step 2: Check and install NGINX Gateway Fabric controller
-echo "Checking for NGINX Gateway Fabric release..."
+# Step 2: Install NGINX Gateway Fabric if not already installed
+echo "✅ Checking for NGINX Gateway Fabric release..."
 if ! helm list -n nginx-gateway | grep -q "^ngf"; then
-  echo "Installing NGINX Gateway Fabric..."
-  helm install ngf oci://ghcr.io/nginxinc/charts/nginx-gateway-fabric --create-namespace -n nginx-gateway
+  echo "📦 Installing NGINX Gateway Fabric..."
+
+  cat <<EOF > dev-values.yaml
+service:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      name: http
+      nodePort: 32000
+    - port: 443
+      targetPort: 443
+      protocol: TCP
+      name: https
+      nodePort: 32443
+EOF
+
+  helm install ngf oci://ghcr.io/nginxinc/charts/nginx-gateway-fabric \
+    --create-namespace -n nginx-gateway -f dev-values.yaml
 else
-  echo "NGINX Gateway Fabric already installed. Skipping..."
+  echo "✅ NGINX Gateway Fabric already installed. Skipping..."
 fi
 
 # Step 3: Deploy NGINX app in default namespace
