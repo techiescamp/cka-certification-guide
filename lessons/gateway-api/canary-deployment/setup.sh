@@ -3,7 +3,7 @@
 set -e
 
 echo "🚀 Creating namespace..."
-kubectl create ns weighted-routing-demo || echo "Namespace already exists"
+kubectl create ns app-ns || echo "Namespace already exists"
 
 echo "📦 Applying ConfigMaps..."
 kubectl apply -f - <<EOF
@@ -11,7 +11,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: app1-html
-  namespace: weighted-routing-demo
+  namespace: app-ns
 data:
   index.html: |
     <html>
@@ -44,7 +44,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: app2-html
-  namespace: weighted-routing-demo
+  namespace: app-ns
 data:
   index.html: |
     <html>
@@ -80,7 +80,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: app1
-  namespace: weighted-routing-demo
+  namespace: app-ns
 spec:
   replicas: 1
   selector:
@@ -107,7 +107,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: app1-service
-  namespace: weighted-routing-demo
+  namespace: app-ns
 spec:
   selector:
     app: app1
@@ -119,7 +119,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: app2
-  namespace: weighted-routing-demo
+  namespace: app-ns
 spec:
   replicas: 1
   selector:
@@ -146,7 +146,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: app2-service
-  namespace: weighted-routing-demo
+  namespace: app-ns
 spec:
   selector:
     app: app2
@@ -161,7 +161,7 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: demo-gateway
-  namespace: weighted-routing-demo
+  namespace: app-ns
 spec:
   gatewayClassName: nginx
   listeners:
@@ -176,7 +176,7 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: app-route
-  namespace: weighted-routing-demo
+  namespace: app-ns
 spec:
   parentRefs:
   - name: demo-gateway
