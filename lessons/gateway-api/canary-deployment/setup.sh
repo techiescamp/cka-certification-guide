@@ -120,10 +120,10 @@ kubectl apply -f - <<EOF
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
-  name: gateway
+  name: app-gateway
   namespace: app-ns
 spec:
-  gatewayClassName: nginx
+  gatewayClassName: nginx-gateway-class
   listeners:
   - name: http
     port: 80
