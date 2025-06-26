@@ -10,26 +10,26 @@ kubectl apply -f - <<EOF
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: app1-html
+  name: app-v1-html
   namespace: app-ns
 data:
   index.html: |
     <html>
       <body>
-        <h1>Hi, you're connected to <strong>App1</strong></h1>
+        <h1>Hi, you're connected to App-V1</h1>
       </body>
     </html>
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: app2-html
+  name: app-v2-html
   namespace: app-ns
 data:
   index.html: |
     <html>
       <body>
-        <h1>Hi, you're connected to <strong>App2</strong></h1>
+        <h1>Hi, you're connected to App-V2</h1>
       </body>
     </html>
 EOF
@@ -39,17 +39,17 @@ kubectl apply -f - <<EOF
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app1
+  name: app-v1
   namespace: app-ns
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: app1
+      app: app-v1
   template:
     metadata:
       labels:
-        app: app1
+        app: app-v1
     spec:
       containers:
       - name: nginx
@@ -61,7 +61,7 @@ spec:
       volumes:
       - name: html
         configMap:
-          name: app1-html
+          name: app-v1-html
 ---
 apiVersion: v1
 kind: Service
@@ -70,7 +70,7 @@ metadata:
   namespace: app-ns
 spec:
   selector:
-    app: app1
+    app: app-v1
   ports:
   - port: 80
     targetPort: 80
@@ -78,17 +78,17 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app2
+  name: app-v2
   namespace: app-ns
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: app2
+      app: app-v2
   template:
     metadata:
       labels:
-        app: app2
+        app: app-v2
     spec:
       containers:
       - name: nginx
@@ -100,7 +100,7 @@ spec:
       volumes:
       - name: html
         configMap:
-          name: app2-html
+          name: app-v2-html
 ---
 apiVersion: v1
 kind: Service
@@ -109,7 +109,7 @@ metadata:
   namespace: app-ns
 spec:
   selector:
-    app: app2
+    app: app-v2
   ports:
   - port: 80
     targetPort: 80
@@ -129,26 +129,5 @@ spec:
     port: 80
     protocol: HTTP
     hostname: "app.techiescamp.com"
----
-apiVersion: gateway.networking.k8s.io/v1
-kind: HTTPRoute
-metadata:
-  name: app-route
-  namespace: app-ns
-spec:
-  parentRefs:
-  - name: gateway
-  rules:
-  - matches:
-    - path:
-        type: PathPrefix
-        value: /
-    backendRefs:
-    - name: app-v1-svc
-      port: 80
-      weight: 50
-    - name: app-v2-svc
-      port: 80
-      weight: 50
 EOF
 
