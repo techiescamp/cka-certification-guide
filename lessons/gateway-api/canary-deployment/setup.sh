@@ -15,28 +15,8 @@ metadata:
 data:
   index.html: |
     <html>
-      <head>
-        <style>
-          body {
-            background-color: #f0f4f8;
-            font-family: Arial, sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-          }
-          .card {
-            background-color: #2e7d32; /* Green for App1 */
-            color: white;
-            padding: 30px 50px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            font-size: 24px;
-          }
-        </style>
-      </head>
       <body>
-        <div class="card">Hi, you're connected to <strong>App1</strong></div>
+        <h1>Hi, you're connected to <strong>App1</strong></h1>
       </body>
     </html>
 ---
@@ -48,28 +28,8 @@ metadata:
 data:
   index.html: |
     <html>
-      <head>
-        <style>
-          body {
-            background-color: #f0f4f8;
-            font-family: Arial, sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-          }
-          .card {
-            background-color: #1565c0; /* Blue for App2 */
-            color: white;
-            padding: 30px 50px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            font-size: 24px;
-          }
-        </style>
-      </head>
       <body>
-        <div class="card">Hi, you're connected to <strong>App2</strong></div>
+        <h1>Hi, you're connected to <strong>App2</strong></h1>
       </body>
     </html>
 EOF
@@ -168,9 +128,7 @@ spec:
   - name: http
     port: 80
     protocol: HTTP
-    allowedRoutes:
-      namespaces:
-        from: Same
+    hostname: "app.techiescamp.com"
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
@@ -181,7 +139,11 @@ spec:
   parentRefs:
   - name: gateway
   rules:
-  - backendRefs:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
     - name: app-v1-svc
       port: 80
       weight: 50
