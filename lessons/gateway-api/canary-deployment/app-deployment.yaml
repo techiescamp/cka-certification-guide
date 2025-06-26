@@ -1,12 +1,8 @@
-#!/bin/bash
-
-set -e
-
-echo "🚀 Creating namespace..."
-kubectl create ns app-ns || echo "Namespace already exists"
-
-echo "📦 Applying ConfigMaps..."
-kubectl apply -f - <<EOF
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: app-ns
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -32,10 +28,7 @@ data:
         <h1>Hi, you're connected to App-V2</h1>
       </body>
     </html>
-EOF
-
-echo "📦 Deploying applications and services..."
-kubectl apply -f - <<EOF
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -113,10 +106,7 @@ spec:
   ports:
   - port: 80
     targetPort: 80
-EOF
-
-echo "🌐 Creating Gateway and HTTPRoute..."
-kubectl apply -f - <<EOF
+---
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
@@ -129,5 +119,3 @@ spec:
     port: 80
     protocol: HTTP
     hostname: "app.techiescamp.com"
-EOF
-
