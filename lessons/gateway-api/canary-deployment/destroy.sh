@@ -4,7 +4,7 @@ set -e
 
 echo "🧨 Deleting Gateway and HTTPRoute..."
 kubectl delete httproute app-route -n app-ns --ignore-not-found
-kubectl delete gateway gateway -n app-ns --ignore-not-found
+kubectl delete gateway app-gateway -n app-ns --ignore-not-found
 
 echo "🧨 Deleting Deployments and Services..."
 kubectl delete deployment app-v1 -n app-ns --ignore-not-found
