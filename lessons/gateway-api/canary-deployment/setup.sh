@@ -106,7 +106,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: app1-service
+  name: app-v1-svc
   namespace: app-ns
 spec:
   selector:
@@ -145,7 +145,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: app2-service
+  name: app-v2-svc
   namespace: app-ns
 spec:
   selector:
@@ -182,10 +182,10 @@ spec:
   - name: gateway
   rules:
   - backendRefs:
-    - name: app1-service
+    - name: app-v1-svc
       port: 80
       weight: 50
-    - name: app2-service
+    - name: app-v2-svc
       port: 80
       weight: 50
 EOF
