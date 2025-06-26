@@ -190,4 +190,3 @@ spec:
       weight: 50
 EOF
 
-echo "✅ All resources created successfully!"
