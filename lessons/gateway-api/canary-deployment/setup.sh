@@ -160,7 +160,7 @@ kubectl apply -f - <<EOF
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
-  name: demo-gateway
+  name: gateway
   namespace: app-ns
 spec:
   gatewayClassName: nginx
@@ -179,7 +179,7 @@ metadata:
   namespace: app-ns
 spec:
   parentRefs:
-  - name: demo-gateway
+  - name: gateway
   rules:
   - backendRefs:
     - name: app1-service
