@@ -35,8 +35,8 @@ spec:
       port: {{ .port }}
       targetPort: {{ .targetPort }}
       {{- if eq $.Values.service.type "NodePort" }}
-      {{- if eq .name "http" }}
-      nodePort: {{ $.Values.service.nodePort | default 32000 }}
+      {{- if .nodePort }}
+      nodePort: {{ .nodePort }}
       {{- end }}
       {{- end }}
       protocol: {{ .protocol }}
