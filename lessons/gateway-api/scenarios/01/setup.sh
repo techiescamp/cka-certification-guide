@@ -2,47 +2,51 @@
 
 set -e
 
-# Step 1: Install Gateway API CRDs if not already present
-echo "✅ Checking for Gateway API CRDs..."
-if ! kubectl get crd gateways.gateway.networking.k8s.io &>/dev/null; then
+# Step 1: Install Gateway API CRDs if not present
+echo "🔍 Checking if Gateway API CRDs are already installed..."
+if ! kubectl get crd gateways.gateway.networking.k8s.io &> /dev/null; then
   echo "📦 Installing Gateway API CRDs..."
   kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.3.0/standard-install.yaml
 else
-  echo "✅ Gateway API CRDs already installed. Skipping..."
+  echo "✅ Gateway API CRDs already installed. Skipping Step 1."
 fi
 
-# Step 2: Install NGINX Gateway Fabric if not already installed
-echo "✅ Checking for NGINX Gateway Fabric release..."
-if ! helm list -n nginx-gateway | grep -q "^ngf"; then
-  echo "📦 Installing NGINX Gateway Fabric..."
+# Step 2: Clone repo if not already present
+echo "🔍 Checking if CKA repo already exists..."
+if [ ! -d "cka-certification-guide" ]; then
+  echo "📥 Cloning the CKA certification guide repository..."
+  git clone https://github.com/techiescamp/cka-certification-guide.git
+else
+  echo "✅ Repository already cloned. Skipping Step 2."
+fi
 
-  cat <<EOF > dev-values.yaml
-service:
-  type: NodePort
-  ports:
-    - port: 80
-      targetPort: 80
-      protocol: TCP
-      name: http
-      nodePort: 32000
-    - port: 443
-      targetPort: 443
-      protocol: TCP
-      name: https
-      nodePort: 32443
+cd cka-certification-guide/helm-charts/nginx-gateway-fabric/
+
+# Install Helm chart
+echo "🚀 Installing NGINX Gateway Fabric via Helm..."
+helm install ngf . -n nginx-gateway --create-namespace || echo "⚠️ Helm release already exists. Skipping."
+
+# Create GatewayClass
+echo "📄 Creating GatewayClass resource..."
+cat <<EOF | kubectl apply -f -
+apiVersion: gateway.networking.k8s.io/v1
+kind: GatewayClass
+metadata:
+  name: nginx-gateway-class
+spec:
+  controllerName: gateway.nginx.org/nginx-gateway-controller
+  parametersRef:
+    group: gateway.nginx.org
+    kind: NginxProxy
+    name: ngf-proxy-config
+    namespace: nginx-gateway
 EOF
 
-  helm install ngf oci://ghcr.io/nginxinc/charts/nginx-gateway-fabric \
-    --create-namespace -n nginx-gateway -f dev-values.yaml
-else
-  echo "✅ NGINX Gateway Fabric already installed. Skipping..."
-fi
-
-# Step 3: Create 'prod' namespace if it doesn't exist
+# Step 3: Create 'prod' namespace
 echo "🔧 Creating 'prod' namespace..."
 kubectl create namespace prod --dry-run=client -o yaml | kubectl apply -f -
 
-# Step 4: Create NGINX deployment in 'prod'
+# Step 4: Create nginx Deployment in 'prod'
 echo "🚀 Creating NGINX deployment 'web-app' in 'prod' namespace..."
 kubectl apply -n prod -f - <<EOF
 apiVersion: apps/v1
@@ -66,7 +70,7 @@ spec:
         - containerPort: 80
 EOF
 
-# Step 5: Expose the deployment as a ClusterIP service
+# Step 5: Expose nginx via ClusterIP service
 echo "🌐 Creating ClusterIP service 'web-app-svc'..."
 kubectl apply -n prod -f - <<EOF
 apiVersion: v1
@@ -83,14 +87,4 @@ spec:
   type: ClusterIP
 EOF
 
-# Step 6: Add host entry to /etc/hosts
-echo "📝 Adding entry to /etc/hosts..."
-HOST_ENTRY="172.30.1.2 prod.techiescamp.com"
-if ! grep -q "$HOST_ENTRY" /etc/hosts; then
-  echo "$HOST_ENTRY" | sudo tee -a /etc/hosts > /dev/null
-  echo "✅ Entry added to /etc/hosts."
-else
-  echo "✅ Entry already exists in /etc/hosts. Skipping..."
-fi
-
-echo "🎉 All tasks completed."
+echo "✅ Setup complete! You can now route traffic to the web-app-svc in 'prod' namespace."
