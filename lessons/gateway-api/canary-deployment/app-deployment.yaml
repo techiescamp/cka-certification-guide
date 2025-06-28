@@ -65,7 +65,7 @@ spec:
   selector:
     app: app-v1
   ports:
-  - port: 80
+  - port: 8080
     targetPort: 80
 ---
 apiVersion: apps/v1
@@ -104,7 +104,7 @@ spec:
   selector:
     app: app-v2
   ports:
-  - port: 80
+  - port: 8080
     targetPort: 80
 ---
 apiVersion: gateway.networking.k8s.io/v1
@@ -116,6 +116,6 @@ spec:
   gatewayClassName: nginx-gateway-class
   listeners:
   - name: http
-    port: 80
+    port: 8080
     protocol: HTTP
     hostname: "app.techiescamp.com"
