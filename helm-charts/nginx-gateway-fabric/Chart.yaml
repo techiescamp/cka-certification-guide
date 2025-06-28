@@ -1,8 +1,8 @@
 apiVersion: v2
-appVersion: 1.5.1
+appVersion: 2.0.1
 description: NGINX Gateway Fabric
-home: https://github.com/nginxinc/nginx-gateway-fabric
-icon: https://raw.githubusercontent.com/nginxinc/nginx-gateway-fabric/main/charts/nginx-gateway-fabric/chart-icon.png
+home: https://github.com/nginx/nginx-gateway-fabric
+icon: https://raw.githubusercontent.com/nginx/nginx-gateway-fabric/main/charts/nginx-gateway-fabric/chart-icon.png
 keywords:
 - kubernetes
 - gateway
@@ -10,9 +10,9 @@ keywords:
 kubeVersion: '>= 1.25.0-0'
 maintainers:
 - email: kubernetes@nginx.com
-  name: nginxinc/nginx-gateway-fabric
+  name: nginx/nginx-gateway-fabric
 name: nginx-gateway-fabric
 sources:
-- https://github.com/nginxinc/nginx-gateway-fabric/tree/main/charts/nginx-gateway-fabric
+- https://github.com/nginx/nginx-gateway-fabric/tree/main/charts/nginx-gateway-fabric
 type: application
-version: 1.5.1
+version: 2.0.1

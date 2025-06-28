@@ -1,4 +1,3 @@
-{{- if .Values.service.create }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -6,48 +5,20 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "nginx-gateway.labels" . | nindent 4 }}
-  {{- if .Values.service.annotations }}
+{{- if .Values.nginxGateway.service.labels }}
+{{ toYaml .Values.nginxGateway.service.labels | indent 4 }}
+{{- end }}
+{{- if .Values.nginxGateway.service.annotations }}
   annotations:
-    {{ toYaml .Values.service.annotations | indent 4 }}
-  {{- end }}
+{{ toYaml .Values.nginxGateway.service.annotations | indent 4 }}
+{{- end }}
 spec:
-  {{- if or (eq .Values.service.type "LoadBalancer") (eq .Values.service.type "NodePort") }}
-  {{- if .Values.service.externalTrafficPolicy }}
-  externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy }}
-  {{- end }}
-  {{- end }}
-  type: {{ .Values.service.type }}
-  {{- if eq .Values.service.type "LoadBalancer" }}
-  {{- if .Values.service.loadBalancerIP }}
-  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
-  {{- end }}
-  {{- if .Values.service.loadBalancerSourceRanges }}
-  loadBalancerSourceRanges:
-    {{ toYaml .Values.service.loadBalancerSourceRanges | nindent 2 }}
-  {{- end }}
-  {{- end }}
+  type: ClusterIP
   selector:
     {{- include "nginx-gateway.selectorLabels" . | nindent 4 }}
   ports:
-    {{- if .Values.service.ports }}
-    {{- range .Values.service.ports }}
-    - name: {{ .name }}
-      port: {{ .port }}
-      targetPort: {{ .targetPort }}
-      {{- if eq $.Values.service.type "NodePort" }}
-      {{- if .nodePort }}
-      nodePort: {{ .nodePort }}
-      {{- end }}
-      {{- end }}
-      protocol: {{ .protocol }}
-    {{- end }}
-    {{- else }}
-    - name: http
-      port: 80
-      targetPort: 80
-      {{- if eq .Values.service.type "NodePort" }}
-      nodePort: {{ .Values.service.nodePort | default 32000 }}
-      {{- end }}
-      protocol: TCP
-    {{- end }}
-{{- end }}
+  - name: agent-grpc
+    port: 443
+    protocol: TCP
+    targetPort: 8443
+    

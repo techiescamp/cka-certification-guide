@@ -5,19 +5,19 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.18.0
   labels:
-    gateway.networking.k8s.io/policy: inherited
-  name: clientsettingspolicies.gateway.nginx.org
+    gateway.networking.k8s.io/policy: direct
+  name: upstreamsettingspolicies.gateway.nginx.org
 spec:
   group: gateway.nginx.org
   names:
     categories:
     - nginx-gateway-fabric
-    kind: ClientSettingsPolicy
-    listKind: ClientSettingsPolicyList
-    plural: clientsettingspolicies
+    kind: UpstreamSettingsPolicy
+    listKind: UpstreamSettingsPolicyList
+    plural: upstreamsettingspolicies
     shortNames:
-    - cspolicy
-    singular: clientsettingspolicy
+    - uspolicy
+    singular: upstreamsettingspolicy
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
@@ -28,8 +28,8 @@ spec:
     schema:
       openAPIV3Schema:
         description: |-
-          ClientSettingsPolicy is an Inherited Attached Policy. It provides a way to configure the behavior of the connection
-          between the client and NGINX Gateway Fabric.
+          UpstreamSettingsPolicy is a Direct Attached Policy. It provides a way to configure the behavior of
+          the connection between NGINX and the upstream applications.
         properties:
           apiVersion:
             description: |-
@@ -49,40 +49,25 @@ spec:
           metadata:
             type: object
           spec:
-            description: Spec defines the desired state of the ClientSettingsPolicy.
+            description: Spec defines the desired state of the UpstreamSettingsPolicy.
             properties:
-              body:
-                description: Body defines the client request body settings.
-                properties:
-                  maxSize:
-                    description: |-
-                      MaxSize sets the maximum allowed size of the client request body.
-                      If the size in a request exceeds the configured value,
-                      the 413 (Request Entity Too Large) error is returned to the client.
-                      Setting size to 0 disables checking of client request body size.
-                      Default: https://nginx.org/en/docs/http/ngx_http_core_module.html#client_max_body_size.
-                    pattern: ^\d{1,4}(k|m|g)?$
-                    type: string
-                  timeout:
-                    description: |-
-                      Timeout defines a timeout for reading client request body. The timeout is set only for a period between
-                      two successive read operations, not for the transmission of the whole request body.
-                      If a client does not transmit anything within this time, the request is terminated with the
-                      408 (Request Time-out) error.
-                      Default: https://nginx.org/en/docs/http/ngx_http_core_module.html#client_body_timeout.
-                    pattern: ^[0-9]{1,4}(ms|s|m|h)?$
-                    type: string
-                type: object
               keepAlive:
                 description: KeepAlive defines the keep-alive settings.
                 properties:
+                  connections:
+                    description: |-
+                      Connections sets the maximum number of idle keep-alive connections to upstream servers that are preserved
+                      in the cache of each nginx worker process. When this number is exceeded, the least recently used
+                      connections are closed.
+                      Directive: https://nginx.org/en/docs/http/ngx_http_upstream_module.html#keepalive
+                    format: int32
+                    minimum: 1
+                    type: integer
                   requests:
                     description: |-
                       Requests sets the maximum number of requests that can be served through one keep-alive connection.
-                      After the maximum number of requests are made, the connection is closed. Closing connections periodically
-                      is necessary to free per-connection memory allocations. Therefore, using too high maximum number of requests
-                      is not recommended as it can lead to excessive memory usage.
-                      Default: https://nginx.org/en/docs/http/ngx_http_core_module.html#keepalive_requests.
+                      After the maximum number of requests are made, the connection is closed.
+                      Directive: https://nginx.org/en/docs/http/ngx_http_upstream_module.html#keepalive_requests
                     format: int32
                     minimum: 0
                     type: integer
@@ -90,66 +75,76 @@ spec:
                     description: |-
                       Time defines the maximum time during which requests can be processed through one keep-alive connection.
                       After this time is reached, the connection is closed following the subsequent request processing.
-                      Default: https://nginx.org/en/docs/http/ngx_http_core_module.html#keepalive_time.
+                      Directive: https://nginx.org/en/docs/http/ngx_http_upstream_module.html#keepalive_time
                     pattern: ^[0-9]{1,4}(ms|s|m|h)?$
                     type: string
                   timeout:
-                    description: Timeout defines the keep-alive timeouts for clients.
-                    properties:
-                      header:
-                        description: 'Header sets the timeout in the "Keep-Alive:
-                          timeout=time" response header field.'
-                        pattern: ^[0-9]{1,4}(ms|s|m|h)?$
-                        type: string
-                      server:
-                        description: |-
-                          Server sets the timeout during which a keep-alive client connection will stay open on the server side.
-                          Setting this value to 0 disables keep-alive client connections.
-                        pattern: ^[0-9]{1,4}(ms|s|m|h)?$
-                        type: string
-                    type: object
-                    x-kubernetes-validations:
-                    - message: header can only be specified if server is specified
-                      rule: '!(has(self.header) && !has(self.server))'
+                    description: |-
+                      Timeout defines the keep-alive timeout for upstreams.
+                      Directive: https://nginx.org/en/docs/http/ngx_http_upstream_module.html#keepalive_timeout
+                    pattern: ^[0-9]{1,4}(ms|s|m|h)?$
+                    type: string
                 type: object
-              targetRef:
+              targetRefs:
                 description: |-
-                  TargetRef identifies an API object to apply the policy to.
-                  Object must be in the same namespace as the policy.
-                  Support: Gateway, HTTPRoute, GRPCRoute.
-                properties:
-                  group:
-                    description: Group is the group of the target resource.
-                    maxLength: 253
-                    pattern: ^$|^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
-                    type: string
-                  kind:
-                    description: Kind is kind of the target resource.
-                    maxLength: 63
-                    minLength: 1
-                    pattern: ^[a-zA-Z]([-a-zA-Z0-9]*[a-zA-Z0-9])?$
-                    type: string
-                  name:
-                    description: Name is the name of the target resource.
-                    maxLength: 253
-                    minLength: 1
-                    type: string
-                required:
-                - group
-                - kind
-                - name
-                type: object
+                  TargetRefs identifies API object(s) to apply the policy to.
+                  Objects must be in the same namespace as the policy.
+                  Support: Service
+
+                  TargetRefs must be _distinct_. The `name` field must be unique for all targetRef entries in the UpstreamSettingsPolicy.
+                items:
+                  description: |-
+                    LocalPolicyTargetReference identifies an API object to apply a direct or
+                    inherited policy to. This should be used as part of Policy resources
+                    that can target Gateway API resources. For more information on how this
+                    policy attachment model works, and a sample Policy resource, refer to
+                    the policy attachment documentation for Gateway API.
+                  properties:
+                    group:
+                      description: Group is the group of the target resource.
+                      maxLength: 253
+                      pattern: ^$|^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
+                      type: string
+                    kind:
+                      description: Kind is kind of the target resource.
+                      maxLength: 63
+                      minLength: 1
+                      pattern: ^[a-zA-Z]([-a-zA-Z0-9]*[a-zA-Z0-9])?$
+                      type: string
+                    name:
+                      description: Name is the name of the target resource.
+                      maxLength: 253
+                      minLength: 1
+                      type: string
+                  required:
+                  - group
+                  - kind
+                  - name
+                  type: object
+                maxItems: 16
+                minItems: 1
+                type: array
                 x-kubernetes-validations:
-                - message: 'TargetRef Kind must be one of: Gateway, HTTPRoute, or
-                    GRPCRoute'
-                  rule: (self.kind=='Gateway' || self.kind=='HTTPRoute' || self.kind=='GRPCRoute')
-                - message: TargetRef Group must be gateway.networking.k8s.io.
-                  rule: (self.group=='gateway.networking.k8s.io')
+                - message: 'TargetRefs Kind must be: Service'
+                  rule: self.all(t, t.kind=='Service')
+                - message: TargetRefs Group must be core
+                  rule: self.exists(t, t.group=='') || self.exists(t, t.group=='core')
+                - message: TargetRef Name must be unique
+                  rule: self.all(p1, self.exists_one(p2, p1.name == p2.name))
+              zoneSize:
+                description: |-
+                  ZoneSize is the size of the shared memory zone used by the upstream. This memory zone is used to share
+                  the upstream configuration between nginx worker processes. The more servers that an upstream has,
+                  the larger memory zone is required.
+                  Default: OSS: 512k, Plus: 1m.
+                  Directive: https://nginx.org/en/docs/http/ngx_http_upstream_module.html#zone
+                pattern: ^\d{1,4}(k|m|g)?$
+                type: string
             required:
-            - targetRef
+            - targetRefs
             type: object
           status:
-            description: Status defines the state of the ClientSettingsPolicy.
+            description: Status defines the state of the UpstreamSettingsPolicy.
             properties:
               ancestors:
                 description: |-
