@@ -419,7 +419,7 @@ nginx:
     #   - LoadBalancer
     # @schema
     # -- The type of service to create for the NGINX data plane.
-    type: NodePort
+    type: LoadBalancer
 
     # @schema
     # enum:
@@ -457,13 +457,13 @@ nginx:
     # @schema
     # -- A list of NodePorts to expose on the NGINX data plane service. Each NodePort MUST map to a Gateway listener port,
     # otherwise it will be ignored. The default NodePort range enforced by Kubernetes is 30000-32767.
-    nodePorts:
-    - port: 32000
-      listenerPort: 80
-    - port: 32500
-      listenerPort: 8080
-    - port: 32443
-      listenerPort: 443
+    # nodePorts:
+    # - port: 32000
+    #   listenerPort: 80
+    # - port: 32500
+    #   listenerPort: 8080
+    # - port: 32443
+    #   listenerPort: 443
     # -- Enable debugging for NGINX. Uses the nginx-debug binary. The NGINX error log level should be set to debug in the NginxProxy resource.
   debug: false
 
