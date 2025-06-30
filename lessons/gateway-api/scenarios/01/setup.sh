@@ -24,7 +24,7 @@ cd cka-certification-guide/helm-charts/nginx-gateway-fabric/
 
 # Install Helm chart
 echo "🚀 Installing NGINX Gateway Fabric via Helm..."
-helm install ngf . -n nginx-gateway --create-namespace || echo "⚠️ Helm release already exists. Skipping."
+helm install ngf . -n nginx-gateway --create-namespace -f custom-values.yaml || echo "⚠️ Helm release already exists. Skipping."
 
 # Create GatewayClass
 echo "📄 Creating GatewayClass resource..."
