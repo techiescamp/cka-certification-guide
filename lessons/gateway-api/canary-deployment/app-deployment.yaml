@@ -106,16 +106,4 @@ spec:
   ports:
   - port: 8080
     targetPort: 80
----
-apiVersion: gateway.networking.k8s.io/v1
-kind: Gateway
-metadata:
-  name: app-gateway
-  namespace: app-ns
-spec:
-  gatewayClassName: nginx-gateway-class
-  listeners:
-  - name: http
-    port: 8080
-    protocol: HTTP
-    hostname: "app.techiescamp.com"
+
