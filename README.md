@@ -77,7 +77,7 @@ CKA Certification Exam has the following key domains:
 Following are the subtopics under Cluster Architecture, Installation & Configuration
 
 ### Manage role based access control (RBAC).
-> [RBAC](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55733267) | [Service Accounts](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55724447) | [Roles & ClusterRoles](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55997133) : Understand the difference between Roles (namespace level) and ClusterRoles (cluster level).
+> [RBAC](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55733398) | [Service Accounts](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55724447) | [Roles & ClusterRoles](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55997133) : Understand the difference between Roles (namespace level) and ClusterRoles (cluster level).
 
 ```bash
 # Create a service account
@@ -97,24 +97,86 @@ k create clusterrolebinding <binding-name> --clusterrole=<clusterrole-name> --us
 
 # Check RBAC authorization
 k auth can-i <verb> <resource> --as=<username>
-
 ```
 
 ### Prepare underlying infrastructure for installing a Kubernetes cluster.
-> [Setup Virtual Machines](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/54923684) : Ensure that each virtual machine (VM) meets the minimum system requirements for setting up a Kubernetes cluster.
+> [Setup Virtual Machines](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/60080222) : Ensure that each virtual machine (VM) meets the minimum system requirements for setting up a Kubernetes cluster.
 
-> [Kubeadm Cluster Prerequisites](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55288352) : Ensure that all VMs can communicate with each other, as Kubernetes requires all nodes to have unrestricted communication for pod-to-pod networking.
+> [Kubeadm Cluster Prerequisites](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/60080223) : Ensure that all VMs can communicate with each other, as Kubernetes requires all nodes to have unrestricted communication for pod-to-pod networking.
 
-> [Provision underlying infrastructure to deploy a Kubernetes cluster](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55287065) : Tools like VirtualBox, VMware, or KVM can be used to set up virtual machines locally and for cloud environments, consider providers like AWS, GCP, or Azure for flexibility and scalability.
+> [Provision underlying infrastructure to deploy a Kubernetes cluster](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/60080224) : Tools like VirtualBox, VMware, or KVM can be used to set up virtual machines locally and for cloud environments, consider providers like AWS, GCP, or Azure for flexibility and scalability.
 
-### Create and manage Kubernetes clusters using kubeadm.
-> [Cluster Setup](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55288346) : kubeadm is a tool used for easy cluster bootstrap, be familiar with creating a cluster control plane node and adding worker nodes.
-
+### Multi Part Kubeadm Cluster Initialization
+> [Kubeadm Cluster Bootstrap](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/60080225) : Initialize a Kubernetes cluster using a multi-part kubeadm configuration file, customizing the Kubelet, Kube Proxy, and Scheduler settings.
 ```bash
-# Set Up kubeconfig
+# Edit the config file (Sample Configuration)
+---
+apiVersion: kubeadm.k8s.io/v1beta4
+kind: InitConfiguration
+localAPIEndpoint:
+  advertiseAddress: "172.30.1.2"
+  bindPort: 6443
+nodeRegistration:
+  name: "controlplane"
+  criSocket: "unix:///var/run/containerd/containerd.sock"
+  imagePullPolicy: IfNotPresent
+
+---
+apiVersion: kubeadm.k8s.io/v1beta4
+kind: ClusterConfiguration
+kubernetesVersion: "1.32.0"
+controlPlaneEndpoint: "172.30.1.2:6443"
+networking:
+  podSubnet: "10.244.0.0/16"
+  serviceSubnet: "10.96.0.0/12"
+  dnsDomain: "cluster.local"
+imageRepository: "registry.k8s.io"
+etcd:
+  local:
+    dataDir: "/var/lib/etcd"
+controllerManager:
+  extraArgs:
+    - name: "node-cidr-mask-size"
+      value: "24"
+scheduler:
+  extraArgs:
+    - name: "leader-elect"
+      value: "true"
+
+---
+apiVersion: kubelet.config.k8s.io/v1beta1
+kind: KubeletConfiguration
+cgroupDriver: "systemd"
+syncFrequency: "1m"
+failSwapOn: false
+rotateCertificates: true
+
+---
+apiVersion: kubeproxy.config.k8s.io/v1alpha1
+kind: KubeProxyConfiguration
+mode: "ipvs"
+clusterCIDR: "10.244.0.0/16"
+conntrack:
+  maxPerCore: 32768
+  min: 131072
+  tcpCloseWaitTimeout: "1h"
+  tcpEstablishedTimeout: "24h"
+
+# Initialize the cluster using the config file
+sudo kubeadm init --config=[CONFIG_FILE] --ignore-preflight-errors=NumCPU
+
+# Configure the Kubectl access [Command will be shown in the output]
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+# Install the CNI plugin
+kubectl apply -f [CNI_URL]
+
+# Join worker nodes [Command will be shown in the output]
+ssh [WORKER_NODE]
+
+kubeadm join ....
 ```
 
 ### Manage the lifecycle of Kubernetes clusters.
@@ -175,11 +237,45 @@ crictl logs <container-id>
 
 ```
 
-> [Network Plugin](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55287071) : Kubernetes uses network plugins (CNI) to manage pod networking, get a good understanding of  popular plugins like Calico, Flannel, and Weave Net, and understand the role of CNIs in providing network connectivity, security policies, and IPAM.
+> [Network Plugin](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/60189043) : Kubernetes uses network plugins (CNI) to manage pod networking, get a good understanding of  popular plugins like Calico, Flannel, and Weave Net, and understand the role of CNIs in providing network connectivity, security policies, and IPAM.
 
 ```bash
 # List installed CNI plugins
 ls /etc/cni/net.d/
+
+# Install the Tigera Operator
+kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.29.1/manifests/tigera-operator.yaml
+
+# Download the Calico Custom Resources
+curl -O https://raw.githubusercontent.com/projectcalico/calico/v3.29.1/manifests/custom-resources.yaml
+
+# Get the cluster Pod CIDR information
+kubectl -n kube-system get pod -l component=kube-controller-manager -o yaml | grep -i cluster-cidr
+
+# Modify the Custom Resouce manifest with the cluster CIDR
+vi custom-resource.yaml
+
+apiVersion: operator.tigera.io/v1
+kind: Installation
+metadata:
+  name: default
+spec:
+  calicoNetwork:
+    ipPools:
+    - name: default-ipv4-ippool
+      blockSize: 26
+      cidr: 10.244.0.0/16
+      encapsulation: VXLANCrossSubnet
+      natOutgoing: Enabled
+      nodeSelector: all()
+
+# Apply the Custom Resource manifest
+k apply -f custom-resource.yaml
+
+# Validate the Pod and Node status
+
+k get po -a
+k get no
 ```
 
 > Container Storage Interface (CSI) for Kubernetes GA : The CSIs is a standardized mechanism that allows storage providers to provide persistent storage support for Kubernetes.
@@ -187,7 +283,6 @@ ls /etc/cni/net.d/
 ```bash
 # List CSI drivers
 k get csidrivers
-
 ```
 
 ### Understand CRDs, install and configure operators.
@@ -202,10 +297,47 @@ k describe crd <crd-name>
 
 # Delete a CRD
 k delete <resource-name> <name>
-
 ```
 
 > Operator pattern : The Operator pattern allows you to automate the lifecycle of applications running on Kubernetes by packaging operational knowledge into Kubernetes-native applications.
+
+### ETCD Backup and Restore
+[ETCD Snapshot & Recovery](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55119871) : Backup and restore etcd data using `etcdctl`.
+```bash
+# Create a backup directory
+sudo mkdir -p /opt/backup
+
+# Take a snapshot
+ETCDCTL_API=3 etcdctl \
+  --endpoints=https://192.168.201.10:2379 \
+  --cacert=/etc/kubernetes/pki/etcd/ca.crt \
+  --cert=/etc/kubernetes/pki/etcd/server.crt \
+  --key=/etc/kubernetes/pki/etcd/server.key \
+  snapshot save /opt/backup/etcd.db
+
+# Verfify snapshot status
+ETCDCTL_API=3 etcdctl --write-out=table snapshot status /opt/backup/etcd.db
+
+# Restore etch from snapshot
+ETCDCTL_API=3 etcdctl \
+  --data-dir /opt/etcd \
+  --endpoints=https://192.168.201.10:2379 \
+  --cacert=/etc/kubernetes/pki/etcd/ca.crt \
+  --cert=/etc/kubernetes/pki/etcd/server.crt \
+  --key=/etc/kubernetes/pki/etcd/server.key \
+  snapshot restore /opt/backup/etcd.db
+
+# Update the etcd manifest for new data path
+volumeMounts:
+- mountPath: /opt/etcd   # ← updated from /var/lib/etcd
+  name: etcd-data
+
+volumes:
+- name: etcd-data
+  hostPath:
+    path: /opt/etcd       # ← updated from /var/lib/etcd
+    type: DirectoryOrCreate
+```
 
 ## 2. Workloads & Scheduling (15%)
 
@@ -296,7 +428,7 @@ k create secret tls <secret-name> --cert=tls.crt --key=tls.key
 ```
 
 ### Configure workload autoscaling.
-> Autoscaling Workloads : Practice setting up Horizontal Pod Autoscaler (HPA).
+[Autoscaling Workloads](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/58713870) : Practice setting up Horizontal Pod Autoscaler (HPA).
 
 ```bash
 # Using autoscaling
