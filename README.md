@@ -273,7 +273,6 @@ spec:
 k apply -f custom-resource.yaml
 
 # Validate the Pod and Node status
-
 k get po -a
 k get no
 ```
@@ -424,7 +423,6 @@ k create secret generic <secret-name> --from-literal=<key1>=<value1> --from-lite
 
 # Create TLS secret from certificate files
 k create secret tls <secret-name> --cert=tls.crt --key=tls.key
-
 ```
 
 ### Configure workload autoscaling.
@@ -568,25 +566,23 @@ tolerations:
 
 # Remove taint from a node
 k taint no <node-name> <key>=<value>-
-
 ```
 
 > [Node Name & Node Selector](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55686799) : Node Selectors are used to schedule pods onto specific nodes by using labels on the nodes.
 
 ```bash
 # Label a node
-k label no <pod-name> <label-key>=<label-value>
+k label no <node-name> <label-key>=<label-value>
 
 # Use node selector on pod
 nodeSelector:
   <label-key>: <label-value>
 
 # Remove labels from a node
-k label no <pod-name> <label-key>-
-
+k label no <node-name> <label-key>-
 ```
 
-[Node Affinity](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55687979) : Use node affinity to control the placement of your pods, ensuring that workloads are distributed efficiently across nodes as per there requirements.
+> [Node Affinity](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55687979) : Use node affinity to control the placement of your pods, ensuring that workloads are distributed efficiently across nodes as per there requirements.
 
 ```bash
 # Example Node affinity
@@ -599,6 +595,21 @@ nodeAffinity:
         operator: In
         values:
         - <label-value>
+```
+
+### Using Init Containers in Pods
+> [Init Containers](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55299962) : Init containers to prepare the Pod before the main container runs.
+```bash
+# Add init container section under the `spec` section.
+initContainers:
+  - name: write-ip
+    image: busybox
+    command: ["sh", "-c", "echo $MY_POD_IP > /web-content/ip.txt; echo 'Wrote the Pod IP to ip.txt'"]
+    env:
+    - name: MY_POD_IP
+      valueFrom:
+        fieldRef:
+          fieldPath: status.podIP
 ```
 
 > [Admission Controllers Reference](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/) : Use admission controllers to enforce policies such as resource quotas, pod security policies, and image validation.
@@ -625,7 +636,6 @@ k get sc
 
 # Describe storageclass
 k describe sc <storageclass-name>
-
 ```
 
 > Dynamic Volume Provisioning : Understand which type of persistent storage is supported (like AWS EBS, GCE Persistent Disks) and practice using them.
@@ -635,6 +645,21 @@ k describe sc <storageclass-name>
 > [Volumes](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55791431) : Understand which type of persistent storage is supported (like AWS EBS, GCE Persistent Disks) and practice using them.
 
 > [Persistent Volumes](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55792087) : Remember to know the different reclaim policies: Retain, Delete, and Recycle. Understand access modes like ReadWriteOnce, ReadOnlyMany.
+
+```bash
+# Create a Persistent Volume
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: techiescamp-pv
+spec:
+  capacity:
+    storage: 15Gi
+  accessModes:
+  - ReadWriteMany
+  hostPath:
+    path: /tmp/data
+```
 
 ```bash
 # List persistentvolume
@@ -698,6 +723,16 @@ k exec <pod-name> -- ifconfig
 > [Network Policies](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/57421520) : Practice setting up network policies to restrict traffic flow between pods.
 
 ```bash
+# Create a Network Policy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+
 # List network policies
 k get netpol
 
@@ -717,10 +752,47 @@ k get svc
 
 # List service endpoints
 k get ep
-
 ```
 ### Use the Gateway API to manage Ingress traffic.
-> Gateway API : The Gateway API provides more flexibility and extensibility compared to traditional Ingress. Use it when you need advanced traffic routing, such as assigning multiple gateways with different capabilities to different services.
+> [Gateway API](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/61100920) : The Gateway API provides more flexibility and extensibility compared to traditional Ingress. Use it when you need advanced traffic routing, such as assigning multiple gateways with different capabilities to different services.
+```bash
+# Create a Gateway
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: frontend-gateway
+  namespace: frontend
+spec:
+  gatewayClassName: [GATEWAY_CLASS_NAME]
+  listeners:
+  - name: http
+    protocol: HTTP
+    port: 80
+    hostname: "[HOST_NAME]"
+    tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: [TLS_SECRET_NAME]
+
+# Create a HTTPRoute to map the routing rules.
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: frontend-route
+  namespace: frontend
+spec:
+  parentRefs:
+    - name: [GATEWAY_NAME]
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: [SERVICE_NAME]
+          port: 80
+```
 
 ### Know how to use Ingress controllers and Ingress resources.
 > [Ingress](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/56659356) : Practice creating Ingress resources with different rules to route traffic to services based on hostnames and paths, you can also define multiple services under a single Ingress resource by utilizing both path-based and host-based rules.
@@ -810,11 +882,10 @@ k get --raw /healthz
 
 # Check status of API server
 k get componentstatuses
-
 ```
 
 ### Monitor cluster and application resource usage.
-> [Metrics Server](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55287074) : Use kubectl top to monitor resource utilization.
+> [Metrics Server](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/60080228) : Use kubectl top to monitor resource utilization.
 
 ```bash
 # Get no cpu and memory usage
