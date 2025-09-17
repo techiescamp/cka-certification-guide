@@ -29,7 +29,7 @@ Use code **SEPT25CT** to save 47% on folowing bundles.
 
 ## Organized Kubernetes & CKA Learning
 
-If you Looking for an organized way to learn Kubernetes and prepare for the CKA exam? 
+If you Looking for an organized way to learn Kubernetes and prepare for the CKA exam with practice questions? 
 
 > Check out our [Complete CKA Certification Course](https://courses.devopscube.com/p/cka-complete-prep-course-practice-tests). 
 
