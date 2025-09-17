@@ -16,19 +16,28 @@ Once the certificate is earned, the CKA certification remains valid for 2 years.
 
 >**Important Note:** This guide is based on the new CKA syllabus. You can read more about the exam changes here [CKA Exam Changes](https://blog.techiescamp.com/cka-exam-updates/)
 
-## CKA Exam Coupon (30% Off Exclusive Discount)
+## CKA Exam Coupon (47% Off Exclusive Discount)
 
 To save on CKA exam registration, use the following coupon code.
 
-**Coupon:** Use code **DCUBE30** at [kube.promo/cka](https://kube.promo/cka)
+**Coupon:** Use code **SEPT25CT** at [kube.promo/cka](https://kube.promo/cka)
 
-Use code **DCUBE30** to save 40% on folowing bundles.
+Use code **SEPT25CT** to save 47% on folowing bundles.
 
-- KCNA + KCSA + CKA + CKAD + CKS (40% Savings): [kube.promo/kubestronaut](https://kube.promo/kubestronaut)
-- CKA + CKAD + CKS Exam bundle (40% Savings): [kube.promo/k8s-bundle](https://kube.promo/k8s-bundle)
-- CKA + CKS Bundle (40% Savings) [kube.promo/bundle](https://kube.promo/bundle)
+- KCNA + KCSA + CKA + CKAD + CKS (47% Savings): [kube.promo/kubestronaut](https://kube.promo/kubestronaut)
+- CKA + CKAD + CKS Exam bundle (47% Savings): [kube.promo/k8s-bundle](https://kube.promo/k8s-bundle)
+- CKA + CKS Bundle (47% Savings) [kube.promo/bundle](https://kube.promo/bundle)
 
->**Important Note:** If you're planning to take the Certified Kubernetes Administrator (CKA) exam, be aware that the syllabus is changing soon. If you want to give the CKA exam before the syllabus change on February 10th, dont delay booking your CKA Exam.  Plan and book your exam as early as possible to avoid last-minute slot issues.
+## Organized Kubernetes & CKA Learning
+
+If you Looking for an organized way to learn Kubernetes and prepare for the CKA exam? 
+
+> Check out our [Complete CKA Certification Course](https://courses.devopscube.com/p/cka-complete-prep-course-practice-tests). 
+
+It includes illustrations, hands-on exercises, real-world examples, and dedicated Discord support. 
+
+> [!NOTE]
+>⌛ For a lmited time, use code **DCUBE30** to get 30% OFF today!
 
 ## Table of Contents
 
