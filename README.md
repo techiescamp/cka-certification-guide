@@ -1,4 +1,4 @@
-# Ultimate Certified Kubernetes Administrator (CKA) Exam Preparation Guide - V1.31 (2025)
+# Ultimate Certified Kubernetes Administrator (CKA) Exam Preparation Guide - V1.33 (2025)
 
 > This CKA learning path and guide is part of the [Complete CKA Certification Course](https://techiescamp.com/p/cka-complete-prep-course-practice-tests). 
 > If you Looking for an organized way to learn Kubernetes and prepare for the CKA exam? Use code **DCUBE25** to get 25% OFF! Our course includes illustrations, hands-on exercises, real-world examples, and dedicated Discord support.
