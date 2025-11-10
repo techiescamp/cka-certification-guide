@@ -15,13 +15,13 @@ Once the certificate is earned, the CKA certification remains valid for 2 years.
 
 >**Important Note:** This guide is based on the new CKA syllabus. You can read more about the exam changes here [CKA Exam Changes](https://blog.techiescamp.com/cka-exam-updates/)
 
-## CKA Exam Coupon (65% Off Exclusive Discount)
+## CKA Exam Coupon (47% Off Exclusive Discount)
 
 To save on CKA exam registration, use the following coupon code.
 
-**Coupon:** Use code **DCUBE30** at [kube.promo/cka](https://kube.promo/cka)
+**Coupon:** Use code **40KUBE25CT** at [kube.promo/cka](https://kube.promo/cka)
 
-Use code **DCUBE30** to save 65% on folowing bundles.
+Use code **40KUBE25CT** to save 47% on folowing bundles.
 
 - CKA + CKAD ($370+ Savings): [kube.promo/cka-ckad](https://kube.promo/cka-ckad)
 - CKA + CKS Bundle ($370+ Savings) [kube.promo/bundle](https://kube.promo/bundle)
