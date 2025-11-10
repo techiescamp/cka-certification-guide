@@ -1,13 +1,19 @@
-## Install Latest VMware Fusion & Vagrant
+## Install Latest VirtualBox & Vagrant
 
-Following the instructions given in the following blog to setup VMware fusion and vagrant.
+Follow the instructions given in the following blog to set up **VirtualBox** and **Vagrant** on Mac M-series.
 
-Detailed Blog: [Setup VMWare Fusion & vagrant](https://devopscube.com/build-vms-mac-silicon-with-vagrant/)
+**Detailed Blog:** [Setup VirtualBox & Vagrant](https://developer.hashicorp.com/vagrant/downloads)
 
+You can download the latest Apple Silicon (ARM64) build of VirtualBox from the official  
+[VirtualBox Downlaods](https://www.virtualbox.org/wiki/Downloads).
+
+---
 
 ## Restart the System
 
 Once all the installation is done, restart the system.
+
+---
 
 ## Bring up the VMS
 
