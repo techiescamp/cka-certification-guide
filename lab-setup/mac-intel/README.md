@@ -40,18 +40,47 @@ Now, open the terminal and cd in the lab-setup/mac-intel folder.
 cd lab-setup/mac-intel 
 ```
 
-Execute the following command to bring up the VMs
+This setup uses **bento/ubuntu-24.04** box. Execute the following command to bring up the VMs:
 
 ```
 vagrant up
 ```
 
-Once the VMs are up, you cna login to the VMs using the VM names.
+Once the VMs are up, you can login to the VMs using the VM names.
 
 ```
 vagrant ssh controlplane
 vagrant ssh node01
-vagrant ssh node01
+vagrant ssh node02
+```
+
+## Verify the Box
+
+To verify which Vagrant boxes are installed on your system:
+
+```
+vagrant box list
+```
+
+To check the Ubuntu version running in your VMs:
+
+```
+vagrant ssh controlplane -c "cat /etc/os-release"
+```
+
+## Remove Old Boxes
+
+If you have old/unused Vagrant boxes and want to free up disk space:
+
+```
+vagrant box list
+vagrant box remove <box-name>
+```
+
+For example, to remove an old Ubuntu box:
+
+```
+vagrant box remove generic/ubuntu2304
 ```
 
 ## Halt the VMs
