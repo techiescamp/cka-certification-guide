@@ -15,13 +15,13 @@ Once the certificate is earned, the CKA certification remains valid for 2 years.
 
 >**Important Note:** This guide is based on the new CKA syllabus. You can read more about the exam changes here [CKA Exam Changes](https://blog.techiescamp.com/cka-exam-updates/)
 
-## CKA Exam Coupon (47% Off Exclusive Discount)
+## CKA Exam Coupon (37% Off Exclusive Discount)
 
 To save on CKA exam registration, use the following coupon code.
 
-**Coupon:** Use code **40KUBE25CT** at [kube.promo/cka](https://kube.promo/cka)
+**Coupon:** Use code **DCUBE30** at [kube.promo/cka](https://kube.promo/cka)
 
-Use code **40KUBE25CT** to save 47% on folowing bundles.
+Use code **DCUBE30** to save 37% on folowing bundles.
 
 - CKA + CKAD ($370+ Savings): [kube.promo/cka-ckad](https://kube.promo/cka-ckad)
 - CKA + CKS Bundle ($370+ Savings) [kube.promo/bundle](https://kube.promo/bundle)
@@ -37,7 +37,7 @@ If you Looking for an organized way to learn Kubernetes and prepare for the CKA 
 It includes illustrations, hands-on exercises, real-world examples, and dedicated Discord support. 
 
 > [!NOTE]
->⌛ For a lmited time, use code **DCUBE30** to get 30% OFF today!
+>⌛ For a lmited time, use code **FLASH40** to get 40% OFF today!
 
 ## Table of Contents
 
