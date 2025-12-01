@@ -38,7 +38,7 @@ If you Looking for an organized way to learn Kubernetes and prepare for the CKA 
 It includes illustrations, hands-on exercises, real-world examples, and dedicated Discord support. 
 
 > [!NOTE]
->⌛ For a lmited time, use code **FLASH40** to get 40% OFF today!
+>⌛ For a lmited time, use code **CYBER50** to get 50% OFF today!
 
 ## Table of Contents
 
