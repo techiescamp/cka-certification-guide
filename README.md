@@ -1,6 +1,6 @@
-# Ultimate Certified Kubernetes Administrator (CKA) Exam Preparation Guide - V1.34 (2025)
+# Certified Kubernetes Administrator (CKA) Exam Preparation Guide - V1.34 (2025)
 
-This is detailed study guide with tips and practical examplesto ace Certified Kubernetes Administrator exam.
+This is detailed study guide with tips and practical examples to ace the Certified Kubernetes Administrator exam.
 
 ## Hit the Star! :star:
 
