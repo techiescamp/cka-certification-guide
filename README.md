@@ -240,10 +240,11 @@ crictl logs <container-id>
 ls /etc/cni/net.d/
 
 # Install the Tigera Operator
-kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.29.1/manifests/tigera-operator.yaml
+kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.31.3/manifests/operator-crds.yaml
+kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.31.3/manifests/tigera-operator.yaml
 
 # Download the Calico Custom Resources
-curl -O https://raw.githubusercontent.com/projectcalico/calico/v3.29.1/manifests/custom-resources.yaml
+curl -O https://raw.githubusercontent.com/projectcalico/calico/v3.31.3/manifests/custom-resources.yaml
 
 # Get the cluster Pod CIDR information
 kubectl -n kube-system get pod -l component=kube-controller-manager -o yaml | grep -i cluster-cidr
@@ -297,41 +298,44 @@ k delete <resource-name> <name>
 > Operator pattern : The Operator pattern allows you to automate the lifecycle of applications running on Kubernetes by packaging operational knowledge into Kubernetes-native applications.
 
 ### ETCD Backup and Restore
-[ETCD Snapshot & Recovery](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55119871) : Backup and restore etcd data using `etcdctl`.
+[ETCD Snapshot & Recovery](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55119871) : Backup and restore etcd data using `etcdctl` & `etcdutl`
 ```bash
 # Create a backup directory
 sudo mkdir -p /opt/backup
 
 # Take a snapshot
-ETCDCTL_API=3 etcdctl \
-  --endpoints=https://192.168.201.10:2379 \
+sudo etcdctl \
+  --endpoints=https://192.168.201. 10:2379 \
   --cacert=/etc/kubernetes/pki/etcd/ca.crt \
   --cert=/etc/kubernetes/pki/etcd/server.crt \
   --key=/etc/kubernetes/pki/etcd/server.key \
-  snapshot save /opt/backup/etcd.db
+snapshot save /opt/backup/etcd.db
 
 # Verfify snapshot status
-ETCDCTL_API=3 etcdctl --write-out=table snapshot status /opt/backup/etcd.db
+etcdutl --write-out=table snapshot status /opt/backup/etcd.db
 
-# Restore etch from snapshot
-ETCDCTL_API=3 etcdctl \
-  --data-dir /opt/etcd \
-  --endpoints=https://192.168.201.10:2379 \
-  --cacert=/etc/kubernetes/pki/etcd/ca.crt \
-  --cert=/etc/kubernetes/pki/etcd/server.crt \
-  --key=/etc/kubernetes/pki/etcd/server.key \
+# Stop the kube-apiserver and ETCD pods
+sudo mv /etc/kubernetes/manifests/kube-apiserver.yaml /tmp/
+sudo mv /etc/kubernetes/manifests/etcd.yaml /tmp/
+
+# Verify kube-apiserver and ETCD containers status
+crictl ps 
+
+# Restore etcd from snapshot
+sudo etcdutl --data-dir /var/lib/etcd-from-backup \
   snapshot restore /opt/backup/etcd.db
 
 # Update the etcd manifest for new data path
-volumeMounts:
-- mountPath: /opt/etcd   # ← updated from /var/lib/etcd
-  name: etcd-data
+# ... inside volumes section
+  - name: etcd-data
+    hostPath:
+      path: /var/lib/etcd-from-backup  # The new restored directory 
+      type: DirectoryOrCreate
 
-volumes:
-- name: etcd-data
-  hostPath:
-    path: /opt/etcd       # ← updated from /var/lib/etcd
-    type: DirectoryOrCreate
+# Redeploy the kube-apiserver and ETCD pods
+sudo mv /tmp/kube-apiserver.yaml /etc/kubernetes/manifests/
+sudo mv /tmp/etcd.yaml /etc/kubernetes/manifests/
+
 ```
 
 ## 2. Workloads & Scheduling (15%)
