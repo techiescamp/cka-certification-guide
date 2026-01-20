@@ -13,13 +13,13 @@ To pass the exam, candidates need to achieve a score of at least 66%.
 The exam will be on Kubernetes version 1.34.
 Once the certificate is earned, the CKA certification remains valid for 2 years. The cost to take the exam is $395 USD.
 
-## CKA Exam Coupon (30% Off Exclusive Discount)
+## CKA Exam Coupon (35% Off Exclusive Discount)
 
 To save on CKA exam registration, use the following coupon code.
 > [!IMPORTANT]
-> **Coupon:** Use code **DCUBE30** at [kube.promo/cka](https://kube.promo/cka)
+> **Coupon:** Use code **SKILLSMIX26CT** at [kube.promo/cka](https://kube.promo/cka)
 
-Use code **DCUBE30** to save 40% on folowing bundles.
+Use code **SKILLSMIX26CT** to save 40% on folowing bundles.
 
 - CKA + CKAD ($370+ Savings): [kube.promo/cka-ckad](https://kube.promo/cka-ckad)
 - CKA + CKS Bundle ($370+ Savings) [kube.promo/bundle](https://kube.promo/bundle)
