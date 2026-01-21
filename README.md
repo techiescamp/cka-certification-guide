@@ -305,7 +305,7 @@ sudo mkdir -p /opt/backup
 
 # Take a snapshot
 sudo etcdctl \
-  --endpoints=https://192.168.201. 10:2379 \
+  --endpoints=https://192.168.201.10:2379 \
   --cacert=/etc/kubernetes/pki/etcd/ca.crt \
   --cert=/etc/kubernetes/pki/etcd/server.crt \
   --key=/etc/kubernetes/pki/etcd/server.key \
@@ -327,10 +327,16 @@ sudo etcdutl --data-dir /var/lib/etcd-from-backup \
 
 # Update the etcd manifest for new data path
 # ... inside volumes section
-  - name: etcd-data
-    hostPath:
-      path: /var/lib/etcd-from-backup  # The new restored directory 
+    volumes:
+  - hostPath:
+      path: /etc/kubernetes/pki/etcd
       type: DirectoryOrCreate
+    name: etcd-certs
+  - hostPath:
+      path:  /var/lib/etcd-from-backup  # The new restored directory
+      type: DirectoryOrCreate
+    name: etcd-data
+
 
 # Redeploy the kube-apiserver and ETCD pods
 sudo mv /tmp/kube-apiserver.yaml /etc/kubernetes/manifests/
