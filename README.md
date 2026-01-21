@@ -327,7 +327,7 @@ sudo etcdutl --data-dir /var/lib/etcd-from-backup \
 
 # Update the etcd manifest for new data path
 # ... inside volumes section
-    volumes:
+  volumes:
   - hostPath:
       path: /etc/kubernetes/pki/etcd
       type: DirectoryOrCreate
