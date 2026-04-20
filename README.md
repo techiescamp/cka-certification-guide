@@ -1,4 +1,4 @@
-# Certified Kubernetes Administrator (CKA) Exam Preparation Guide - V1.34 (2026)
+# Certified Kubernetes Administrator (CKA) Exam Preparation Guide - V1.35 (2026)
 
 This is a detailed study guide with tips and practical examples to ace the Certified Kubernetes Administrator exam.
 
@@ -10,7 +10,7 @@ If you are planning to use this repo for reference, please hit the star. Thanks!
 
 The Certified Kubernetes Administrator (CKA) exam has a duration of 2 hours.
 To pass the exam, candidates need to achieve a score of at least 66%.
-The exam will be on Kubernetes version 1.34.
+The exam will be on Kubernetes version 1.35.
 Once the certificate is earned, the CKA certification remains valid for 2 years. The cost to take the exam is $395 USD.
 
 ## CKA Exam Coupon (45% Off Exclusive Discount)
