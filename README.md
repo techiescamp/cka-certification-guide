@@ -251,7 +251,7 @@ nodeRegistration:
 ---
 apiVersion: kubeadm.k8s.io/v1beta4
 kind: ClusterConfiguration
-kubernetesVersion: "1.32.0"
+kubernetesVersion: "1.35.0"
 controlPlaneEndpoint: "172.30.1.2:6443"
 networking:
   podSubnet: "10.244.0.0/16"
