@@ -1,68 +1,200 @@
 # Certified Kubernetes Administrator (CKA) Exam Preparation Guide - V1.35 (2026)
 
+![Kubernetes](https://img.shields.io/badge/Kubernetes-v1.35-326CE5?logo=kubernetes&logoColor=white)
+![Exam](https://img.shields.io/badge/CKA-Exam%20Prep-green)
+![Passing Score](https://img.shields.io/badge/Passing%20Score-66%25-blue)
+![Duration](https://img.shields.io/badge/Duration-2%20Hours-orange)
+![License](https://img.shields.io/badge/License-All%20Rights%20Reserved-red)
+
 This is a detailed study guide with tips and practical examples to ace the Certified Kubernetes Administrator exam.
+
+---
+
+## 🗂️ Quick Navigation
+
+| Resource | Description |
+|----------|-------------|
+| 📋 [CHEATSHEET.md](./CHEATSHEET.md) | Fast kubectl command reference organized by exam domain |
+| 🎯 [EXAM_TIPS.md](./EXAM_TIPS.md) | Time management, strategy, common traps, last-minute checklist |
+| 📝 [PRACTICE_QUESTIONS.md](./PRACTICE_QUESTIONS.md) | 35 exam-style scenario questions with full solutions |
+| 🔧 [TROUBLESHOOTING_GUIDE.md](./TROUBLESHOOTING_GUIDE.md) | Deep-dive debug playbooks for every cluster layer |
+| 🗒️ [SYLLABUS.md](./SYLLABUS.md) | **NEW** — Full CKA v1.35 official syllabus with all sub-topics & commands |
+| 📅 [EXAM_DAY_GUIDE.md](./EXAM_DAY_GUIDE.md) | **NEW** — Printable exam-day reference: checklist, shortcuts, time strategy |
+| ❓ [FAQ.md](./FAQ.md) | **NEW** — Official CKA FAQ (scoring, ID, proctoring, simulator, renewal) |
+
+**Domain Study Notes:**
+
+| Note | Domain | Exam Weight |
+|------|--------|-------------|
+| 📖 [01-cluster-architecture.md](./study-notes/01-cluster-architecture.md) | Cluster Architecture, Installation & Configuration | 25% |
+| 📖 [02-workloads-scheduling.md](./study-notes/02-workloads-scheduling.md) | Workloads & Scheduling | 15% |
+| 📖 [03-storage.md](./study-notes/03-storage.md) | Storage | 10% |
+| 📖 [04-services-networking.md](./study-notes/04-services-networking.md) | Services & Networking | 20% |
+| 📖 [05-troubleshooting.md](./study-notes/05-troubleshooting.md) | Troubleshooting | 30% |
+
+---
+
+## 🚀 How to Use This Repo
+
+**New to CKA?** Follow this path:
+1. Read the domain study notes in `study-notes/` to understand the theory
+2. Work through this README for hands-on command references and examples
+3. Set up the lab environment (`lab-setup/`) for hands-on practice
+4. Test yourself with `PRACTICE_QUESTIONS.md`
+5. Review `EXAM_TIPS.md` the week before your exam
+6. Keep `CHEATSHEET.md` open during practice sessions
+
+**Already studying?** Jump directly to any section using the Quick Navigation above.
+
+**Lab Setup:** See `lab-setup/` for multi-platform Vagrant-based Kubernetes cluster setup (Mac, Windows, Ubuntu).
+
+---
 
 ## Hit the Star! :star:
 
 If you are planning to use this repo for reference, please hit the star. Thanks!
 
-## CKA Exam Overview
+## CKA Exam At-a-Glance
 
-The Certified Kubernetes Administrator (CKA) exam has a duration of 2 hours.
-To pass the exam, candidates need to achieve a score of at least 66%.
-The exam will be on Kubernetes version 1.35.
-Once the certificate is earned, the CKA certification remains valid for 2 years. The cost to take the exam is $395 USD.
+| Detail | Value |
+|--------|-------|
+| **Kubernetes Version** | v1.35 |
+| **Duration** | 2 hours |
+| **Format** | 15–20 performance-based CLI tasks |
+| **Passing Score** | 66% |
+| **Results** | Emailed within 24 hours |
+| **Validity** | 2 years |
+| **Retake** | 1 free retake included |
+| **Languages** | English, Simplified Chinese, Japanese |
+| **Simulator** | [Killer.sh](https://killer.sh) (2 attempts × 36 hrs, included with registration) |
+| **Allowed Resources** | kubernetes.io/docs, kubernetes.io/blog, helm.sh/docs |
 
-## CKA Exam Coupon (45% Off Exclusive Discount Ends Soon)
+> [!NOTE]
+> The exam environment tracks the latest K8s minor version within ~4–8 weeks of its release.
+> See [FAQ.md](./FAQ.md) for full details on scoring, ID requirements, proctoring, and renewal.
+
+## CKA Exam Coupon (Exclusive Discount)
 
 To save on CKA exam registration, use the following coupon code.
 > [!IMPORTANT]
 > **Coupon:** Use code **35KUBECT** at [kube.promo/cka](https://kube.promo/cka)
 
-Use code **35KUBECT** to save 40% on following bundles.
+Use code **35KUBECT** to save on following bundles:
 
 - CKA + CKAD ($370+ Savings): [kube.promo/cka-ckad](https://kube.promo/cka-ckad)
-- CKA + CKS Bundle ($370+ Savings) [kube.promo/bundle](https://kube.promo/bundle)
+- CKA + CKS Bundle ($370+ Savings): [kube.promo/bundle](https://kube.promo/bundle)
 - CKA + CKAD + CKS Exam bundle (35% Discount): [kube.promo/k8s-bundle](https://kube.promo/k8s-bundle)
 - KCNA + KCSA + CKA + CKAD + CKS: [kube.promo/kubestronaut](https://kube.promo/kubestronaut)
 
-## Table of Contents
+## 🔑 Exam Day Technical Quick Reference
 
-1. [Cluster Architecture, Installation & Configuration (25%)](#1-cluster-architecture-installation--configuration-25)
-   - [Manage role based access control (RBAC)](#manage-role-based-access-control-rbac)
-   - [Prepare underlying infrastructure for installing a Kubernetes cluster](#prepare-underlying-infrastructure-for-installing-a-kubernetes-cluster)
-   - [Create and manage Kubernetes clusters using kubeadm](#create-and-manage-kubernetes-clusters-using-kubeadm)
-   - [Manage the lifecycle of Kubernetes clusters](#manage-the-lifecycle-of-kubernetes-clusters)
-   - [Use Helm and Kustomize to install cluster components](#use-helm-and-kustomize-to-install-cluster-components)
-   - [Understand extension interfaces (CNI, CSI, CRI, etc.)](#understand-extension-interfaces-cni-csi-cri-etc)
-   - [Understand CRDs, install and configure operators](#understand-crds-install-and-configure-operators)
+> Full guide: [EXAM_DAY_GUIDE.md](./EXAM_DAY_GUIDE.md)
 
-2. [Workloads & Scheduling (15%)](#2-workloads--scheduling-15)
-   - [Understand deployments and how to perform rolling update and rollbacks](#understand-deployments-and-how-to-perform-rolling-update-and-rollbacks)
-   - [Use ConfigMaps and Secrets to configure applications](#use-configmaps-and-secrets-to-configure-applications)
-   - [Configure workload autoscaling](#configure-workload-autoscaling)
-   - [Understand the primitives used to create robust, self-healing, application deployments](#understand-the-primitives-used-to-create-robust-self-healing-application-deployments)
-   - [Configure Pod admission and scheduling (limits, node affinity, etc.)](#configure-pod-admission-and-scheduling-limits-node-affinity-etc)
+### Critical Keyboard Shortcuts (Remote Desktop)
 
-3. [Storage (10%)](#3-storage-10)
-   - [Implement storage classes and dynamic volume provisioning](#implement-storage-classes-and-dynamic-volume-provisioning)
-   - [Configure volume types, access modes and reclaim policies](#configure-volume-types-access-modes-and-reclaim-policies)
-   - [Manage persistent volumes and persistent volume claims](#manage-persistent-volumes-and-persistent-volume-claims)
+| Action | Shortcut |
+|--------|----------|
+| Close tab **(use this, NOT Ctrl+W)** | `Ctrl+Alt+W` |
+| Copy in Terminal | `Ctrl+Shift+C` |
+| Paste in Terminal | `Ctrl+Shift+V` |
+| Find in Firefox | `Ctrl+F` |
+| Locate cursor | `Ctrl+Alt+K` |
+| Vim insert mode | `i` (INSERT key is disabled) |
 
-4. [Services & Networking (20%)](#4-services--networking-20)
-   - [Understand connectivity between Pods](#understand-connectivity-between-pods)
-   - [Define and enforce Network Policies](#define-and-enforce-network-policies)
-   - [Use ClusterIP, NodePort, LoadBalancer service types and endpoints](#use-clusterip-nodeport-loadbalancer-service-types-and-endpoints)
-   - [Use the Gateway API to manage Ingress traffic](#use-the-gateway-api-to-manage-ingress-traffic)
-   - [Know how to use Ingress controllers and Ingress resources](#know-how-to-use-ingress-controllers-and-ingress-resources)
-   - [Understand and use CoreDNS](#understand-and-use-coredns)
+### Node Navigation
 
-5. [Troubleshooting (30%)](#5-troubleshooting-30)
-   - [Troubleshoot clusters and nodes](#troubleshoot-clusters-and-nodes)
-   - [Troubleshoot cluster components](#troubleshoot-cluster-components)
-   - [Monitor cluster and application resource usage](#monitor-cluster-and-application-resource-usage)
-   - [Manage and evaluate container output streams](#manage-and-evaluate-container-output-streams)
-   - [Troubleshoot services and networking](#troubleshoot-services-and-networking)
+```bash
+ssh <nodename>    # Move to task node
+sudo -i           # Get root on any node
+exit              # Return to base node
+```
+
+> [!WARNING]
+> **Do NOT reboot the base node.** Each task specifies which node to SSH into — complete the task there, then `exit` back to base.
+
+### Pre-installed Tools on All SSH Hosts
+
+`kubectl` (alias `k` with bash autocompletion) · `yq` · `curl` · `wget` · `man`
+
+## 📚 Table of Contents
+
+> The CKA exam has **5 domains** totalling **100%** of your score. Each domain below shows its weight and all official sub-topics.
+
+---
+
+### 🏗️ Domain 1 — [Cluster Architecture, Installation & Configuration](#1-cluster-architecture-installation--configuration-25) `25%`
+
+> ![weight](https://img.shields.io/badge/Exam%20Weight-25%25-4A90D9?style=flat-square) &nbsp; 📖 [Study Notes](./study-notes/01-cluster-architecture.md)
+
+| # | Sub-topic |
+|---|-----------|
+| 1.1 | 🔐 [Manage role-based access control (RBAC)](#manage-role-based-access-control-rbac) |
+| 1.2 | 🖥️ [Prepare underlying infrastructure for installing a Kubernetes cluster](#prepare-underlying-infrastructure-for-installing-a-kubernetes-cluster) |
+| 1.3 | ⚙️ [Create and manage Kubernetes clusters using kubeadm](#create-and-manage-kubernetes-clusters-using-kubeadm) |
+| 1.4 | 🔄 [Manage the lifecycle of Kubernetes clusters](#manage-the-lifecycle-of-kubernetes-clusters) |
+| 1.5 | 📦 [Use Helm and Kustomize to install cluster components](#use-helm-and-kustomize-to-install-cluster-components) |
+| 1.6 | 🔌 [Understand extension interfaces (CNI, CSI, CRI, etc.)](#understand-extension-interfaces-cni-csi-cri-etc) |
+| 1.7 | 🧩 [Understand CRDs, install and configure operators](#understand-crds-install-and-configure-operators) |
+
+---
+
+### 🚀 Domain 2 — [Workloads & Scheduling](#2-workloads--scheduling-15) `15%`
+
+> ![weight](https://img.shields.io/badge/Exam%20Weight-15%25-7B68EE?style=flat-square) &nbsp; 📖 [Study Notes](./study-notes/02-workloads-scheduling.md)
+
+| # | Sub-topic |
+|---|-----------|
+| 2.1 | 🔁 [Understand deployments and how to perform rolling updates and rollbacks](#understand-deployments-and-how-to-perform-rolling-update-and-rollbacks) |
+| 2.2 | 🗂️ [Use ConfigMaps and Secrets to configure applications](#use-configmaps-and-secrets-to-configure-applications) |
+| 2.3 | 📈 [Configure workload autoscaling](#configure-workload-autoscaling) |
+| 2.4 | 🛡️ [Understand the primitives used to create robust, self-healing application deployments](#understand-the-primitives-used-to-create-robust-self-healing-application-deployments) |
+| 2.5 | 🎯 [Configure Pod admission and scheduling (limits, node affinity, etc.)](#configure-pod-admission-and-scheduling-limits-node-affinity-etc) |
+
+---
+
+### 💾 Domain 3 — [Storage](#3-storage-10) `10%`
+
+> ![weight](https://img.shields.io/badge/Exam%20Weight-10%25-E8A838?style=flat-square) &nbsp; 📖 [Study Notes](./study-notes/03-storage.md)
+
+| # | Sub-topic |
+|---|-----------|
+| 3.1 | 🏷️ [Implement storage classes and dynamic volume provisioning](#implement-storage-classes-and-dynamic-volume-provisioning) |
+| 3.2 | 🔧 [Configure volume types, access modes and reclaim policies](#configure-volume-types-access-modes-and-reclaim-policies) |
+| 3.3 | 📀 [Manage persistent volumes and persistent volume claims](#manage-persistent-volumes-and-persistent-volume-claims) |
+
+---
+
+### 🌐 Domain 4 — [Services & Networking](#4-services--networking-20) `20%`
+
+> ![weight](https://img.shields.io/badge/Exam%20Weight-20%25-2ECC71?style=flat-square) &nbsp; 📖 [Study Notes](./study-notes/04-services-networking.md)
+
+| # | Sub-topic |
+|---|-----------|
+| 4.1 | 🔗 [Understand connectivity between Pods](#understand-connectivity-between-pods) |
+| 4.2 | 🛡️ [Define and enforce Network Policies](#define-and-enforce-network-policies) |
+| 4.3 | 🔀 [Use ClusterIP, NodePort, LoadBalancer service types and endpoints](#use-clusterip-nodeport-loadbalancer-service-types-and-endpoints) |
+| 4.4 | 🚪 [Use the Gateway API to manage Ingress traffic](#use-the-gateway-api-to-manage-ingress-traffic) |
+| 4.5 | 🗺️ [Know how to use Ingress controllers and Ingress resources](#know-how-to-use-ingress-controllers-and-ingress-resources) |
+| 4.6 | 🔍 [Understand and use CoreDNS](#understand-and-use-coredns) |
+
+---
+
+### 🔬 Domain 5 — [Troubleshooting](#5-troubleshooting-30) `30%` ⭐ Highest Weight
+
+> ![weight](https://img.shields.io/badge/Exam%20Weight-30%25-E74C3C?style=flat-square) &nbsp; 📖 [Study Notes](./study-notes/05-troubleshooting.md)
+
+> [!IMPORTANT]
+> **Troubleshooting is worth 30% of your score** — the single largest domain. Dedicate at least one-third of your study time here.
+
+| # | Sub-topic |
+|---|-----------|
+| 5.1 | 🖥️ [Troubleshoot clusters and nodes](#troubleshoot-clusters-and-nodes) |
+| 5.2 | ⚙️ [Troubleshoot cluster components](#troubleshoot-cluster-components) |
+| 5.3 | 📊 [Monitor cluster and application resource usage](#monitor-cluster-and-application-resource-usage) |
+| 5.4 | 📋 [Manage and evaluate container output streams](#manage-and-evaluate-container-output-streams) |
+| 5.5 | 🌐 [Troubleshoot services and networking](#troubleshoot-services-and-networking) |
+
+---
 
 ## CKA Exam Detailed Study Guide & References
 
@@ -296,53 +428,6 @@ k delete <resource-name> <name>
 ```
 
 > Operator pattern : The Operator pattern allows you to automate the lifecycle of applications running on Kubernetes by packaging operational knowledge into Kubernetes-native applications.
-
-### ETCD Backup and Restore
-[ETCD Snapshot & Recovery](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55119871) : Backup and restore etcd data using `etcdctl` & `etcdutl`
-```bash
-# Create a backup directory
-sudo mkdir -p /opt/backup
-
-# Take a snapshot
-sudo etcdctl \
-  --endpoints=https://192.168.201.10:2379 \
-  --cacert=/etc/kubernetes/pki/etcd/ca.crt \
-  --cert=/etc/kubernetes/pki/etcd/server.crt \
-  --key=/etc/kubernetes/pki/etcd/server.key \
-snapshot save /opt/backup/etcd.db
-
-# Verfify snapshot status
-etcdutl --write-out=table snapshot status /opt/backup/etcd.db
-
-# Stop the kube-apiserver and ETCD pods
-sudo mv /etc/kubernetes/manifests/kube-apiserver.yaml /tmp/
-sudo mv /etc/kubernetes/manifests/etcd.yaml /tmp/
-
-# Verify kube-apiserver and ETCD containers status
-crictl ps 
-
-# Restore etcd from snapshot
-sudo etcdutl --data-dir /var/lib/etcd-from-backup \
-  snapshot restore /opt/backup/etcd.db
-
-# Update the etcd manifest for new data path
-# ... inside volumes section
-  volumes:
-  - hostPath:
-      path: /etc/kubernetes/pki/etcd
-      type: DirectoryOrCreate
-    name: etcd-certs
-  - hostPath:
-      path:  /var/lib/etcd-from-backup  # The new restored directory
-      type: DirectoryOrCreate
-    name: etcd-data
-
-
-# Redeploy the kube-apiserver and ETCD pods
-sudo mv /tmp/kube-apiserver.yaml /etc/kubernetes/manifests/
-sudo mv /tmp/etcd.yaml /etc/kubernetes/manifests/
-
-```
 
 ## 2. Workloads & Scheduling (15%)
 
