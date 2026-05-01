@@ -194,8 +194,8 @@ kubectl create secret docker-registry regcred \
 # All kube-system pods
 kubectl get pods -n kube-system -o wide
 
-# Check component health (older API, may be deprecated)
-kubectl get componentstatuses
+# Check control plane component health (componentstatuses removed in k8s 1.24)
+kubectl get pods -n kube-system -l tier=control-plane
 
 # API server health
 curl -k https://localhost:6443/healthz
@@ -243,28 +243,6 @@ kubectl logs -n kube-system kube-controller-manager-<node>
 cat /etc/kubernetes/manifests/kube-controller-manager.yaml
 
 # Symptom: Deployments not scaling, pods not created from ReplicaSets
-```
-
-### ETCD Issues
-
-```bash
-# Check ETCD pod
-kubectl get pods -n kube-system | grep etcd
-kubectl logs -n kube-system etcd-<node>
-
-# Verify ETCD health
-ETCDCTL_API=3 etcdctl endpoint health \
-  --endpoints=https://127.0.0.1:2379 \
-  --cacert=/etc/kubernetes/pki/etcd/ca.crt \
-  --cert=/etc/kubernetes/pki/etcd/server.crt \
-  --key=/etc/kubernetes/pki/etcd/server.key
-
-# List ETCD members
-ETCDCTL_API=3 etcdctl member list \
-  --endpoints=https://127.0.0.1:2379 \
-  --cacert=/etc/kubernetes/pki/etcd/ca.crt \
-  --cert=/etc/kubernetes/pki/etcd/server.crt \
-  --key=/etc/kubernetes/pki/etcd/server.key
 ```
 
 ---
@@ -344,9 +322,17 @@ kubectl get pods -n kube-system -l k8s-app=kube-proxy
 # Check kube-proxy logs
 kubectl logs -n kube-system <kube-proxy-pod>
 
-# Check iptables rules (on node)
+# Check which proxy mode is active (iptables vs ipvs)
+kubectl get configmap kube-proxy -n kube-system -o yaml | grep mode
+
+# iptables mode — check rules on node
 iptables -t nat -L | grep <service-ip>
+
+# IPVS mode — check rules on node (requires ipvsadm)
+ipvsadm -Ln | grep <service-ip>
 ```
+
+> kube-proxy mode (iptables vs IPVS) is set at cluster install time. Use the correct tool for the cluster you're on.
 
 ---
 

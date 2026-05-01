@@ -13,14 +13,14 @@ This is a detailed study guide with tips and practical examples to ace the Certi
 ## 🗂️ Quick Navigation
 
 | Resource | Description |
-|----------|-------------|
-| 📋 [CHEATSHEET.md](./CHEATSHEET.md) | Fast kubectl command reference organized by exam domain |
-| 🎯 [EXAM_TIPS.md](./EXAM_TIPS.md) | Time management, strategy, common traps, last-minute checklist |
-| 📝 [PRACTICE_QUESTIONS.md](./PRACTICE_QUESTIONS.md) | 35 exam-style scenario questions with full solutions |
-| 🔧 [TROUBLESHOOTING_GUIDE.md](./TROUBLESHOOTING_GUIDE.md) | Deep-dive debug playbooks for every cluster layer |
-| 🗒️ [SYLLABUS.md](./SYLLABUS.md) | **NEW** — Full CKA v1.35 official syllabus with all sub-topics & commands |
-| 📅 [EXAM_DAY_GUIDE.md](./EXAM_DAY_GUIDE.md) | **NEW** — Printable exam-day reference: checklist, shortcuts, time strategy |
-| ❓ [FAQ.md](./FAQ.md) | **NEW** — Official CKA FAQ (scoring, ID, proctoring, simulator, renewal) |
+|--------------------------------------------------|---------------------------------------------------------------|
+| 📋 [CHEATSHEET.md](./CHEATSHEET.md)             | Fast kubectl command reference organized by exam domain       |
+| 🎯 [EXAM_TIPS.md](./EXAM_TIPS.md)               | Time management, strategy, common traps, last-minute checklist|
+| 📝 [PRACTICE_QUESTIONS.md](./PRACTICE_QUESTIONS.md) | 35 exam-style scenario questions with full solutions      |
+| 🔧 [TROUBLESHOOTING_GUIDE.md](./TROUBLESHOOTING_GUIDE.md) | Deep-dive debug playbooks for every cluster layer  |
+| 🗒️ [SYLLABUS.md](./SYLLABUS.md)                | **NEW** — Full CKA v1.35 official syllabus with all sub-topics & commands |
+| 📅 [EXAM_DAY_GUIDE.md](./EXAM_DAY_GUIDE.md)    | **NEW** — Printable exam-day reference: checklist, shortcuts, time strategy |
+| ❓ [FAQ.md](./FAQ.md)                           | **NEW** — Official CKA FAQ (scoring, ID, proctoring, simulator, renewal) |
 
 **Domain Study Notes:**
 
@@ -66,7 +66,7 @@ If you are planning to use this repo for reference, please hit the star. Thanks!
 | **Validity** | 2 years |
 | **Retake** | 1 free retake included |
 | **Languages** | English, Simplified Chinese, Japanese |
-| **Simulator** | [Killer.sh](https://killer.sh) (2 attempts × 36 hrs, included with registration) |
+| **Simulator** | [Killer.sh](https://killer.sh) (2 attempts × 36 hrs, included with exam bundles — not `CKA-SINGLE`) |
 | **Allowed Resources** | kubernetes.io/docs, kubernetes.io/blog, helm.sh/docs |
 
 > [!NOTE]
@@ -433,7 +433,7 @@ k delete <resource-name> <name>
 Following are the subtopics under Workloads & Scheduling
 
 ### Understand deployments and how to perform rolling update and rollbacks.
-> [Deployments](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55402667) : Understand the use of --record for version history, which is crucial for rollbacks.
+> [Deployments](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55402667) : Understand rolling updates and rollbacks. Use `kubectl rollout history` to inspect revision history.
 
 ```bash
 # Create deployment with 3 replicas
@@ -458,7 +458,7 @@ k scale deploy <deployment-name> --replicas=2
 k get deploy <deployment-name> -o yaml
 
 # Update container image in a deployment
-k set image deploy <deployment-name> nginx=<image-name> --record
+k set image deploy <deployment-name> nginx=<image-name>
 
 # Rollback to previous deployment version
 k rollout undo deploy <deployment-name>
@@ -971,7 +971,8 @@ journalctl -u kubelet
 k get --raw /healthz
 
 # Check status of API server
-k get componentstatuses
+k get --raw /healthz
+kubectl get pods -n kube-system -l tier=control-plane
 ```
 
 ### Monitor cluster and application resource usage.

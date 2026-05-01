@@ -118,6 +118,18 @@ You have approximately **6–8 minutes per question** on average. Not all questi
 - If a question is worth **1–2%** of the exam → don't spend more than 3 minutes
 - If a question is worth **7–10%** → it deserves 10–15 minutes
 
+### Time Allocation by Domain Weight
+
+| Domain | Weight | Suggested Time |
+|--------|--------|----------------|
+| Troubleshooting | 30% | ~36 min |
+| Cluster Architecture | 25% | ~30 min |
+| Services & Networking | 20% | ~24 min |
+| Workloads & Scheduling | 15% | ~18 min |
+| Storage | 10% | ~12 min |
+
+Cluster upgrade tasks are time-consuming — budget 12–15 min and do them only when confident.
+
 ---
 
 ## The Most Important Habit: Check Your Context
@@ -185,6 +197,32 @@ k apply -f deploy.yaml
 - You need to add fields that can't be set imperatively (e.g., tolerations, affinity, volumes, probes)
 - The question gives you a manifest to modify
 - You need to create multiple resources at once
+
+---
+
+## Vim Quick Reference
+
+```
+i          → Enter INSERT mode
+Esc        → Return to COMMAND mode
+:wq        → Save and quit
+:q!        → Quit without saving
+dd         → Delete current line
+yy         → Copy (yank) current line
+p          → Paste after cursor
+u          → Undo
+gg         → Go to top of file
+G          → Go to bottom of file
+/pattern   → Search forward
+n          → Next search result
+:%s/old/new/g  → Replace all occurrences
+:set number    → Show line numbers
+:set paste     → Paste mode (avoids auto-indent issues when pasting YAML)
+gg=G           → Auto-indent entire file (use carefully)
+```
+
+> [!TIP]
+> The **INSERT key is disabled** on the exam remote desktop. Always use `i` to enter insert mode.
 
 ---
 
