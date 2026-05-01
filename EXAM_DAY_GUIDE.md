@@ -112,22 +112,30 @@ No other websites, notes, or books are allowed.
 
 ## ⚡ First 5 Minutes of the Exam
 
-Run these immediately after logging in to any node:
+Run these immediately after logging in — do this on **every node** you SSH into:
 
 ```bash
-# 1. Verify kubectl alias works
+# 1. Confirm alias and autocompletion work (pre-configured on exam nodes)
 k version --short
 
-# 2. Check which context you're in
-k config get-contexts
-k config current-context
+# 2. Set up speed shortcuts (if not already set)
+alias k=kubectl
+export do="--dry-run=client -o yaml"
+export now="--force --grace-period=0"
 
-# 3. Set namespace (if task specifies one)
-k config set-context --current --namespace=<namespace>
-
-# 4. Enable bash completion (if not already active)
+# 3. Enable bash completion
 source <(kubectl completion bash)
 complete -F __start_kubectl k
+
+# 4. Configure vim for YAML editing
+echo "set tabstop=2" >> ~/.vimrc
+echo "set expandtab" >> ~/.vimrc
+echo "set shiftwidth=2" >> ~/.vimrc
+export KUBE_EDITOR=vim
+
+# 5. Check current context before every task
+k config get-contexts
+k config current-context
 ```
 
 ---
@@ -142,7 +150,7 @@ The exam is **2 hours** for 15–20 tasks.
 | **Skip and return** | Flag hard questions, return after easier ones |
 | **Partial credit** | Exists — incomplete answers still score points |
 | **High-weight tasks** | Do these first if confident |
-| **etcd/cluster upgrade** | Time-consuming — plan carefully |
+| **Cluster upgrade** | Time-consuming — plan carefully |
 | **Verify your work** | Always run `kubectl get`/`describe` to confirm |
 
 ### Time allocation by domain weight
@@ -155,21 +163,59 @@ The exam is **2 hours** for 15–20 tasks.
 | Workloads & Scheduling | 15% | ~18 min |
 | Storage | 10% | ~12 min |
 
+**3-pass approach:**
+1. **First pass (60 min):** Solve everything under 5 min — skip the rest
+2. **Second pass (45 min):** Return to flagged questions, use docs
+3. **Buffer (15 min):** Final verification pass
+
+---
+
+## ⚙️ Imperative Commands Quick Reference
+
+```bash
+# Pods
+k run nginx --image=nginx
+k run busybox --image=busybox --restart=Never -- sleep 3600
+
+# Deployments
+k create deploy app --image=nginx --replicas=3
+
+# Services
+k expose deploy app --port=80 --target-port=8080
+k create svc clusterip my-svc --tcp=80:8080
+
+# ConfigMaps & Secrets
+k create configmap cm --from-literal=key=value
+k create secret generic sec --from-literal=key=value --from-file=./file
+
+# RBAC
+k create role r --verb=get,list --resource=pods
+k create rolebinding rb --role=r --user=username
+k create clusterrole cr --verb=get --resource=pods
+k create clusterrolebinding crb --clusterrole=cr --user=username
+
+# Scale / Image update
+k scale deploy app --replicas=5
+k set image deploy/app nginx=nginx:1.26
+
+# Generate YAML without applying
+k run nginx --image=nginx $do > pod.yaml
+k create deploy app --image=nginx $do > deploy.yaml
+```
+
 ---
 
 ## 🔑 Essential kubectl One-Liners for Speed
 
 ```bash
-# Generate YAML without applying (fastest way to get a template)
-k run nginx --image=nginx --dry-run=client -o yaml > pod.yaml
-k create deploy app --image=nginx --replicas=3 --dry-run=client -o yaml > deploy.yaml
-k create svc clusterip my-svc --tcp=80:8080 --dry-run=client -o yaml > svc.yaml
-
 # Delete fast (no grace period)
-k delete pod my-pod --grace-period=0 --force
+k delete pod my-pod $now
 
 # Switch namespace quickly
 k config set-context --current --namespace=my-namespace
+
+# Switch cluster context (required per task!)
+k config use-context <context-name>
 
 # Get all resources in a namespace
 k get all -n my-namespace
@@ -180,6 +226,14 @@ k get events --sort-by='.lastTimestamp' -n my-namespace
 # Explain resource fields without docs
 k explain pod.spec.containers.livenessProbe
 k explain deployment.spec.strategy
+k explain networkpolicy.spec
+
+# Check RBAC
+k auth can-i create pods --as=<user> -n <ns>
+
+# Check available API versions for a resource
+k api-resources | grep ingress
+k api-versions | grep networking
 ```
 
 ---
@@ -202,7 +256,100 @@ n          → Next search result
 :%s/old/new/g  → Replace all occurrences
 :set number    → Show line numbers
 :set paste     → Paste mode (avoids auto-indent issues)
+gg=G           → Auto-indent entire file (use carefully)
 ```
+
+---
+
+## 🔧 Troubleshooting Quick Flow (30% of Exam)
+
+When something is broken, follow this order every time:
+
+```bash
+# Step 1 — Is the resource there? What state?
+k get <resource> -n <ns>
+
+# Step 2 — What does Kubernetes think is wrong?
+k describe <resource> <name> -n <ns>   # check Events at bottom
+
+# Step 3 — What does the application say?
+k logs <pod> -n <ns>
+k logs <pod> -n <ns> --previous        # if pod keeps crashing
+
+# Step 4 — Cluster-wide events
+k get events -n <ns> --sort-by='.lastTimestamp'
+
+# Step 5 — Node/kubelet issues (if node is NotReady)
+ssh <node>
+sudo -i
+systemctl status kubelet
+journalctl -u kubelet -f
+
+# Step 6 — Static pod issues (control plane components)
+ls /etc/kubernetes/manifests/
+cat /etc/kubernetes/manifests/kube-apiserver.yaml
+```
+
+---
+
+## 🔼 Cluster Upgrade Quick Checklist
+
+```bash
+# 1. Drain the control plane node
+k drain <node> --ignore-daemonsets --delete-emptydir-data
+
+# 2. Upgrade kubeadm
+apt-mark unhold kubeadm
+apt-get install -y kubeadm=1.x.x-*
+apt-mark hold kubeadm
+
+# 3. Plan and apply
+kubeadm upgrade plan
+kubeadm upgrade apply v1.x.x    # control plane only
+
+# 4. Upgrade kubelet + kubectl
+apt-mark unhold kubelet kubectl
+apt-get install -y kubelet=1.x.x-* kubectl=1.x.x-*
+apt-mark hold kubelet kubectl
+systemctl daemon-reload
+systemctl restart kubelet
+
+# 5. Uncordon
+k uncordon <node>
+
+
+# For each worker node (repeat per node):
+k drain <worker-node> --ignore-daemonsets --delete-emptydir-data
+# SSH into the worker node, then:
+ssh <worker-node>
+sudo -i
+apt-mark unhold kubeadm kubelet kubectl
+apt-get install -y kubeadm=1.x.x-* kubelet=1.x.x-* kubectl=1.x.x-*
+apt-mark hold kubeadm kubelet kubectl
+kubeadm upgrade node
+systemctl daemon-reload && systemctl restart kubelet
+exit
+# Back on control plane:
+k uncordon <worker-node>
+```
+
+---
+
+## 📚 Kubernetes Docs Bookmarks
+
+One browser tab allowed. Know these paths:
+
+| Topic | URL Path |
+|-------|----------|
+| kubectl cheatsheet | `/docs/reference/kubectl/quick-reference/` |
+| RBAC | `/docs/reference/access-authn-authz/rbac/` |
+| Network Policies | `/concepts/services-networking/network-policies/` |
+| PersistentVolumes | `/concepts/storage/persistent-volumes/` |
+| Scheduling | `/concepts/scheduling-eviction/` |
+| kubeadm install | `/setup/production-environment/tools/kubeadm/install-kubeadm/` |
+| Ingress | `/concepts/services-networking/ingress/` |
+
+Use `Ctrl+F` in Firefox to search within any docs page.
 
 ---
 
@@ -211,13 +358,14 @@ n          → Next search result
 | Mistake | Prevention |
 |---------|-----------|
 | Wrong namespace | Always check task context; use `-n <namespace>` |
-| Wrong cluster context | Run `k config current-context` before each task |
+| Wrong cluster context | Run `k config use-context <ctx>` before each task |
 | Forgetting `sudo -i` | Always escalate on worker nodes |
 | Not verifying work | After every task, run `k get`/`describe` to confirm |
 | Editing wrong file | Double-check paths: `/etc/kubernetes/manifests/` |
-| etcd wrong flags | Always specify `--endpoints`, `--cacert`, `--cert`, `--key` |
 | Accidentally closing tab | Use `Ctrl+Alt+W` NOT `Ctrl+W` |
-| Running out of time | Skip, flag, come back — partial credit is better than nothing |
+| Running out of time | Skip, flag, come back — partial credit beats nothing |
+| Tabs in YAML | Always use 2 spaces, never tabs |
+| Forgetting `--restart=Never` | Required for one-off pods: `k run test --image=busybox --restart=Never` |
 
 ---
 

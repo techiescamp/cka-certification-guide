@@ -83,22 +83,22 @@ kubectl auth can-i list nodes --as=system:serviceaccount:monitoring:monitor-sa
 <summary>Solution</summary>
 
 ```bash
-# Step 1: Update kubeadm
+# Step 1: Drain the control plane node first
+kubectl drain controlplane --ignore-daemonsets --delete-emptydir-data
+
+# Step 2: Upgrade kubeadm to the TARGET version (1.35.x)
 apt-get update
 apt-mark unhold kubeadm
-apt-get install -y kubeadm=1.34.0-*
+apt-get install -y kubeadm=1.35.0-*
 apt-mark hold kubeadm
 
-# Step 2: Plan and apply upgrade
+# Step 3: Plan and apply upgrade
 kubeadm upgrade plan
 kubeadm upgrade apply v1.35.0
 
-# Step 3: Drain node
-kubectl drain controlplane --ignore-daemonsets --delete-emptydir-data
-
-# Step 4: Upgrade kubelet and kubectl
+# Step 4: Upgrade kubelet and kubectl to TARGET version (1.35.x)
 apt-mark unhold kubelet kubectl
-apt-get install -y kubelet=1.34.0-* kubectl=1.34.0-*
+apt-get install -y kubelet=1.35.0-* kubectl=1.35.0-*
 apt-mark hold kubelet kubectl
 systemctl daemon-reload
 systemctl restart kubelet
@@ -1209,13 +1209,47 @@ kubectl get pvc -n database
 
 ---
 
+### Q35 — PodDisruptionBudget
+
+**Task:** Create a PodDisruptionBudget named `frontend-pdb` in namespace `production` for deployment `frontend` that ensures at least 2 pods are always available during voluntary disruptions (e.g., node drains).
+
+<details>
+<summary>Solution</summary>
+
+```yaml
+# pdb.yaml
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: frontend-pdb
+  namespace: production
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: frontend
+```
+
+```bash
+kubectl apply -f pdb.yaml
+
+# Verify
+kubectl get pdb frontend-pdb -n production
+kubectl describe pdb frontend-pdb -n production
+```
+
+> Use `minAvailable` (minimum pods that must stay up) **or** `maxUnavailable` (maximum pods allowed down at once) — not both. PDB `policy/v1` is the stable API (v1beta1 removed in k8s 1.25).
+</details>
+
+---
+
 ## Score Yourself
 
 | Questions Solved | Result |
 |-----------------|--------|
-| 28–34 | Exam-ready 🟢 |
-| 21–27 | Almost there 🟡 |
-| 14–20 | More practice needed 🟠 |
+| 29–35 | Exam-ready 🟢 |
+| 22–28 | Almost there 🟡 |
+| 15–21 | More practice needed 🟠 |
 | < 15  | Focus on fundamentals 🔴 |
 
 ---

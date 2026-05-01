@@ -67,7 +67,7 @@ k create rolebinding sa-binding --role=pod-reader --serviceaccount=dev:my-sa -n 
 
 ```bash
 # Initialize control plane
-kubeadm init --pod-network-cidr=192.168.0.0/16 --kubernetes-version=1.34.0
+kubeadm init --pod-network-cidr=192.168.0.0/16 --kubernetes-version=1.35.0
 
 # Join worker node (run on worker)
 kubeadm token create --print-join-command
@@ -79,16 +79,25 @@ kubeadm reset -f
 ### Cluster Upgrade (kubeadm)
 
 ```bash
-# On control plane
-apt-get update && apt-get install -y kubeadm=1.34.x-*
+# On control plane — upgrade kubeadm FIRST to target version
+apt-mark unhold kubeadm
+apt-get update && apt-get install -y kubeadm=1.35.x-*
+apt-mark hold kubeadm
 kubeadm upgrade plan
 kubeadm upgrade apply v1.35.x
-apt-get install -y kubelet=1.34.x-* kubectl=1.34.x-*
+# Then upgrade kubelet + kubectl to same target version
+apt-mark unhold kubelet kubectl
+apt-get install -y kubelet=1.35.x-* kubectl=1.35.x-*
+apt-mark hold kubelet kubectl
 systemctl daemon-reload && systemctl restart kubelet
 
 # On worker nodes
 kubectl drain <node> --ignore-daemonsets --delete-emptydir-data
-# (upgrade kubelet/kubectl on worker, then)
+apt-mark unhold kubeadm kubelet kubectl
+apt-get install -y kubeadm=1.35.x-* kubelet=1.35.x-* kubectl=1.35.x-*
+apt-mark hold kubeadm kubelet kubectl
+kubeadm upgrade node
+systemctl daemon-reload && systemctl restart kubelet
 kubectl uncordon <node>
 ```
 
@@ -237,7 +246,18 @@ ls /etc/kubernetes/manifests/
 
 # Find kubelet config for staticPodPath
 cat /var/lib/kubelet/config.yaml | grep staticPodPath
+
+# Edit a static pod manifest (kubelet auto-restarts pod on save)
+vim /etc/kubernetes/manifests/kube-apiserver.yaml
+
+# Watch for the pod to restart after editing
+watch kubectl get pods -n kube-system
+
+# If pod doesn't restart: check kubelet logs
+journalctl -u kubelet -f
 ```
+
+> Static pods are managed by kubelet directly, not the API server. Changes take effect within seconds of saving the manifest.
 
 ---
 
