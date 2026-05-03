@@ -1,30 +1,42 @@
-# Domain 3: Storage
+# Storage
 
 > **Exam Weight: 10%** — Focus on PV/PVC lifecycle, StorageClasses, and volume types.
 
 ---
 
-## Storage Hierarchy
+## Index
 
-```
-StorageClass
-     │
-     │ (dynamic provisioning)
-     ▼
-PersistentVolume (PV)
-     │
-     │ (binding)
-     ▼
-PersistentVolumeClaim (PVC)
-     │
-     │ (mount)
-     ▼
-   Pod
-```
+1. [Storage Hierarchy](#storage-hierarchy)
+2. [Kubernetes Volumes](#kubernetes-volumes)
+3. [PersistentVolumes (PV)](#persistentvolumes-pv)
+4. [PersistentVolumeClaims (PVC)](#persistentvolumeclaims-pvc)
+5. [StorageClasses](#storageclasses)
+6. [Using PVC in a Pod](#using-pvc-in-a-pod)
+7. [Volume Expansion](#volume-expansion)
+8. [Ephemeral Volumes](#ephemeral-volumes)
+9. [CSI (Container Storage Interface)](#csi-container-storage-interface)
+10. [Troubleshooting Storage](#troubleshooting-storage)
+11. [Exam Focus Points](#exam-focus-points)
 
 ---
 
-## Volume Types
+## Storage Hierarchy
+
+<p align="center">
+  <img src="./images/21.png" width="80%" />
+</p>
+
+---
+## Kubernetes Volumes
+
+> 👉 **Deep Dive Lesson:** [Kubernetes Volumes](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55791431)
+
+
+<p align="center">
+  <img src="./images/22.gif" width="80%" />
+</p>
+
+### Volume Types
 
 | Type | Description | Persistence |
 |------|-------------|------------|
@@ -66,6 +78,12 @@ volumes:
 ---
 
 ## PersistentVolumes (PV)
+
+> 👉 **Deep Dive Lesson:** [Persistent Volumes](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55792087)
+
+<p align="center">
+  <img src="./images/23.gif" width="80%" />
+</p>
 
 ### Access Modes
 
@@ -117,6 +135,12 @@ spec:
 
 ## PersistentVolumeClaims (PVC)
 
+> 👉 **Deep Dive Lesson:** [Persistent Volumes Claims](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55792087)
+
+<p align="center">
+  <img src="./images/24.gif" width="80%" />
+</p>
+
 - PVC is a **request** for storage
 - Kubernetes binds a PVC to a PV that satisfies all requirements
 - A PVC binds to **one PV** only
@@ -149,6 +173,12 @@ spec:
 ---
 
 ## StorageClasses
+
+> 👉 **Deep Dive Lesson:** [Storage Classes](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55786335)
+
+<p align="center">
+  <img src="./images/25.gif" width="80%" />
+</p>
 
 StorageClasses enable **dynamic provisioning** — PVs are automatically created when a PVC is created.
 
@@ -279,7 +309,7 @@ kubectl get pv
 
 ---
 
-## Exam Focus Points for Domain 3
+## Exam Focus Points
 
 1. **PV/PVC creation and binding** — Know the binding rules (storageClass, accessMode, capacity)
 2. **Access modes** — RWO vs RWX and what supports each
@@ -289,5 +319,5 @@ kubectl get pv
 
 ---
 
-*Previous: [Domain 2 — Workloads & Scheduling](./02-workloads-scheduling.md)*
-*Next: [Domain 4 — Services & Networking](./04-services-networking.md)*
+*Previous: [Workloads & Scheduling](./02-workloads-scheduling.md)*
+*Next: [Services & Networking](./04-services-networking.md)*

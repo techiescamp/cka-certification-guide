@@ -1,6 +1,27 @@
-# Domain 2: Workloads & Scheduling
+# Workloads & Scheduling
 
 > **Exam Weight: 15%** — Focus on Deployments, scheduling constraints, and resource management.
+
+---
+
+## Index
+
+1. [Workload Types](#workload-types)
+2. [Deployments](#deployments)
+3. [Scheduling](#scheduling)
+4. [Resource Requests vs Limits](#resource-requests-vs-limits)
+5. [Node Name & Node Selector](#node-name--node-selector)
+6. [Node Affinity](#node-affinity)
+7. [Pod Affinity & Anti-Affinity](#pod-affinity--anti-affinity)
+8. [Taints & Tolerations](#taints--tolerations)
+9. [ConfigMaps & Secrets](#configmaps--secrets)
+10. [Health Probes](#health-probes)
+11. [Init Containers](#init-containers)
+12. [Static Pods](#static-pods)
+13. [Pod Priority & Preemption](#pod-priority--preemption)
+14. [HorizontalPodAutoscaler (HPA)](#horizontalpodautoscaler-hpa)
+15. [Admission Controllers](#admission-controllers)
+16. [Exam Focus Points](#exam-focus-points)
 
 ---
 
@@ -19,6 +40,22 @@
 ---
 
 ## Deployments
+
+> 👉 **Deep Dive Lesson:** [Deployments](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/61061431)
+
+A Deployment manages a ReplicaSet; the ReplicaSet manages Pods via label selectors. The `pod-template-hash` label is added automatically so two ReplicaSets can coexist during a rolling update.
+
+<p align="center">
+  <img src="./images/08.png" width="80%" alt="Deployment → ReplicaSet → Pod label hierarchy" />
+</p>
+
+<p align="center"><em>Deployment → ReplicaSet → Pod: selectors chain through each layer via labels</em></p>
+
+### Rolling Update in Action
+
+<p align="center">
+  <img src="./images/11.gif" width="80%" />
+</p>
 
 ### Deployment Strategy Types
 
@@ -62,13 +99,26 @@ kubectl set image deployment/webapp nginx=nginx:1.26
 
 ## Scheduling
 
+> 👉 **Deep Dive Lesson:** [Scheduler](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/58086840)
+
 ### How the Scheduler Works
+
+<p align="center">
+  <img src="./images/09.gif" width="80%" />
+</p>
 
 1. **Filtering:** Remove nodes that don't meet requirements (resources, taints, affinity)
 2. **Scoring:** Rank remaining nodes (least utilized, image locality, etc.)
 3. **Binding:** Assign pod to winning node
 
-### Resource Requests vs Limits
+
+## Resource Requests vs Limits
+
+> 👉 **Deep Dive Lesson:** [Resource Requests vs Limits](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55682021)
+
+<p align="center">
+  <img src="./images/10.gif" width="80%" />
+</p>
 
 | | Request | Limit |
 |--|---------|-------|
@@ -95,41 +145,58 @@ resources:
 
 ---
 
-## Scheduling Constraints
+### Node Name & Node Selector 
 
-### NodeSelector (simple label matching)
+> 👉 **Deep Dive Lesson:** [Node Selector](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55686799)
+
+
+<p align="center">
+  <img src="./images/12.gif" width="80%" />
+</p>
 
 ```yaml
 spec:
   nodeSelector:
-    disktype: ssd
+    gpu: "true"
 ```
 
 ```bash
-kubectl label node node01 disktype=ssd
+kubectl label node node01 gpu="true"
 ```
 
-### Node Affinity (advanced label matching)
+
+## Node Affinity 
+
+> 👉 **Deep Dive Lesson:** [Node Affinity](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55687979)
+
+
+<p align="center">
+  <img src="./images/13.gif" width="80%" />
+</p>
 
 ```yaml
 spec:
+  containers:
+  - name: nginx
+    image: nginx
   affinity:
     nodeAffinity:
-      # Hard requirement (pod stays pending if not met)
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
         - matchExpressions:
-          - key: zone
+          - key: diskType
             operator: In
-            values: [us-east-1a, us-east-1b]
+            values:
+            - ssd
       # Soft preference (scheduler prefers but not required)
-      preferredDuringSchedulingIgnoredDuringExecution:
-      - weight: 1
+     preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
         preference:
           matchExpressions:
-          - key: disktype
+          - key: nodeType
             operator: In
-            values: [ssd]
+            values:
+            - gpu
 ```
 
 ### Pod Affinity & Anti-Affinity
@@ -155,7 +222,14 @@ spec:
           topologyKey: kubernetes.io/hostname
 ```
 
-### Taints & Tolerations
+## Taints & Tolerations
+
+> 👉 **Deep Dive Lesson:** [Taints & Tolerations](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55659898)
+
+
+<p align="center">
+  <img src="./images/14.gif" width="80%" />
+</p>  
 
 **Taints** on nodes prevent pods from scheduling there (unless they tolerate).
 
@@ -182,6 +256,13 @@ spec:
 ---
 
 ## ConfigMaps & Secrets
+
+> 👉 **Deep Dive Lesson:** [ConfigMaps](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55993034)
+
+
+<p align="center">
+  <img src="./images/15.gif" width="80%" />
+</p>  
 
 ### ConfigMap Usage Patterns
 
@@ -210,6 +291,13 @@ containers:
     mountPath: /etc/config
 ```
 
+> 👉 **Deep Dive Lesson:** [Secrets](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55993473)
+
+
+<p align="center">
+  <img src="./images/16.png" width="80%" />
+</p>  
+
 ### Secret Types
 
 | Type | Use |
@@ -223,7 +311,7 @@ containers:
 
 ---
 
-## Health Probes
+### Health Probes
 
 | Probe | Purpose | What Happens on Failure |
 |-------|---------|------------------------|
@@ -258,6 +346,14 @@ startupProbe:
 
 ## Init Containers
 
+> 👉 **Deep Dive Lesson:** [Init Containers](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55993474)
+
+
+<p align="center">
+  <img src="./images/17.png" width="80%" />
+</p>  
+
+
 - Run to completion **before** main containers start
 - Run sequentially (not in parallel)
 - Use cases: wait for dependencies, pre-populate data, run setup scripts
@@ -277,6 +373,13 @@ spec:
 
 ## Static Pods
 
+> 👉 **Deep Dive Lesson:** [Static Pods](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55279551)
+
+
+<p align="center">
+  <img src="./images/18.gif" width="80%" />
+</p>  
+
 - Managed directly by `kubelet` on a node (not by the API server)
 - Manifests stored at `staticPodPath` in kubelet config (default: `/etc/kubernetes/manifests/`)
 - Control plane components (apiserver, etcd, etc.) are static pods
@@ -291,6 +394,13 @@ cat /var/lib/kubelet/config.yaml | grep staticPodPath
 ---
 
 ## Pod Priority & Preemption
+
+> 👉 **Deep Dive Lesson:** [Pod Priority & Preemption](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/60175740)
+
+
+<p align="center">
+  <img src="./images/19.png" width="80%" />
+</p>  
 
 ```yaml
 # 1. Create PriorityClass
@@ -312,6 +422,13 @@ Higher priority pods can **preempt** (evict) lower priority pods when resources 
 ---
 
 ## HorizontalPodAutoscaler (HPA)
+
+> 👉 **Deep Dive Lesson:** [Horizontal Pod Autoscaler](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/61061646)
+
+
+<p align="center">
+  <img src="./images/20.gif" width="80%" />
+</p>  
 
 ```bash
 kubectl autoscale deployment <name> \
@@ -341,7 +458,7 @@ Intercept API requests before they're persisted to ETCD:
 
 ---
 
-## Exam Focus Points for Domain 2
+## Exam Focus Points
 
 1. **Deployment updates & rollbacks** — Very commonly tested
 2. **ConfigMaps and Secrets** — Know all 3 usage patterns
@@ -352,5 +469,5 @@ Intercept API requests before they're persisted to ETCD:
 
 ---
 
-*Previous: [Domain 1 — Cluster Architecture](./01-cluster-architecture.md)*
-*Next: [Domain 3 — Storage](./03-storage.md)*
+*Previous: [Cluster Architecture](./01-cluster-architecture.md)*
+*Next: [Storage](./03-storage.md)*
