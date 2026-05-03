@@ -1,37 +1,29 @@
-# Domain 1: Cluster Architecture, Installation & Configuration
+# Cluster Architecture, Installation & Configuration
 
 > **Exam Weight: 25%** — Highest weighted domain. Focus on RBAC, kubeadm cluster lifecycle, and extension interfaces.
 
 ---
 
+## Index
+
+1. [Kubernetes Architecture Overview](#kubernetes-architecture-overview)
+2. [RBAC (Role-Based Access Control)](#rbac-role-based-access-control)
+3. [ServiceAccounts](#serviceaccounts)
+4. [kubeadm Cluster Lifecycle](#kubeadm-cluster-lifecycle)
+5. [Extension Interfaces](#extension-interfaces)
+6. [Custom Resource Definitions (CRDs)](#custom-resource-definitions-crds)
+7. [Helm & Kustomize](#helm--kustomize)
+
+
+---
+
 ## Kubernetes Architecture Overview
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                    CONTROL PLANE                        │
-│  ┌────────────┐  ┌──────────────┐  ┌────────────────┐  │
-│  │ kube-       │  │ kube-        │  │ kube-          │  │
-│  │ apiserver   │  │ scheduler    │  │ controller-    │  │
-│  │             │  │              │  │ manager        │  │
-│  └────────────┘  └──────────────┘  └────────────────┘  │
-│  ┌────────────┐  ┌──────────────┐                       │
-│  │   etcd     │  │ cloud-       │                       │
-│  │            │  │ controller   │                       │
-│  └────────────┘  └──────────────┘                       │
-└─────────────────────────────────────────────────────────┘
-          │                  │
-┌─────────────────┐  ┌─────────────────┐
-│   WORKER NODE   │  │   WORKER NODE   │
-│  ┌───────────┐  │  │  ┌───────────┐  │
-│  │  kubelet  │  │  │  │  kubelet  │  │
-│  ├───────────┤  │  │  ├───────────┤  │
-│  │ kube-proxy│  │  │  │ kube-proxy│  │
-│  ├───────────┤  │  │  ├───────────┤  │
-│  │ Container │  │  │  │ Container │  │
-│  │ Runtime   │  │  │  │ Runtime   │  │
-│  └───────────┘  │  │  └───────────┘  │
-└─────────────────┘  └─────────────────┘
-```
+> 👉 **Deep Dive Lesson:** [Kubernetes Architecture ](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/60080221)
+
+<p align="center">
+  <img src="./images/01.gif" width="80%" />
+</p>
 
 ### Control Plane Components
 
@@ -51,9 +43,17 @@
 | `kube-proxy` | Maintains network rules (iptables/ipvs) for services |
 | Container Runtime | Runs containers (containerd, CRI-O) |
 
+
 ---
 
 ## RBAC (Role-Based Access Control)
+
+> 👉 **Deep Dive Lesson:** [RBAC](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55733267) | [ServiceAccounts](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55724447) | [Roles & ClusterRoles](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55724449) | [RoleBindings & ClusterRoleBindings](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55997133)
+
+<p align="center">
+  <img src="./images/02.gif" width="80%" />
+</p>
+
 
 ### Core RBAC Objects
 
@@ -96,6 +96,8 @@ spec:
 
 ## kubeadm Cluster Lifecycle
 
+> 👉 **Deep Dive Lesson:** [Cluster Configurations](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55120266) | [Cluster Upgrades](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55120133)
+
 ### Init Phases (what kubeadm does)
 
 1. Preflight checks
@@ -110,23 +112,10 @@ spec:
 
 ### Key Files After Init
 
-```
-/etc/kubernetes/
-├── admin.conf            ← kubeconfig for admin
-├── kubelet.conf          ← kubeconfig for kubelet
-├── controller-manager.conf
-├── scheduler.conf
-├── manifests/            ← static pod manifests
-│   ├── kube-apiserver.yaml
-│   ├── etcd.yaml
-│   ├── kube-controller-manager.yaml
-│   └── kube-scheduler.yaml
-└── pki/                  ← all certificates
-    ├── ca.crt / ca.key
-    ├── apiserver.crt
-    ├── etcd/
-    └── ...
-```
+
+<p align="center">
+  <img src="./images/03.png" width="80%" />
+</p>
 
 ### Upgrade Path
 
@@ -146,9 +135,15 @@ spec:
 5. Restart kubelet
 6. `kubectl uncordon <worker>`
 
+
 ---
 
 ## Extension Interfaces
+
+<p align="center">
+  <img src="./images/04.png" width="80%" />
+</p>
+
 
 | Interface | Purpose |
 |-----------|---------|
@@ -159,6 +154,14 @@ spec:
 ---
 
 ## Custom Resource Definitions (CRDs)
+
+ > 👉 **Deep Dive Lesson:** [Custom Resource Definitions (CRDs and Operators)](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/58698982)
+
+
+<p align="center">
+  <img src="./images/05.png" width="80%" />
+</p>
+
 
 CRDs extend the Kubernetes API with custom resource types:
 
@@ -188,6 +191,12 @@ spec:
 
 ## Helm & Kustomize
 
+> 👉 **Deep Dive Lesson:** [Helm](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/62134793)
+
+<p align="center">
+  <img src="./images/06.png" width="80%" />
+</p>
+
 ### Helm (Package Manager)
 
 - **Chart** = package of K8s manifests
@@ -203,7 +212,12 @@ helm uninstall <release>
 helm list -A
 ```
 
+
 ### Kustomize (Template-free customization)
+
+<p align="center">
+  <img src="./images/07.png" width="80%" />
+</p>
 
 - Base + Overlays pattern
 - No templating — uses strategic merge patches
@@ -230,4 +244,4 @@ overlays/
 
 ---
 
-*Next: [Domain 2 — Workloads & Scheduling](./02-workloads-scheduling.md)*
+*Next: [Workloads & Scheduling](./02-workloads-scheduling.md)*

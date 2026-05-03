@@ -1,10 +1,25 @@
-# Domain 4: Services & Networking
+# Services & Networking
 
 > **Exam Weight: 20%** — Focus on Services, Network Policies, Ingress, and DNS.
 
 ---
 
+## Index
+
+1. [Kubernetes Networking Model](#kubernetes-networking-model)
+2. [Services](#services)
+3. [DNS in Kubernetes](#dns-in-kubernetes)
+4. [Network Policies](#network-policies)
+5. [Ingress](#ingress)
+6. [Gateway API](#gateway-api)
+7. [CoreDNS Configuration](#coredns-configuration)
+8. [kube-proxy Modes](#kube-proxy-modes)
+9. [Exam Focus Points](#exam-focus-points)
+
+---
+
 ## Kubernetes Networking Model
+
 
 ### Core Principles
 
@@ -13,23 +28,18 @@
 3. Agents on a node (kubelet, kube-proxy) can communicate with all pods on that node
 4. Pods can communicate with Services using DNS
 
-### Network Layers
+### Network Flow
 
-```
-External Traffic
-       │
-   Ingress / LoadBalancer
-       │
-    Services (ClusterIP/NodePort/LoadBalancer)
-       │
-  kube-proxy (iptables/ipvs rules)
-       │
-     Pods  ←──── CNI Plugin ────→  Pods
-```
+<p align="center">
+  <img src="./images/26.png" width="80%" />
+</p>
+
 
 ---
 
 ## Services
+
+> 👉 **Deep Dive Lesson:** [Services](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55809546)
 
 Services provide stable endpoints for pods (which have ephemeral IPs).
 
@@ -96,7 +106,7 @@ kubectl get endpoints <svc-name>
 
 ---
 
-## DNS in Kubernetes
+### DNS in Kubernetes
 
 CoreDNS provides DNS resolution. All services and pods get DNS entries.
 
@@ -136,7 +146,14 @@ kubectl run dns-test --image=busybox --rm -it -- \
 
 ## Network Policies
 
+> 👉 **Deep Dive Lesson:** [Network Policies](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/57421520)
+
 By default, all pods can communicate with all other pods. Network Policies restrict this.
+
+<p align="center">
+  <img src="./images/27.gif" width="80%" />
+</p>
+
 
 ### Key Concepts
 
@@ -229,6 +246,13 @@ from:
 
 ## Ingress
 
+> 👉 **Deep Dive Lesson:** [Ingress](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/56659356)
+
+
+<p align="center">
+  <img src="./images/28.gif" width="80%" />
+</p>
+
 Ingress manages external HTTP/HTTPS access to services.
 
 ### Requirements
@@ -290,7 +314,13 @@ spec:
 
 ---
 
-## Gateway API (Modern Ingress Alternative)
+## Gateway API 
+
+> 👉 **Deep Dive Lesson:** [Gateway API](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/61100920)
+
+<p align="center">
+  <img src="./images/30.png" width="80%" />
+</p>
 
 Gateway API is the successor to Ingress, with more features and better extensibility.
 
@@ -339,7 +369,9 @@ spec:
 
 ---
 
-## CoreDNS Configuration
+### CoreDNS Configuration
+
+> 👉 **Deep Dive Lesson:** [CoreDNS](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55120286)
 
 ```bash
 # View CoreDNS ConfigMap
@@ -372,6 +404,13 @@ kubectl get configmap coredns -n kube-system -o yaml
 
 ## kube-proxy Modes
 
+> 👉 **Deep Dive Lesson:** [kube-proxy Modes](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/58129596)
+
+<p align="center">
+  <img src="./images/31.png" width="80%" />
+</p>
+
+
 | Mode | How it Works |
 |------|-------------|
 | `iptables` (default) | Uses iptables rules for packet forwarding |
@@ -380,8 +419,7 @@ kubectl get configmap coredns -n kube-system -o yaml
 
 ---
 
-## Exam Focus Points for Domain 4
-
+## Exam Focus Points 
 1. **Service selectors** — Know why endpoints might be empty and how to fix
 2. **Network Policies** — Know default deny, allow by pod/namespace selector
 3. **DNS format** — Know the full FQDN `<svc>.<ns>.svc.cluster.local`
@@ -390,5 +428,5 @@ kubectl get configmap coredns -n kube-system -o yaml
 
 ---
 
-*Previous: [Domain 3 — Storage](./03-storage.md)*
-*Next: [Domain 5 — Troubleshooting](./05-troubleshooting.md)*
+*Previous: [Storage](./03-storage.md)*
+*Next: [Troubleshooting](./05-troubleshooting.md)*

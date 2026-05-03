@@ -9,28 +9,20 @@
 This is a detailed study guide with tips and practical examples to ace the Certified Kubernetes Administrator exam.
 
 ---
+## Hit the Star! :star:
+If you are planning to use this repo for reference, please hit the star. Thanks!
 
 ## 🗂️ Quick Navigation
 
 | Resource | Description |
 |--------------------------------------------------|---------------------------------------------------------------|
-| 📋 [CHEATSHEET.md](./CHEATSHEET.md)             | Fast kubectl command reference organized by exam domain       |
-| 🎯 [EXAM_TIPS.md](./EXAM_TIPS.md)               | Time management, strategy, common traps, last-minute checklist|
-| 📝 [PRACTICE_QUESTIONS.md](./PRACTICE_QUESTIONS.md) | 35 exam-style scenario questions with full solutions      |
-| 🔧 [TROUBLESHOOTING_GUIDE.md](./TROUBLESHOOTING_GUIDE.md) | Deep-dive debug playbooks for every cluster layer  |
-| 🗒️ [SYLLABUS.md](./SYLLABUS.md)                | **NEW** — Full CKA v1.35 official syllabus with all sub-topics & commands |
-| 📅 [EXAM_DAY_GUIDE.md](./EXAM_DAY_GUIDE.md)    | **NEW** — Printable exam-day reference: checklist, shortcuts, time strategy |
+| 📋 [Cheatsheet.md](./CHEATSHEET.md)             | Fast kubectl command reference organized by exam domain       |
+| 🎯 [Exam-tips.md](./EXAM_TIPS.md)               | Time management, strategy, common traps, last-minute checklist|
+| 📝 [Practice-questions.md](./PRACTICE_QUESTIONS.md) | 35 exam-style scenario questions with full solutions      |
+| 🔧 [Troubleshooting-guide.md](./TROUBLESHOOTING_GUIDE.md) | Deep-dive debug playbooks for every cluster layer  |
+| 🗒️ [Syllabus.md](./SYLLABUS.md)                | **NEW** — Full CKA v1.35 official syllabus with all sub-topics & commands |
+| 📅 [Exam-day-guide.md](./EXAM_DAY_GUIDE.md)    | **NEW** — Printable exam-day reference: checklist, shortcuts, time strategy |
 | ❓ [FAQ.md](./FAQ.md)                           | **NEW** — Official CKA FAQ (scoring, ID, proctoring, simulator, renewal) |
-
-**Domain Study Notes:**
-
-| Note | Domain | Exam Weight |
-|------|--------|-------------|
-| 📖 [01-cluster-architecture.md](./study-notes/01-cluster-architecture.md) | Cluster Architecture, Installation & Configuration | 25% |
-| 📖 [02-workloads-scheduling.md](./study-notes/02-workloads-scheduling.md) | Workloads & Scheduling | 15% |
-| 📖 [03-storage.md](./study-notes/03-storage.md) | Storage | 10% |
-| 📖 [04-services-networking.md](./study-notes/04-services-networking.md) | Services & Networking | 20% |
-| 📖 [05-troubleshooting.md](./study-notes/05-troubleshooting.md) | Troubleshooting | 30% |
 
 ---
 
@@ -85,100 +77,70 @@ Use code **MM26BUNCT** to save 60% on following CKA bundles.
 - CKA + CKS Bundle ($370+ Savings): [kube.promo/bundle](https://kube.promo/bundle)
 - CKA + CKAD + CKS Exam bundle (35% Discount): [kube.promo/k8s-bundle](https://kube.promo/k8s-bundle)
 
-## 🔑 Exam Day Technical Quick Reference
-
-> Full guide: [EXAM_DAY_GUIDE.md](./EXAM_DAY_GUIDE.md)
-
-### Critical Keyboard Shortcuts (Remote Desktop)
-
-| Action | Shortcut |
-|--------|----------|
-| Close tab **(use this, NOT Ctrl+W)** | `Ctrl+Alt+W` |
-| Copy in Terminal | `Ctrl+Shift+C` |
-| Paste in Terminal | `Ctrl+Shift+V` |
-| Find in Firefox | `Ctrl+F` |
-| Locate cursor | `Ctrl+Alt+K` |
-| Vim insert mode | `i` (INSERT key is disabled) |
-
-### Node Navigation
-
-```bash
-ssh <nodename>    # Move to task node
-sudo -i           # Get root on any node
-exit              # Return to base node
-```
-
-> [!WARNING]
-> **Do NOT reboot the base node.** Each task specifies which node to SSH into — complete the task there, then `exit` back to base.
-
-### Pre-installed Tools on All SSH Hosts
-
-`kubectl` (alias `k` with bash autocompletion) · `yq` · `curl` · `wget` · `man`
-
 ## 📚 Table of Contents
 
 > The CKA exam has **5 domains** totalling **100%** of your score. Each domain below shows its weight and all official sub-topics.
 
 ---
 
-### 🏗️ Domain 1 — [Cluster Architecture, Installation & Configuration](#1-cluster-architecture-installation--configuration-25) `25%`
+### 🏗️ [Cluster Architecture, Installation & Configuration](#1-cluster-architecture-installation--configuration-25) `25%`
 
 > ![weight](https://img.shields.io/badge/Exam%20Weight-25%25-4A90D9?style=flat-square) &nbsp; 📖 [Study Notes](./study-notes/01-cluster-architecture.md)
 
 | # | Sub-topic |
 |---|-----------|
-| 1.1 | 🔐 [Manage role-based access control (RBAC)](#manage-role-based-access-control-rbac) |
-| 1.2 | 🖥️ [Prepare underlying infrastructure for installing a Kubernetes cluster](#prepare-underlying-infrastructure-for-installing-a-kubernetes-cluster) |
-| 1.3 | ⚙️ [Create and manage Kubernetes clusters using kubeadm](#create-and-manage-kubernetes-clusters-using-kubeadm) |
-| 1.4 | 🔄 [Manage the lifecycle of Kubernetes clusters](#manage-the-lifecycle-of-kubernetes-clusters) |
-| 1.5 | 📦 [Use Helm and Kustomize to install cluster components](#use-helm-and-kustomize-to-install-cluster-components) |
-| 1.6 | 🔌 [Understand extension interfaces (CNI, CSI, CRI, etc.)](#understand-extension-interfaces-cni-csi-cri-etc) |
-| 1.7 | 🧩 [Understand CRDs, install and configure operators](#understand-crds-install-and-configure-operators) |
+| 1 | 🔐 [Manage role-based access control (RBAC)](#manage-role-based-access-control-rbac) |
+| 2 | 🖥️ [Prepare underlying infrastructure for installing a Kubernetes cluster](#prepare-underlying-infrastructure-for-installing-a-kubernetes-cluster) |
+| 3 | ⚙️ [Create and manage Kubernetes clusters using kubeadm](#create-and-manage-kubernetes-clusters-using-kubeadm) |
+| 4 | 🔄 [Manage the lifecycle of Kubernetes clusters](#manage-the-lifecycle-of-kubernetes-clusters) |
+| 5 | 📦 [Use Helm and Kustomize to install cluster components](#use-helm-and-kustomize-to-install-cluster-components) |
+| 6 | 🔌 [Understand extension interfaces (CNI, CSI, CRI, etc.)](#understand-extension-interfaces-cni-csi-cri-etc) |
+| 7 | 🧩 [Understand CRDs, install and configure operators](#understand-crds-install-and-configure-operators) |
 
 ---
 
-### 🚀 Domain 2 — [Workloads & Scheduling](#2-workloads--scheduling-15) `15%`
+### 🚀 [Workloads & Scheduling](#2-workloads--scheduling-15) `15%`
 
 > ![weight](https://img.shields.io/badge/Exam%20Weight-15%25-7B68EE?style=flat-square) &nbsp; 📖 [Study Notes](./study-notes/02-workloads-scheduling.md)
 
 | # | Sub-topic |
 |---|-----------|
-| 2.1 | 🔁 [Understand deployments and how to perform rolling updates and rollbacks](#understand-deployments-and-how-to-perform-rolling-update-and-rollbacks) |
-| 2.2 | 🗂️ [Use ConfigMaps and Secrets to configure applications](#use-configmaps-and-secrets-to-configure-applications) |
-| 2.3 | 📈 [Configure workload autoscaling](#configure-workload-autoscaling) |
-| 2.4 | 🛡️ [Understand the primitives used to create robust, self-healing application deployments](#understand-the-primitives-used-to-create-robust-self-healing-application-deployments) |
-| 2.5 | 🎯 [Configure Pod admission and scheduling (limits, node affinity, etc.)](#configure-pod-admission-and-scheduling-limits-node-affinity-etc) |
+| 1 | 🔁 [Understand deployments and how to perform rolling updates and rollbacks](#understand-deployments-and-how-to-perform-rolling-update-and-rollbacks) |
+| 2 | 🗂️ [Use ConfigMaps and Secrets to configure applications](#use-configmaps-and-secrets-to-configure-applications) |
+| 3 | 📈 [Configure workload autoscaling](#configure-workload-autoscaling) |
+| 4 | 🛡️ [Understand the primitives used to create robust, self-healing application deployments](#understand-the-primitives-used-to-create-robust-self-healing-application-deployments) |
+| 5 | 🎯 [Configure Pod admission and scheduling (limits, node affinity, etc.)](#configure-pod-admission-and-scheduling-limits-node-affinity-etc) |
 
 ---
 
-### 💾 Domain 3 — [Storage](#3-storage-10) `10%`
+### 💾 [Storage](#3-storage-10) `10%`
 
 > ![weight](https://img.shields.io/badge/Exam%20Weight-10%25-E8A838?style=flat-square) &nbsp; 📖 [Study Notes](./study-notes/03-storage.md)
 
 | # | Sub-topic |
 |---|-----------|
-| 3.1 | 🏷️ [Implement storage classes and dynamic volume provisioning](#implement-storage-classes-and-dynamic-volume-provisioning) |
-| 3.2 | 🔧 [Configure volume types, access modes and reclaim policies](#configure-volume-types-access-modes-and-reclaim-policies) |
-| 3.3 | 📀 [Manage persistent volumes and persistent volume claims](#manage-persistent-volumes-and-persistent-volume-claims) |
+| 1 | 🏷️ [Implement storage classes and dynamic volume provisioning](#implement-storage-classes-and-dynamic-volume-provisioning) |
+| 2 | 🔧 [Configure volume types, access modes and reclaim policies](#configure-volume-types-access-modes-and-reclaim-policies) |
+| 3 | 📀 [Manage persistent volumes and persistent volume claims](#manage-persistent-volumes-and-persistent-volume-claims) |
 
 ---
 
-### 🌐 Domain 4 — [Services & Networking](#4-services--networking-20) `20%`
+### 🌐 [Services & Networking](#4-services--networking-20) `20%`
 
 > ![weight](https://img.shields.io/badge/Exam%20Weight-20%25-2ECC71?style=flat-square) &nbsp; 📖 [Study Notes](./study-notes/04-services-networking.md)
 
 | # | Sub-topic |
 |---|-----------|
-| 4.1 | 🔗 [Understand connectivity between Pods](#understand-connectivity-between-pods) |
-| 4.2 | 🛡️ [Define and enforce Network Policies](#define-and-enforce-network-policies) |
-| 4.3 | 🔀 [Use ClusterIP, NodePort, LoadBalancer service types and endpoints](#use-clusterip-nodeport-loadbalancer-service-types-and-endpoints) |
-| 4.4 | 🚪 [Use the Gateway API to manage Ingress traffic](#use-the-gateway-api-to-manage-ingress-traffic) |
-| 4.5 | 🗺️ [Know how to use Ingress controllers and Ingress resources](#know-how-to-use-ingress-controllers-and-ingress-resources) |
-| 4.6 | 🔍 [Understand and use CoreDNS](#understand-and-use-coredns) |
+| 1 | 🔗 [Understand connectivity between Pods](#understand-connectivity-between-pods) |
+| 2 | 🛡️ [Define and enforce Network Policies](#define-and-enforce-network-policies) |
+| 3 | 🔀 [Use ClusterIP, NodePort, LoadBalancer service types and endpoints](#use-clusterip-nodeport-loadbalancer-service-types-and-endpoints) |
+| 4 | 🚪 [Use the Gateway API to manage Ingress traffic](#use-the-gateway-api-to-manage-ingress-traffic) |
+| 5 | 🗺️ [Know how to use Ingress controllers and Ingress resources](#know-how-to-use-ingress-controllers-and-ingress-resources) |
+| 6 | 🔍 [Understand and use CoreDNS](#understand-and-use-coredns) |
 
 ---
 
-### 🔬 Domain 5 — [Troubleshooting](#5-troubleshooting-30) `30%` ⭐ Highest Weight
+### 🔬 [Troubleshooting](#5-troubleshooting-30) `30%` ⭐ Highest Weight
 
 > ![weight](https://img.shields.io/badge/Exam%20Weight-30%25-E74C3C?style=flat-square) &nbsp; 📖 [Study Notes](./study-notes/05-troubleshooting.md)
 
@@ -187,11 +149,11 @@ exit              # Return to base node
 
 | # | Sub-topic |
 |---|-----------|
-| 5.1 | 🖥️ [Troubleshoot clusters and nodes](#troubleshoot-clusters-and-nodes) |
-| 5.2 | ⚙️ [Troubleshoot cluster components](#troubleshoot-cluster-components) |
-| 5.3 | 📊 [Monitor cluster and application resource usage](#monitor-cluster-and-application-resource-usage) |
-| 5.4 | 📋 [Manage and evaluate container output streams](#manage-and-evaluate-container-output-streams) |
-| 5.5 | 🌐 [Troubleshoot services and networking](#troubleshoot-services-and-networking) |
+| 1 | 🖥️ [Troubleshoot clusters and nodes](#troubleshoot-clusters-and-nodes) |
+| 2 | ⚙️ [Troubleshoot cluster components](#troubleshoot-cluster-components) |
+| 3 | 📊 [Monitor cluster and application resource usage](#monitor-cluster-and-application-resource-usage) |
+| 4 | 📋 [Manage and evaluate container output streams](#manage-and-evaluate-container-output-streams) |
+| 5 | 🌐 [Troubleshoot services and networking](#troubleshoot-services-and-networking) |
 
 ---
 

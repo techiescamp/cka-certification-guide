@@ -1,4 +1,4 @@
-# Domain 5: Troubleshooting
+# Troubleshooting
 
 > **Exam Weight: 30%** — The highest-impact domain. Master the debug methodology.
 
@@ -15,24 +15,9 @@
 
 ## Troubleshooting Methodology
 
-```
-Problem Reported
-      │
-      ▼
-kubectl get <resource>        ← What is the current state?
-      │
-      ▼
-kubectl describe <resource>   ← Why is it in that state? (Events!)
-      │
-      ▼
-kubectl logs <pod>            ← What did the application say?
-      │
-      ▼
-systemctl / journalctl        ← What did the system/kubelet say?
-      │
-      ▼
-Fix → Verify
-```
+<p align="center">
+  <img src="./images/32.png" width="80%" />
+</p>
 
 ---
 
@@ -383,7 +368,7 @@ kubectl uncordon <node>
 
 ---
 
-## Exam Focus Points for Domain 5
+## Exam Focus Points 
 
 1. **Node NotReady** — kubelet troubleshooting is almost always tested
 2. **Service endpoints** — selector mismatch is the #1 networking issue
@@ -395,5 +380,5 @@ kubectl uncordon <node>
 
 ---
 
-*Previous: [Domain 4 — Services & Networking](./04-services-networking.md)*
+*Previous: [Services & Networking](./04-services-networking.md)*
 *Back to [Main Guide](../README.md)*
