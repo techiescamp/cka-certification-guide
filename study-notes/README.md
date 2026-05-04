@@ -55,7 +55,7 @@ Before any API request is processed, Kubernetes answers two questions: **Who are
 After `kubeadm init`, the control plane lives in `/etc/kubernetes/`. Knowing this layout is essential for upgrades, certificate rotation, and debugging static pod failures.
 
 <p align="center">
-  <img src="./images/03.png" width="80%" alt="kubeadm output — /etc/kubernetes/ directory layout" />
+  <img src="./images/3.png" width="80%" alt="kubeadm output — /etc/kubernetes/ directory layout" />
 </p>
 
 <p align="center"><em>Kubeconfig files for each component, static pod manifests in <code>manifests/</code>, and all certificates under <code>pki/</code></em></p>
