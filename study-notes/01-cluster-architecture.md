@@ -114,7 +114,7 @@ spec:
 
 
 <p align="center">
-  <img src="./images/03.png" width="80%" />
+  <img src="./images/3.png" width="80%" />
 </p>
 
 ### Upgrade Path
