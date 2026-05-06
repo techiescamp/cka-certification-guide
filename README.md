@@ -1,4 +1,4 @@
-# Certified Kubernetes Administrator (CKA) Exam Preparation Guide - V1.36 (2026)
+# Certified Kubernetes Administrator (CKA) Exam Preparation Guide - V1.35 (2026)
 
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-v1.35-326CE5?logo=kubernetes&logoColor=white)
 ![Exam](https://img.shields.io/badge/CKA-Exam%20Prep-green)
@@ -26,36 +26,19 @@ Use code **35KUBECT** to save on following bundles:
 - KCNA + KCSA + CKA + CKAD + CKS: [kube.promo/kubestronaut](https://kube.promo/kubestronaut)
 
 ---
-
-## 🚀 How to Use This Repo
-
-**New to CKA?** Follow this path:
-1. Read the domain study notes in `study-notes/` to understand the theory
-2. Work through this README for hands-on command references and examples
-3. Set up the lab environment (`lab-setup/`) for hands-on practice
-4. Test yourself with `PRACTICE_QUESTIONS.md`
-5. Review `EXAM_TIPS.md` the week before your exam
-6. Keep `CHEATSHEET.md` open during practice sessions
-
-**Already studying?** Jump directly to any section using the Quick Navigation above.
-
-**Lab Setup:** See `lab-setup/` for multi-platform Vagrant-based Kubernetes cluster setup (Mac, Windows, Ubuntu).
-
----
-
 ## 🗂️ Quick Navigation
 
 | Resource | Description |
 |--------------------------------------------------|---------------------------------------------------------------|
+| 🗒️ [Syllabus.md](./SYLLABUS.md)                | **NEW**  Full CKA v1.35 official syllabus with all sub-topics & commands |
 | 📋 [Cheatsheet.md](./CHEATSHEET.md)             | Fast kubectl command reference organized by exam domain       |
-| 🎯 [Exam-tips.md](./EXAM_TIPS.md)               | Time management, strategy, common traps, last-minute checklist|
 | 📝 [Practice-questions.md](./PRACTICE_QUESTIONS.md) | 35 exam-style scenario questions with full solutions      |
 | 🔧 [Troubleshooting-guide.md](./TROUBLESHOOTING_GUIDE.md) | Deep-dive debug playbooks for every cluster layer  |
-| 🗒️ [Syllabus.md](./SYLLABUS.md)                | **NEW** — Full CKA v1.35 official syllabus with all sub-topics & commands |
-| 📅 [Exam-day-guide.md](./EXAM_DAY_GUIDE.md)    | **NEW** — Printable exam-day reference: checklist, shortcuts, time strategy |
-| ❓ [FAQ.md](./FAQ.md)                           | **NEW** — Official CKA FAQ (scoring, ID, proctoring, simulator, renewal) |
+| 🎯 [Exam-tips.md](./EXAM_TIPS.md)               | Time management, strategy, common traps, last-minute checklist|
+| 📅 [Exam-day-guide.md](./EXAM_DAY_GUIDE.md)    | **NEW** Printable exam-day reference: checklist, shortcuts, time strategy |
+| ❓ [CKA FAQ.md](./FAQ.md)                           | **NEW**  Official CKA FAQ (scoring, ID, proctoring, simulator, renewal) |
 
-## 📚 Table of Contents
+## 📚 Structured Syllabus Learning
 
 > The CKA exam has **5 domains** totalling **100%** of your score. Each domain below shows its weight and all official sub-topics.
 
