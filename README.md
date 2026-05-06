@@ -1,4 +1,4 @@
-# Certified Kubernetes Administrator (CKA) Exam Preparation Guide - V1.35 (2026)
+# Certified Kubernetes Administrator (CKA) Exam Preparation Guide - V1.36 (2026)
 
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-v1.35-326CE5?logo=kubernetes&logoColor=white)
 ![Exam](https://img.shields.io/badge/CKA-Exam%20Prep-green)
@@ -12,17 +12,18 @@ This is a detailed study guide with tips and practical examples to ace the Certi
 ## Hit the Star! :star:
 If you are planning to use this repo for reference, please hit the star. Thanks!
 
-## 🗂️ Quick Navigation
+## CKA Exam Coupon (Exclusive Discount)
 
-| Resource | Description |
-|--------------------------------------------------|---------------------------------------------------------------|
-| 📋 [Cheatsheet.md](./CHEATSHEET.md)             | Fast kubectl command reference organized by exam domain       |
-| 🎯 [Exam-tips.md](./EXAM_TIPS.md)               | Time management, strategy, common traps, last-minute checklist|
-| 📝 [Practice-questions.md](./PRACTICE_QUESTIONS.md) | 35 exam-style scenario questions with full solutions      |
-| 🔧 [Troubleshooting-guide.md](./TROUBLESHOOTING_GUIDE.md) | Deep-dive debug playbooks for every cluster layer  |
-| 🗒️ [Syllabus.md](./SYLLABUS.md)                | **NEW** — Full CKA v1.35 official syllabus with all sub-topics & commands |
-| 📅 [Exam-day-guide.md](./EXAM_DAY_GUIDE.md)    | **NEW** — Printable exam-day reference: checklist, shortcuts, time strategy |
-| ❓ [FAQ.md](./FAQ.md)                           | **NEW** — Official CKA FAQ (scoring, ID, proctoring, simulator, renewal) |
+To save on CKA exam registration, use the following coupon code.
+> [!IMPORTANT]
+> **Coupon:** Use code **35KUBECT** at [kube.promo/cka](https://kube.promo/cka)
+
+Use code **35KUBECT** to save on following bundles:
+
+- CKA + CKAD ($370+ Savings): [kube.promo/cka-ckad](https://kube.promo/cka-ckad)
+- CKA + CKS Bundle ($370+ Savings): [kube.promo/bundle](https://kube.promo/bundle)
+- CKA + CKAD + CKS Exam bundle (35% Discount): [kube.promo/k8s-bundle](https://kube.promo/k8s-bundle)
+- KCNA + KCSA + CKA + CKAD + CKS: [kube.promo/kubestronaut](https://kube.promo/kubestronaut)
 
 ---
 
@@ -42,18 +43,17 @@ If you are planning to use this repo for reference, please hit the star. Thanks!
 
 ---
 
-## CKA Exam Coupon (Exclusive Discount)
+## 🗂️ Quick Navigation
 
-To save on CKA exam registration, use the following coupon code.
-> [!IMPORTANT]
-> **Coupon:** Use code **35KUBECT** at [kube.promo/cka](https://kube.promo/cka)
-
-Use code **35KUBECT** to save on following bundles:
-
-- CKA + CKAD ($370+ Savings): [kube.promo/cka-ckad](https://kube.promo/cka-ckad)
-- CKA + CKS Bundle ($370+ Savings): [kube.promo/bundle](https://kube.promo/bundle)
-- CKA + CKAD + CKS Exam bundle (35% Discount): [kube.promo/k8s-bundle](https://kube.promo/k8s-bundle)
-- KCNA + KCSA + CKA + CKAD + CKS: [kube.promo/kubestronaut](https://kube.promo/kubestronaut)
+| Resource | Description |
+|--------------------------------------------------|---------------------------------------------------------------|
+| 📋 [Cheatsheet.md](./CHEATSHEET.md)             | Fast kubectl command reference organized by exam domain       |
+| 🎯 [Exam-tips.md](./EXAM_TIPS.md)               | Time management, strategy, common traps, last-minute checklist|
+| 📝 [Practice-questions.md](./PRACTICE_QUESTIONS.md) | 35 exam-style scenario questions with full solutions      |
+| 🔧 [Troubleshooting-guide.md](./TROUBLESHOOTING_GUIDE.md) | Deep-dive debug playbooks for every cluster layer  |
+| 🗒️ [Syllabus.md](./SYLLABUS.md)                | **NEW** — Full CKA v1.35 official syllabus with all sub-topics & commands |
+| 📅 [Exam-day-guide.md](./EXAM_DAY_GUIDE.md)    | **NEW** — Printable exam-day reference: checklist, shortcuts, time strategy |
+| ❓ [FAQ.md](./FAQ.md)                           | **NEW** — Official CKA FAQ (scoring, ID, proctoring, simulator, renewal) |
 
 ## 📚 Table of Contents
 
