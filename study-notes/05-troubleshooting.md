@@ -368,6 +368,207 @@ kubectl uncordon <node>
 
 ---
 
+## Kubeadm Troubleshooting 
+
+### Scenario
+
+Your team started migrating the Kubernetes control plane from an old node to a new node using `kubeadm`.
+
+During the migration, something failed halfway.
+
+Now:
+
+- `kubectl get nodes` does not work
+- Control plane components are crashing
+- kubelet is unhealthy
+- API server is unreachable
+- etcd may still be running
+
+You are asked to recover the cluster with minimal downtime.
+
+---
+
+### 🏗️ Environment
+- **OS**: Ubuntu 24.04
+- **Runtime**: containerd
+- **Setup**: `kubeadm` single control plane cluster
+
+### 🔍 Symptoms
+```bash
+kubectl get nodes
+# Output: The connection to the server 172.30.1.2:6443 was refused
+```
+
+### Step 1: Check Kubelet Status
+```bash
+systemctl status kubelet
+```
+**Possible Failures:**
+- `kubelet.service: Failed`
+- `node "controlplane" not found`
+
+---
+
+### Step 2: View Kubelet Logs
+```bash
+journalctl -u kubelet -xe
+```
+**Common Errors:**
+- `failed to load kubelet config file`
+- `unable to load bootstrap kubeconfig`
+- `failed to run Kubelet: validate service connection`
+
+---
+
+### Step 3: Verify Static Pod Manifests
+Control plane components run as static pods. Check the directory:
+```bash
+ls /etc/kubernetes/manifests/
+# Expected: etcd.yaml, kube-apiserver.yaml, kube-controller-manager.yaml, kube-scheduler.yaml
+```
+
+#### ❌ Problem 1: Manifest files accidentally moved
+Sometimes during migration, manifests are accidentally backed up or deleted.
+- **Result**: kubelet cannot recreate control plane pods.
+
+#### ✅ Fix
+Restore manifests and restart kubelet:
+```bash
+cp /backup/manifests/* /etc/kubernetes/manifests/
+systemctl restart kubelet
+```
+
+---
+
+### Step 4: Check Running Containers
+If the API server is down, use `crictl`:
+```bash
+crictl ps
+# Should see: kube-apiserver, etcd, kube-controller-manager, kube-scheduler
+```
+
+#### ❌ Problem 2: Certificates Missing or Expired
+Check the PKI directory:
+```bash
+ls /etc/kubernetes/pki/
+# Look for: apiserver.crt/key, ca.crt/key
+```
+
+#### ✅ Fix: Renew Certificates
+```bash
+kubeadm certs check-expiration
+kubeadm certs renew all
+systemctl restart kubelet
+```
+
+---
+
+### Step 5: Verify ETCD Health
+```bash
+crictl ps | grep etcd
+crictl logs <container-id>
+```
+
+#### ❌ Problem 3: Wrong Advertise Address
+If the node IP changed but the manifest still points to the old one:
+```bash
+cat /etc/kubernetes/manifests/kube-apiserver.yaml | grep advertise-address
+```
+
+#### ✅ Fix: Update Manifest
+Edit `/etc/kubernetes/manifests/kube-apiserver.yaml` and update the `--advertise-address` to the new node IP. kubelet will restart the pod automatically.
+
+---
+
+### Step 6: Verify Kubeconfig Files
+```bash
+ls /etc/kubernetes/*.conf
+# Essential: admin.conf, controller-manager.conf, scheduler.conf, kubelet.conf
+```
+
+#### ❌ Problem 4: Kubelet.conf points to Old API Server
+```bash
+cat /etc/kubernetes/kubelet.conf | grep server
+# If it shows OLD-IP:6443, it's broken.
+```
+
+#### ✅ Fix
+Update the `server:` field in `kubelet.conf` to the NEW-IP and restart:
+```bash
+systemctl restart kubelet
+```
+
+---
+
+### Step 7: Validate API Server
+```bash
+curl -k https://127.0.0.1:6443/healthz
+# Expected: ok
+```
+
+### Step 8: Restore Kubectl Access
+```bash
+export KUBECONFIG=/etc/kubernetes/admin.conf
+kubectl get nodes
+```
+
+---
+
+### 📊 Summary: Common CKA Migration Failures
+
+| Problem | Symptom |
+|---|---|
+| Missing manifests | API server not running |
+| Wrong advertise IP | Connection refused |
+| Broken kubelet.conf | kubelet cannot connect |
+| Expired certs | TLS/x509 errors |
+| Missing PKI files | Control plane crash |
+| etcd corruption | API server crashloop |
+
+### 🚀 Fast Recovery Workflow
+Run these in order during the exam:
+1. `systemctl status kubelet`
+2. `journalctl -u kubelet -n 50`
+3. `ls /etc/kubernetes/manifests/`
+4. `crictl ps -a`
+5. `kubeadm certs check-expiration`
+6. `export KUBECONFIG=/etc/kubernetes/admin.conf`
+
+> [!TIP]
+> **Real CKA Tip**
+> In kubeadm clusters, always check **kubelet** first. Since the control plane runs as static pods, if kubelet is down or misconfigured, the entire cluster disappears.
+
+---
+
+# Mini Practice Task
+
+Broken cluster:
+
+```bash
+kubectl get nodes
+```
+
+fails.
+
+You discover:
+
+```bash
+/etc/kubernetes/manifests/
+```
+
+is empty.
+
+## Question
+
+- Why did the control plane disappear?
+- How do you restore it quickly?
+
+## Answer
+
+- Static pod manifests were removed
+- Restore manifest YAMLs into `/etc/kubernetes/manifests/`
+- kubelet automatically recreates all control plane pods
+
 ## Exam Focus Points 
 
 1. **Node NotReady** — kubelet troubleshooting is almost always tested
@@ -377,6 +578,7 @@ kubectl uncordon <node>
 5. **kubectl top** — know how to identify resource-hungry pods
 6. **drain/uncordon** — maintenance workflow is commonly tested
 7. **Control plane components** — know how to debug static pod manifests
+8. **Kubeadm Troubleshooting** — Understand static pod manifests, certificates, and kubelet integration
 
 ---
 
