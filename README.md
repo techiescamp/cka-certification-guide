@@ -30,7 +30,7 @@ Use code **35KUBECT** to save on following bundles:
 
 | Resource | Description |
 |--------------------------------------------------|---------------------------------------------------------------|
-| 🗒️ [Syllabus.md](./SYLLABUS.md)                | **NEW**  Full CKA v1.35 official syllabus with all sub-topics & commands |
+| 🗒️ [Syllabus.md](./SYLLABUS.md)                | **NEW**  Full CKA v1.36 official syllabus with all sub-topics & commands |
 | 📋 [Cheatsheet.md](./CHEATSHEET.md)             | Fast kubectl command reference organized by exam domain       |
 | 📝 [Practice-questions.md](./PRACTICE_QUESTIONS.md) | 35 exam-style scenario questions with full solutions      |
 | 🔧 [Troubleshooting-guide.md](./TROUBLESHOOTING_GUIDE.md) | Deep-dive debug playbooks for every cluster layer  |
@@ -38,13 +38,12 @@ Use code **35KUBECT** to save on following bundles:
 | 📅 [Exam-day-guide.md](./EXAM_DAY_GUIDE.md)    | **NEW** Printable exam-day reference: checklist, shortcuts, time strategy |
 | ❓ [CKA FAQ.md](./FAQ.md)                           | **NEW**  Official CKA FAQ (scoring, ID, proctoring, simulator, renewal) |
 
-## 📚 Structured Syllabus Learning
+## 📚 CKA Exam Detailed Study Guide & References
 
-> The CKA exam has **5 domains** totalling **100%** of your score. Each domain below shows its weight and all official sub-topics.
+Here is the detailed list of topics with references to study notes, detailed lessons and refenrece commands.
 
 ---
-
-### 🏗️ [Cluster Architecture, Installation & Configuration](#1-cluster-architecture-installation--configuration-25) `25%`
+### [Cluster Architecture, Installation & Configuration](#1-cluster-architecture-installation--configuration-25) `25%`
 
 > ![weight](https://img.shields.io/badge/Exam%20Weight-25%25-4A90D9?style=flat-square) &nbsp; 📖 [Study Notes](./study-notes/01-cluster-architecture.md)
 
@@ -60,7 +59,7 @@ Use code **35KUBECT** to save on following bundles:
 
 ---
 
-### 🚀 [Workloads & Scheduling](#2-workloads--scheduling-15) `15%`
+### [Workloads & Scheduling](#2-workloads--scheduling-15) `15%`
 
 > ![weight](https://img.shields.io/badge/Exam%20Weight-15%25-7B68EE?style=flat-square) &nbsp; 📖 [Study Notes](./study-notes/02-workloads-scheduling.md)
 
@@ -74,7 +73,7 @@ Use code **35KUBECT** to save on following bundles:
 
 ---
 
-### 💾 [Storage](#3-storage-10) `10%`
+### [Storage](#3-storage-10) `10%`
 
 > ![weight](https://img.shields.io/badge/Exam%20Weight-10%25-E8A838?style=flat-square) &nbsp; 📖 [Study Notes](./study-notes/03-storage.md)
 
@@ -86,7 +85,7 @@ Use code **35KUBECT** to save on following bundles:
 
 ---
 
-### 🌐 [Services & Networking](#4-services--networking-20) `20%`
+### [Services & Networking](#4-services--networking-20) `20%`
 
 > ![weight](https://img.shields.io/badge/Exam%20Weight-20%25-2ECC71?style=flat-square) &nbsp; 📖 [Study Notes](./study-notes/04-services-networking.md)
 
@@ -101,7 +100,7 @@ Use code **35KUBECT** to save on following bundles:
 
 ---
 
-### 🔬 [Troubleshooting](#5-troubleshooting-30) `30%` ⭐ Highest Weight
+### [Troubleshooting](#5-troubleshooting-30) `30%` ⭐ Highest Weight
 
 > ![weight](https://img.shields.io/badge/Exam%20Weight-30%25-E74C3C?style=flat-square) &nbsp; 📖 [Study Notes](./study-notes/05-troubleshooting.md)
 
@@ -117,10 +116,6 @@ Use code **35KUBECT** to save on following bundles:
 | 5 | 🌐 [Troubleshoot services and networking](#troubleshoot-services-and-networking) |
 
 ---
-
-## CKA Exam Detailed Study Guide & References
-
-CKA Certification Exam has the following key domains:
 
 ## 1. Cluster Architecture, Installation & Configuration (25%)
 
