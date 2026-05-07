@@ -23,7 +23,7 @@
 ## Storage Hierarchy
 
 <p align="center">
-  <img src="./images/21.png" width="80%" />
+  <img src="./images/21.png" width="80%" alt="Kubernetes storage hierarchy diagram with StorageClass, PersistentVolume, and PersistentVolumeClaim" />
 </p>
 
 ---
@@ -33,7 +33,7 @@
 
 
 <p align="center">
-  <img src="./images/22.gif" width="80%" />
+  <img src="./images/22.gif" width="80%" alt="Kubernetes volume types diagram showing emptyDir, hostPath, configMap, and PVC mounts in pods" />
 </p>
 
 ### Volume Types
@@ -82,7 +82,7 @@ volumes:
 > 👉 **Deep Dive Lesson:** [Persistent Volumes](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55792087)
 
 <p align="center">
-  <img src="./images/23.gif" width="80%" />
+  <img src="./images/23.gif" width="80%" alt="Kubernetes PersistentVolume and PersistentVolumeClaim binding lifecycle from available to bound to released" />
 </p>
 
 ### Access Modes
@@ -138,7 +138,7 @@ spec:
 > 👉 **Deep Dive Lesson:** [Persistent Volumes Claims](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55792087)
 
 <p align="center">
-  <img src="./images/24.gif" width="80%" />
+  <img src="./images/24.gif" width="80%" alt="Kubernetes storage access modes diagram comparing ReadWriteOnce, ReadOnlyMany, and ReadWriteMany" />
 </p>
 
 - PVC is a **request** for storage
@@ -177,7 +177,7 @@ spec:
 > 👉 **Deep Dive Lesson:** [Storage Classes](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55786335)
 
 <p align="center">
-  <img src="./images/25.gif" width="80%" />
+  <img src="./images/25.gif" width="80%" alt="Kubernetes PersistentVolume reclaim policy diagram showing Retain, Delete, and Recycle behaviors" />
 </p>
 
 StorageClasses enable **dynamic provisioning** — PVs are automatically created when a PVC is created.
