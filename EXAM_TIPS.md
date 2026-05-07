@@ -4,22 +4,6 @@
 
 ---
 
-## Exam Format Overview
-
-| Detail | Info |
-|--------|------|
-| **Duration** | 2 hours |
-| **Format** | Performance-based (hands-on terminal) |
-| **Tasks** | 15–20 scenario-based CLI tasks |
-| **Passing Score** | 66% |
-| **Kubernetes Version** | v1.35 |
-| **Allowed Resources** | kubernetes.io/docs, kubernetes.io/blog, helm.sh/docs |
-| **Retake Policy** | 1 free retake included |
-| **Results** | Emailed within 24 hours |
-| **Validity** | 2 years |
-
----
-
 ## ✅ Official Pre-Exam Environment Checklist
 
 > Source: [Linux Foundation Important Instructions](https://docs.linuxfoundation.org/tc-docs/certification/tips-cka-and-ckad)

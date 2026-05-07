@@ -5,29 +5,30 @@
 
 ---
 
-## Setup (Do This First in the Exam)
+## Cluster Architecture, Installation & Configuration
+
+### kubeadm Cluster Init
 
 ```bash
-# Set kubectl alias
-alias k=kubectl
-export do="--dry-run=client -o yaml"
-export now="--force --grace-period 0"
+# Initialize control plane
+kubeadm init --pod-network-cidr=192.168.0.0/16 --kubernetes-version=1.35.0
 
-# Enable autocompletion
-source <(kubectl completion bash)
-complete -F __start_kubectl k
+# Join worker node (run on worker)
+kubeadm token create --print-join-command
 
-# Check current context
-k config get-contexts
-k config use-context <context-name>
-
-# Set default namespace
-k config set-context --current --namespace=<namespace>
+# Reset node
+kubeadm reset -f
 ```
 
----
+### ServiceAccounts
 
-## Domain 1 — Cluster Architecture, Installation & Configuration (25%)
+```bash
+k create serviceaccount my-sa -n dev
+k create rolebinding sa-binding --role=pod-reader --serviceaccount=dev:my-sa -n dev
+
+# Use SA in a pod
+# spec.serviceAccountName: my-sa
+```
 
 ### RBAC
 
@@ -53,54 +54,6 @@ k get rolebindings,clusterrolebindings -A | grep <user>
 k describe rolebinding <name> -n <ns>
 ```
 
-### ServiceAccounts
-
-```bash
-k create serviceaccount my-sa -n dev
-k create rolebinding sa-binding --role=pod-reader --serviceaccount=dev:my-sa -n dev
-
-# Use SA in a pod
-# spec.serviceAccountName: my-sa
-```
-
-### kubeadm Cluster Init
-
-```bash
-# Initialize control plane
-kubeadm init --pod-network-cidr=192.168.0.0/16 --kubernetes-version=1.35.0
-
-# Join worker node (run on worker)
-kubeadm token create --print-join-command
-
-# Reset node
-kubeadm reset -f
-```
-
-### Cluster Upgrade (kubeadm)
-
-```bash
-# On control plane — upgrade kubeadm FIRST to target version
-apt-mark unhold kubeadm
-apt-get update && apt-get install -y kubeadm=1.35.x-*
-apt-mark hold kubeadm
-kubeadm upgrade plan
-kubeadm upgrade apply v1.35.x
-# Then upgrade kubelet + kubectl to same target version
-apt-mark unhold kubelet kubectl
-apt-get install -y kubelet=1.35.x-* kubectl=1.35.x-*
-apt-mark hold kubelet kubectl
-systemctl daemon-reload && systemctl restart kubelet
-
-# On worker nodes
-kubectl drain <node> --ignore-daemonsets --delete-emptydir-data
-apt-mark unhold kubeadm kubelet kubectl
-apt-get install -y kubeadm=1.35.x-* kubelet=1.35.x-* kubectl=1.35.x-*
-apt-mark hold kubeadm kubelet kubectl
-kubeadm upgrade node
-systemctl daemon-reload && systemctl restart kubelet
-kubectl uncordon <node>
-```
-
 ### Helm & Kustomize
 
 ```bash
@@ -119,7 +72,45 @@ kubectl kustomize ./base
 
 ---
 
-## Domain 2 — Workloads & Scheduling (15%)
+## Workloads & Scheduling 
+
+### Pods
+
+```bash
+# Run pod
+k run nginx --image=nginx --port=80
+k run busybox --image=busybox --command -- sleep 3600
+
+# Debug pod
+k run debug --image=busybox -it --rm -- sh
+k exec -it <pod> -- /bin/sh
+k exec <pod> -c <container> -- <command>
+
+# Copy files
+k cp <pod>:/path/to/file ./local-file
+k cp ./local-file <pod>:/path/to/file
+```
+
+### Static Pods
+
+```bash
+# Default static pod path
+ls /etc/kubernetes/manifests/
+
+# Find kubelet config for staticPodPath
+cat /var/lib/kubelet/config.yaml | grep staticPodPath
+
+# Edit a static pod manifest (kubelet auto-restarts pod on save)
+vim /etc/kubernetes/manifests/kube-apiserver.yaml
+
+# Watch for the pod to restart after editing
+watch kubectl get pods -n kube-system
+
+# If pod doesn't restart: check kubelet logs
+journalctl -u kubelet -f
+```
+
+> Static pods are managed by kubelet directly, not the API server. Changes take effect within seconds of saving the manifest.
 
 ### Deployments
 
@@ -145,21 +136,17 @@ k rollout resume deployment/nginx
 k create deployment nginx --image=nginx $do > deploy.yaml
 ```
 
-### Pods
+### Resource Management
 
-```bash
-# Run pod
-k run nginx --image=nginx --port=80
-k run busybox --image=busybox --command -- sleep 3600
-
-# Debug pod
-k run debug --image=busybox -it --rm -- sh
-k exec -it <pod> -- /bin/sh
-k exec <pod> -c <container> -- <command>
-
-# Copy files
-k cp <pod>:/path/to/file ./local-file
-k cp ./local-file <pod>:/path/to/file
+```yaml
+# In pod spec:
+resources:
+  requests:
+    memory: "64Mi"
+    cpu: "250m"
+  limits:
+    memory: "128Mi"
+    cpu: "500m"
 ```
 
 ### ConfigMaps & Secrets
@@ -176,19 +163,6 @@ k create secret docker-registry reg-secret \
   --docker-server=registry.io \
   --docker-username=user \
   --docker-password=pass
-```
-
-### Resource Management
-
-```yaml
-# In pod spec:
-resources:
-  requests:
-    memory: "64Mi"
-    cpu: "250m"
-  limits:
-    memory: "128Mi"
-    cpu: "500m"
 ```
 
 ### HPA (Horizontal Pod Autoscaler)
@@ -238,30 +212,25 @@ k label node node1 disktype=ssd
 #           values: [ssd]
 ```
 
-### Static Pods
-
-```bash
-# Default static pod path
-ls /etc/kubernetes/manifests/
-
-# Find kubelet config for staticPodPath
-cat /var/lib/kubelet/config.yaml | grep staticPodPath
-
-# Edit a static pod manifest (kubelet auto-restarts pod on save)
-vim /etc/kubernetes/manifests/kube-apiserver.yaml
-
-# Watch for the pod to restart after editing
-watch kubectl get pods -n kube-system
-
-# If pod doesn't restart: check kubelet logs
-journalctl -u kubelet -f
-```
-
-> Static pods are managed by kubelet directly, not the API server. Changes take effect within seconds of saving the manifest.
-
 ---
 
-## Domain 3 — Storage (10%)
+## Storage
+
+### Volume in Pod
+
+```yaml
+spec:
+  volumes:
+  - name: my-vol
+    persistentVolumeClaim:
+      claimName: my-pvc
+  containers:
+  - name: app
+    image: nginx
+    volumeMounts:
+    - mountPath: /data
+      name: my-vol
+```
 
 ### PersistentVolume & PersistentVolumeClaim
 
@@ -303,25 +272,19 @@ spec:
   storageClassName: standard
 ```
 
-### Volume in Pod
-
-```yaml
-spec:
-  volumes:
-  - name: my-vol
-    persistentVolumeClaim:
-      claimName: my-pvc
-  containers:
-  - name: app
-    image: nginx
-    volumeMounts:
-    - mountPath: /data
-      name: my-vol
-```
-
 ---
 
-## Domain 4 — Services & Networking (20%)
+## Services & Networking
+
+### CoreDNS
+
+```bash
+# Check CoreDNS pods
+k get pods -n kube-system -l k8s-app=kube-dns
+
+# View CoreDNS config
+k get configmap coredns -n kube-system -o yaml
+```
 
 ### Services
 
@@ -400,19 +363,9 @@ k describe ingress <name> -n <ns>
 k create ingress my-ingress --rule="host.com/path=svc:80"
 ```
 
-### CoreDNS
-
-```bash
-# Check CoreDNS pods
-k get pods -n kube-system -l k8s-app=kube-dns
-
-# View CoreDNS config
-k get configmap coredns -n kube-system -o yaml
-```
-
 ---
 
-## Domain 5 — Troubleshooting (30%)
+## Troubleshooting
 
 ### Node Troubleshooting
 

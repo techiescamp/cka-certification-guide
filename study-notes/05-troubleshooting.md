@@ -16,7 +16,7 @@
 ## Troubleshooting Methodology
 
 <p align="center">
-  <img src="./images/32.png" width="80%" />
+  <img src="./images/32.png" width="80%" alt="Kubernetes troubleshooting methodology flowchart with kubectl get, describe, logs, and journalctl steps" />
 </p>
 
 ---

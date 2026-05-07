@@ -89,7 +89,68 @@ kubectl top pods -A --sort-by=cpu | grep <node>
 
 ---
 
-## 2. Pod Troubleshooting
+## 2. Control Plane Troubleshooting
+
+### Check All Control Plane Components
+
+```bash
+# All kube-system pods
+kubectl get pods -n kube-system -o wide
+
+# Check control plane component health (componentstatuses removed in k8s 1.24)
+kubectl get pods -n kube-system -l tier=control-plane
+
+# API server health
+curl -k https://localhost:6443/healthz
+curl -k https://localhost:6443/readyz
+```
+
+### kube-apiserver Issues
+
+```bash
+# Static pod manifest
+cat /etc/kubernetes/manifests/kube-apiserver.yaml
+
+# Logs (if pod is running)
+kubectl logs -n kube-system kube-apiserver-<node>
+
+# If pod won't start, check the manifest for:
+# - Wrong cert path
+# - Invalid flags
+# - Typos in etcd endpoint
+
+# API server logs via docker/containerd (if pod is down)
+crictl ps | grep apiserver
+crictl logs <container-id>
+```
+
+### kube-scheduler Issues
+
+```bash
+# Check scheduler pod
+kubectl get pods -n kube-system | grep scheduler
+kubectl logs -n kube-system kube-scheduler-<node>
+
+# Check manifest
+cat /etc/kubernetes/manifests/kube-scheduler.yaml
+
+# Verify scheduler is processing pods
+kubectl get pods -A | grep Pending
+kubectl describe pod <pending-pod> | grep "No scheduler"
+```
+
+### kube-controller-manager Issues
+
+```bash
+kubectl logs -n kube-system kube-controller-manager-<node>
+cat /etc/kubernetes/manifests/kube-controller-manager.yaml
+
+# Symptom: Deployments not scaling, pods not created from ReplicaSets
+```
+
+---
+
+## 3. Pod Troubleshooting
 
 ### Pod State Reference
 
@@ -182,67 +243,6 @@ kubectl create secret docker-registry regcred \
 # spec:
 #   imagePullSecrets:
 #   - name: regcred
-```
-
----
-
-## 3. Control Plane Troubleshooting
-
-### Check All Control Plane Components
-
-```bash
-# All kube-system pods
-kubectl get pods -n kube-system -o wide
-
-# Check control plane component health (componentstatuses removed in k8s 1.24)
-kubectl get pods -n kube-system -l tier=control-plane
-
-# API server health
-curl -k https://localhost:6443/healthz
-curl -k https://localhost:6443/readyz
-```
-
-### kube-apiserver Issues
-
-```bash
-# Static pod manifest
-cat /etc/kubernetes/manifests/kube-apiserver.yaml
-
-# Logs (if pod is running)
-kubectl logs -n kube-system kube-apiserver-<node>
-
-# If pod won't start, check the manifest for:
-# - Wrong cert path
-# - Invalid flags
-# - Typos in etcd endpoint
-
-# API server logs via docker/containerd (if pod is down)
-crictl ps | grep apiserver
-crictl logs <container-id>
-```
-
-### kube-scheduler Issues
-
-```bash
-# Check scheduler pod
-kubectl get pods -n kube-system | grep scheduler
-kubectl logs -n kube-system kube-scheduler-<node>
-
-# Check manifest
-cat /etc/kubernetes/manifests/kube-scheduler.yaml
-
-# Verify scheduler is processing pods
-kubectl get pods -A | grep Pending
-kubectl describe pod <pending-pod> | grep "No scheduler"
-```
-
-### kube-controller-manager Issues
-
-```bash
-kubectl logs -n kube-system kube-controller-manager-<node>
-cat /etc/kubernetes/manifests/kube-controller-manager.yaml
-
-# Symptom: Deployments not scaling, pods not created from ReplicaSets
 ```
 
 ---
