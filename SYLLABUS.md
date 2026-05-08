@@ -42,3 +42,7 @@ Each exam domain has a dedicated study guide with core concepts.
 | Kubernetes Docs (allowed in exam) | [kubernetes.io/docs](https://kubernetes.io/docs) |
 | Killer.sh CKA Simulator | [killer.sh](https://killer.sh) |
 | Allowed Resources | [LF Certification Resources](https://docs.linuxfoundation.org/tc-docs/certification/certification-resources-allowed) |
+
+---
+
+> 📚 Related: [README](./README.md) | [CHEATSHEET.md](./CHEATSHEET.md) | [EXAM_TIPS.md](./EXAM_TIPS.md) | [PRACTICE_QUESTIONS.md](./PRACTICE_QUESTIONS.md)

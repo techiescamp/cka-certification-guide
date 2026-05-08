@@ -10,7 +10,7 @@
 | Item | Detail |
 |------|--------|
 | **Duration** | 2 hours |
-| **Tasks** | 16 performance-based |
+| **Tasks** | 15–20 performance-based |
 | **Passing Score** | 66% |
 | **Kubernetes Version** | v1.35 |
 | **Results** | Emailed within 24 hours |

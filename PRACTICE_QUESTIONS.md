@@ -1255,3 +1255,5 @@ kubectl describe pdb frontend-pdb -n production
 ---
 
 *Part of the [CKA Certification Guide](./README.md)*
+
+> 📚 Related: [CHEATSHEET.md](./CHEATSHEET.md) | [EXAM_TIPS.md](./EXAM_TIPS.md) | [TROUBLESHOOTING_GUIDE.md](./TROUBLESHOOTING_GUIDE.md) | [EXAM_DAY_GUIDE.md](./EXAM_DAY_GUIDE.md)

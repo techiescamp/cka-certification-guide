@@ -4,83 +4,11 @@
 
 ---
 
-## ✅ Official Pre-Exam Environment Checklist
+## ✅ Pre-Exam Checklist & Technical Setup
 
-> Source: [Linux Foundation Important Instructions](https://docs.linuxfoundation.org/tc-docs/certification/tips-cka-and-ckad)
+For the full environment checklist, keyboard shortcuts, node navigation, and pre-installed tools reference, see:
 
-**System:**
-- [ ] Run the [PSI system check](https://syscheck.bridge.psiexams.com/) on your exam machine
-- [ ] Single monitor only — **dual monitors are NOT supported**
-- [ ] Screen size ≥ 15", resolution 1080p recommended
-- [ ] Do **NOT** use a virtual machine (even if compatibility check passes)
-- [ ] Do **NOT** use a corporate/work machine if possible (security features disrupt PSI)
-- [ ] Disable firewall / corporate proxy
-- [ ] Stop antivirus scanning during exam time
-- [ ] Laptop **plugged into power**
-
-**Network:**
-- [ ] Wired internet connection preferred over Wi-Fi
-- [ ] Close bandwidth-heavy apps (Dropbox, BitTorrent, video calls)
-- [ ] HTTPS to `*.s3.amazonaws.com` must not be blocked
-
-**Peripherals:**
-- [ ] Microphone tested and working
-- [ ] Webcam moveable (for room pan during check-in)
-
-**ID:**
-- [ ] Valid **unexpired** government-issued photo ID ready (original physical document)
-- [ ] Name on ID **exactly** matches your verified name in the LF portal
-
-**Room:**
-- [ ] Clutter-free desk — no paper, electronics, or other objects
-- [ ] Clear walls — no printouts (paintings are OK)
-- [ ] Well-lit, private, quiet space
-- [ ] You must remain within the camera frame throughout
-
----
-
-## ⌨️ Official Exam Technical Instructions
-
-> Source: [Linux Foundation Important Instructions](https://docs.linuxfoundation.org/tc-docs/certification/tips-cka-and-ckad)
-
-### Critical Keyboard Shortcuts
-
-| Action | Shortcut |
-|--------|----------|
-| Close tab **(NOT Ctrl+W — it closes Chrome!)** | `Ctrl+Alt+W` |
-| Copy in Terminal | `Ctrl+Shift+C` |
-| Paste in Terminal | `Ctrl+Shift+V` |
-| Copy in other desktop apps | `Ctrl+C` |
-| Paste in other desktop apps | `Ctrl+V` |
-| Find in Firefox | `Ctrl+F` |
-| Locate cursor | `Ctrl+Alt+K` |
-
-> [!WARNING]
-> The **INSERT key is prohibited** on the remote desktop. Enter vim insert mode with `i`, exit with `Esc`.
-
-> [!WARNING]
-> **Do NOT reboot the base node** (hostname `base`). It will NOT restart your exam environment.
-
-### Node Navigation
-
-```bash
-ssh <nodename>    # SSH into a designated task node
-sudo -i           # Gain elevated privileges on any node
-exit              # Return to base node after task completion
-```
-
-- Nested SSH is **not** supported
-- Every task runs on a specific designated host — the task infobox tells you which one
-- The base node does **not** have kubectl installed
-
-### Tools Pre-installed on All SSH Hosts
-
-| Tool | Description |
-|------|-------------|
-| `kubectl` / `k` | Kubernetes CLI with bash autocompletion |
-| `yq` | YAML processor |
-| `curl` / `wget` | HTTP testing |
-| `man` | Manual pages |
+📅 **[Exam Day Guide — Pre-Exam Checklist](./EXAM_DAY_GUIDE.md#-pre-exam-environment-checklist)**
 
 ---
 
@@ -186,27 +114,7 @@ k apply -f deploy.yaml
 
 ## Vim Quick Reference
 
-```
-i          → Enter INSERT mode
-Esc        → Return to COMMAND mode
-:wq        → Save and quit
-:q!        → Quit without saving
-dd         → Delete current line
-yy         → Copy (yank) current line
-p          → Paste after cursor
-u          → Undo
-gg         → Go to top of file
-G          → Go to bottom of file
-/pattern   → Search forward
-n          → Next search result
-:%s/old/new/g  → Replace all occurrences
-:set number    → Show line numbers
-:set paste     → Paste mode (avoids auto-indent issues when pasting YAML)
-gg=G           → Auto-indent entire file (use carefully)
-```
-
-> [!TIP]
-> The **INSERT key is disabled** on the exam remote desktop. Always use `i` to enter insert mode.
+See the full vim cheatsheet: 📅 **[Exam Day Guide — Vim Reference](./EXAM_DAY_GUIDE.md#️-vim-quick-reference-for-the-exam)**
 
 ---
 
@@ -227,17 +135,7 @@ k explain deployment.spec.strategy
 
 ## Kubernetes Docs — Know These Pages
 
-Bookmark these before your exam (you get one browser tab):
-
-| Topic | URL Path |
-|-------|----------|
-| kubectl cheatsheet | `/docs/reference/kubectl/quick-reference/` |
-| RBAC | `/docs/reference/access-authn-authz/rbac/` |
-| Network Policies | `/concepts/services-networking/network-policies/` |
-| PersistentVolumes | `/concepts/storage/persistent-volumes/` |
-| Scheduling | `/concepts/scheduling-eviction/` |
-| kubeadm install | `/setup/production-environment/tools/kubeadm/install-kubeadm/` |
-| Ingress | `/concepts/services-networking/ingress/` |
+See the full docs bookmark list: 📅 **[Exam Day Guide — Docs Bookmarks](./EXAM_DAY_GUIDE.md#-kubernetes-docs-bookmarks)**
 
 ---
 
@@ -292,45 +190,16 @@ k api-resources | grep <resource>
 
 ## Cluster Upgrade — Exam Checklist
 
-```bash
-# 1. Drain the node first
-k drain <node> --ignore-daemonsets --delete-emptydir-data
-
-# 2. Upgrade kubeadm
-apt-mark unhold kubeadm
-apt-get install -y kubeadm=1.x.x-*
-apt-mark hold kubeadm
-
-# 3. Verify plan and apply
-kubeadm upgrade plan
-kubeadm upgrade apply v1.x.x  # control plane only
-
-# 4. Upgrade kubelet and kubectl
-apt-mark unhold kubelet kubectl
-apt-get install -y kubelet=1.x.x-* kubectl=1.x.x-*
-apt-mark hold kubelet kubectl
-systemctl daemon-reload
-systemctl restart kubelet
-
-# 5. Uncordon
-k uncordon <node>
-```
+See the full step-by-step upgrade procedure: 📅 **[Exam Day Guide — Cluster Upgrade](./EXAM_DAY_GUIDE.md#-cluster-upgrade-quick-checklist)**
 
 ---
 
 ## Troubleshooting Checklist (30% of Exam!)
 
-When something is broken, always follow this order:
+For the full troubleshooting flow and debug playbooks, see:
 
-```
-1. k get <resource> -n <ns>         # Is it there? What status?
-2. k describe <resource> <name>     # Events section at bottom
-3. k logs <pod> [-c container]      # Application logs
-4. k logs <pod> --previous          # If pod crashed
-5. k get events -n <ns>             # Cluster events
-6. systemctl status kubelet          # If node is NotReady
-7. journalctl -u kubelet -f          # Kubelet logs on node
-```
+- 📅 **[Exam Day Guide — Troubleshooting Quick Flow](./EXAM_DAY_GUIDE.md#-troubleshooting-quick-flow-30-of-exam)**
+- 🔧 **[Troubleshooting Guide — Full Playbooks](./TROUBLESHOOTING_GUIDE.md)**
 
 ---
 
