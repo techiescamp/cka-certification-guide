@@ -1,4 +1,4 @@
-# Kubernetes Troubleshooting Guide 🔧
+# Kubernetes Troubleshooting Guide for CKA Exam 🔧
 
 > Systematic debug playbooks for every layer of Kubernetes.
 > Troubleshooting is **30% of the CKA exam** — master this section.

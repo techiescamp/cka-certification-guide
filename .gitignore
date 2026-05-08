@@ -38,3 +38,5 @@ Temporary Items
 lab-setup/mac-silicon/manifests/
 lab-setup/mac-silicon/manifests/
 lab-setup/mac-silicon/common.sh
+
+.claude/
