@@ -1,0 +1,9 @@
+#cloud-config
+package_update: true
+packages:
+  - curl
+  - wget
+  - apt-transport-https
+  - ca-certificates
+  - gnupg
+  - lsb-release
