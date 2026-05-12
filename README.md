@@ -10,21 +10,20 @@ If you are planning to use this repo for reference, please hit the star. Thanks!
 
 The Certified Kubernetes Administrator (CKA) exam has a duration of 2 hours.
 To pass the exam, candidates need to achieve a score of at least 66%.
-The exam will be on Kubernetes version 1.35.
+The exam will be on Kubernetes version 1.36.
 Once the certificate is earned, the CKA certification remains valid for 2 years. The cost to take the exam is $395 USD.
 
-## CKA Exam Coupon (45% Off Exclusive Discount Ends Soon)
+## CKA Exam Coupon (60% Off Exclusive Discount Ends Soon)
 
-To save on CKA exam registration, use the following coupon code.
+To save 50% on CKA exam registration, use the following coupon code.
 > [!IMPORTANT]
-> **Coupon:** Use code **35KUBECT** at [kube.promo/cka](https://kube.promo/cka)
+> **Coupon:** Use code **MM26CCCT** at [kube.promo/cka](https://kube.promo/cka)
 
-Use code **35KUBECT** to save 40% on following bundles.
+Use code **MM26BUNCT** to save 60% on following CKA bundles.
 
 - CKA + CKAD ($370+ Savings): [kube.promo/cka-ckad](https://kube.promo/cka-ckad)
 - CKA + CKS Bundle ($370+ Savings) [kube.promo/bundle](https://kube.promo/bundle)
 - CKA + CKAD + CKS Exam bundle (35% Discount): [kube.promo/k8s-bundle](https://kube.promo/k8s-bundle)
-- KCNA + KCSA + CKA + CKAD + CKS: [kube.promo/kubestronaut](https://kube.promo/kubestronaut)
 
 ## Table of Contents
 
