@@ -1,5 +1,5 @@
 # settings.yaml
-image: ubuntu:24.04
+image: "24.04"
 vms:
   - name: controlplane
     cpus: 2

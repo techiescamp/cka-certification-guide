@@ -73,7 +73,25 @@ update_hosts_on_vm() {
     '
 }
 
+destroy() {
+    echo "==> Reading VM list from $SETTINGS"
+    declare -a NAMES=()
+    while IFS=$'\t' read -r name _image _cpus _memory _disk; do
+        NAMES+=("$name")
+    done < <(parse_vms)
+
+    echo "==> Deleting: ${NAMES[*]}"
+    multipass delete "${NAMES[@]}"
+    multipass purge
+    echo "==> Done."
+}
+
 main() {
+    if [[ "${1:-}" == "--delete" ]]; then
+        destroy
+        return
+    fi
+
     echo "==> Reading settings from $SETTINGS"
 
     declare -a VM_NAMES=()
@@ -97,11 +115,13 @@ main() {
 
     echo ""
     echo "==> Collecting VM IPs..."
-    declare -A VM_IPS=()
+    declare -a VM_IP_LIST=()
+    local i=0
     for name in "${VM_NAMES[@]}"; do
         ip=$(get_vm_ip "$name")
-        VM_IPS["$name"]="$ip"
+        VM_IP_LIST[$i]="$ip"
         printf "    %-15s -> %s\n" "$name" "$ip"
+        i=$((i + 1))
     done
 
     # Write host entries to a temp file for transfer
@@ -109,8 +129,8 @@ main() {
     tmp_hosts=$(mktemp)
     {
         echo "# cka-lab-start"
-        for name in "${VM_NAMES[@]}"; do
-            printf "%-15s %s\n" "${VM_IPS[$name]}" "$name"
+        for i in "${!VM_NAMES[@]}"; do
+            printf "%-15s %s\n" "${VM_IP_LIST[$i]}" "${VM_NAMES[$i]}"
         done
         echo "# cka-lab-end"
     } > "$tmp_hosts"
@@ -126,14 +146,14 @@ main() {
     echo ""
     echo "==> Done! Summary:"
     echo ""
-    for name in "${VM_NAMES[@]}"; do
-        printf "    %-15s %s\n" "$name" "${VM_IPS[$name]}"
+    for i in "${!VM_NAMES[@]}"; do
+        printf "    %-15s %s\n" "${VM_NAMES[$i]}" "${VM_IP_LIST[$i]}"
     done
     echo ""
     echo "Add these to your Mac's /etc/hosts (optional, run with sudo):"
     echo ""
-    for name in "${VM_NAMES[@]}"; do
-        printf "    %-15s %s\n" "${VM_IPS[$name]}" "$name"
+    for i in "${!VM_NAMES[@]}"; do
+        printf "    %-15s %s\n" "${VM_IP_LIST[$i]}" "${VM_NAMES[$i]}"
     done
     echo ""
     echo "Connect to VMs:"
@@ -143,4 +163,4 @@ main() {
     echo ""
 }
 
-main
+main "$@"
