@@ -1,0 +1,15 @@
+# settings.yaml
+image: "24.04"
+vms:
+  - name: controlplane
+    cpus: 2
+    memory: 2G
+    disk: 20G
+  - name: node01
+    cpus: 1
+    memory: 2G
+    disk: 20G
+  - name: node02
+    cpus: 1
+    memory: 2G
+    disk: 20G
