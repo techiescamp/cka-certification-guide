@@ -258,7 +258,7 @@ The retake must be scheduled and completed within **12 months** of the original 
 - **Type:** Performance-based (hands-on, command-line tasks)
 - **Tasks:** 15–20 scenario-based problems
 - **Environment:** Remote desktop running Linux, with a terminal and Firefox
-- **No multiple choice** — every task requires you to actually do the work in a live Kubernetes cluster
+- **No multiple choice** every task requires you to actually do the work in a live Kubernetes cluster
 - **Pre-installed tools:** `kubectl` (with `k` alias + bash completion), `yq`, `curl`, `wget`, `man`
 - **Node access:** SSH from the base node to designated task nodes; `sudo -i` for root
 

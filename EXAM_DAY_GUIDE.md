@@ -305,31 +305,6 @@ cat /etc/kubernetes/manifests/kube-apiserver.yaml
 
 ---
 
-## 🔼 Cluster Upgrade Quick Checklist
-
-```bash
-# 1. Drain the control plane node
-k drain <node> --ignore-daemonsets --delete-emptydir-data
-
-# 2. Upgrade kubeadm
-apt-mark unhold kubeadm
-apt-get install -y kubeadm=1.x.x-*
-apt-mark hold kubeadm
-
-# 3. Plan and apply
-kubeadm upgrade plan
-kubeadm upgrade apply v1.x.x    # control plane only
-
-# 4. Upgrade kubelet + kubectl
-apt-mark unhold kubelet kubectl
-apt-get install -y kubelet=1.x.x-* kubectl=1.x.x-*
-apt-mark hold kubelet kubectl
-systemctl daemon-reload
-systemctl restart kubelet
-
-
----
-
 ## 📚 Kubernetes Docs Bookmarks
 
 One browser tab allowed. Know these paths:
