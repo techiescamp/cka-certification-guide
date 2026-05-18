@@ -31,7 +31,7 @@
 ### Network Flow
 
 <p align="center">
-  <img src="./images/26.png" width="80%" alt="Kubernetes service types diagram showing ClusterIP, NodePort, and LoadBalancer traffic flow" />
+  <img src="./images/26.png" width="80%" height="auto" alt="Kubernetes service types diagram showing ClusterIP, NodePort, and LoadBalancer traffic flow" />
 </p>
 
 
@@ -151,7 +151,7 @@ kubectl run dns-test --image=busybox --rm -it -- \
 By default, all pods can communicate with all other pods. Network Policies restrict this.
 
 <p align="center">
-  <img src="./images/27.gif" width="80%" alt="Kubernetes pod-to-pod networking diagram with CNI plugin and cluster IP routing" />
+  <img src="./images/27.gif" width="80%" height="auto" alt="Kubernetes pod-to-pod networking diagram with CNI plugin and cluster IP routing" />
 </p>
 
 
@@ -250,7 +250,7 @@ from:
 
 
 <p align="center">
-  <img src="./images/28.gif" width="80%" alt="Kubernetes NetworkPolicy diagram showing ingress and egress rules with pod and namespace selectors" />
+  <img src="./images/28.gif" width="80%" height="auto" alt="Kubernetes NetworkPolicy diagram showing ingress and egress rules with pod and namespace selectors" />
 </p>
 
 Ingress manages external HTTP/HTTPS access to services.
@@ -319,7 +319,7 @@ spec:
 > 👉 **Deep Dive Lesson:** [Gateway API](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/61100920)
 
 <p align="center">
-  <img src="./images/30.png" width="80%" alt="Kubernetes Gateway API architecture diagram with GatewayClass, Gateway, and HTTPRoute resources" />
+  <img src="./images/30.png" width="80%" height="auto" alt="Kubernetes Gateway API architecture diagram with GatewayClass, Gateway, and HTTPRoute resources" />
 </p>
 
 Gateway API is the successor to Ingress, with more features and better extensibility.
@@ -407,7 +407,7 @@ kubectl get configmap coredns -n kube-system -o yaml
 > 👉 **Deep Dive Lesson:** [kube-proxy Modes](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/58129596)
 
 <p align="center">
-  <img src="./images/31.png" width="80%" alt="Kubernetes kube-proxy modes diagram comparing iptables and IPVS for service routing" />
+  <img src="./images/31.png" width="80%" height="auto" alt="Kubernetes kube-proxy modes diagram comparing iptables and IPVS for service routing" />
 </p>
 
 

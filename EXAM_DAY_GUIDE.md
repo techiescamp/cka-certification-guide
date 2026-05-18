@@ -314,24 +314,6 @@ apt-mark hold kubelet kubectl
 systemctl daemon-reload
 systemctl restart kubelet
 
-# 5. Uncordon
-k uncordon <node>
-
-
-# For each worker node (repeat per node):
-k drain <worker-node> --ignore-daemonsets --delete-emptydir-data
-# SSH into the worker node, then:
-ssh <worker-node>
-sudo -i
-apt-mark unhold kubeadm kubelet kubectl
-apt-get install -y kubeadm=1.x.x-* kubelet=1.x.x-* kubectl=1.x.x-*
-apt-mark hold kubeadm kubelet kubectl
-kubeadm upgrade node
-systemctl daemon-reload && systemctl restart kubelet
-exit
-# Back on control plane:
-k uncordon <worker-node>
-```
 
 ---
 
@@ -362,7 +344,7 @@ Use `Ctrl+F` in Firefox to search within any docs page.
 | Forgetting `sudo -i` | Always escalate on worker nodes |
 | Not verifying work | After every task, run `k get`/`describe` to confirm |
 | Editing wrong file | Double-check paths: `/etc/kubernetes/manifests/` |
-| Accidentally closing tab | Use `Ctrl+Alt+W` NOT `Ctrl+W` |
+| Accidentally closing tab | Use `Ctrl+Alt+W` — see keyboard shortcuts table above |
 | Running out of time | Skip, flag, come back — partial credit beats nothing |
 | Tabs in YAML | Always use 2 spaces, never tabs |
 | Forgetting `--restart=Never` | Required for one-off pods: `k run test --image=busybox --restart=Never` |

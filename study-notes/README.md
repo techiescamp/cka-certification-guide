@@ -31,7 +31,7 @@ Build the full mental model here before diving into each section.
 Every `kubectl` command flows through the **API Server** at the heart of the Control Plane. The Scheduler places workloads, the Controller Manager keeps them healthy, and `etcd` holds the cluster's source of truth. Worker Nodes run your containers via `kubelet` and expose network rules via `kube-proxy`.
 
 <p align="center">
-  <img src="./images/01.gif" width="80%" alt="Kubernetes cluster architecture diagram with control plane, API server, etcd, and worker nodes" />
+  <img src="./images/01.gif" width="80%" height="auto" alt="Kubernetes cluster architecture diagram with control plane, API server, etcd, and worker nodes" />
 </p>
 
 <p align="center"><em>Control Plane components (API Server, etcd, Scheduler, Controller Manager) talk to Worker Nodes over mTLS</em></p>
@@ -43,7 +43,7 @@ Every `kubectl` command flows through the **API Server** at the heart of the Con
 Before any API request is processed, Kubernetes answers two questions: **Who are you?** (Authentication) and **What are you allowed to do?** (Authorization via RBAC). Human users, Pods, and external apps all pass through the same gate.
 
 <p align="center">
-  <img src="./images/02.gif" width="80%" alt="Kubernetes RBAC authentication and authorization flow diagram with API server" />
+  <img src="./images/02.gif" width="80%" height="auto" alt="Kubernetes RBAC authentication and authorization flow diagram with API server" />
 </p>
 
 <p align="center"><em>Every caller — kubectl user, Service Account, or external app — must authenticate then pass RBAC before reaching any resource</em></p>
@@ -55,7 +55,7 @@ Before any API request is processed, Kubernetes answers two questions: **Who are
 After `kubeadm init`, the control plane lives in `/etc/kubernetes/`. Knowing this layout is essential for upgrades, certificate rotation, and debugging static pod failures.
 
 <p align="center">
-  <img src="./images/3.png" width="80%" alt="Kubernetes control plane configuration, static pod manifests, and PKI certificate directory structure" />
+  <img src="./images/3.png" width="80%" height="auto" alt="Kubernetes control plane configuration, static pod manifests, and PKI certificate directory structure" />
 </p>
 
 <p align="center"><em>Kubeconfig files for each component, static pod manifests in <code>manifests/</code>, and all certificates under <code>pki/</code></em></p>
@@ -67,7 +67,7 @@ After `kubeadm init`, the control plane lives in `/etc/kubernetes/`. Knowing thi
 Kubernetes delegates container execution, networking, and storage to pluggable interfaces. Swapping a CNI plugin (e.g. Flannel → Calico) never requires changes to `kubelet` — the interface contract stays the same.
 
 <p align="center">
-  <img src="./images/04.png" width="80%" alt="Kubernetes CRI vs CNI vs CSI architecture diagram for container runtime, networking, and storage" />
+  <img src="./images/04.png" width="80%" height="auto" alt="Kubernetes CRI vs CNI vs CSI architecture diagram for container runtime, networking, and storage" />
 </p>
 
 <p align="center"><em>CRI lets kubelet talk to any container runtime; CNI gives each Pod network connectivity; CSI mounts persistent storage from any provider</em></p>
@@ -79,7 +79,7 @@ Kubernetes delegates container execution, networking, and storage to pluggable i
 A Deployment manages a ReplicaSet, which manages Pods. Labels and selectors are the glue. The Deployment adds a `pod-template-hash` label to uniquely identify each ReplicaSet's Pods — this is why rolling updates can run two ReplicaSets in parallel during a transition.
 
 <p align="center">
-  <img src="./images/08.png" width="80%" alt="Kubernetes deployment to replicaset to pod label selector hierarchy diagram" />
+  <img src="./images/08.png" width="80%" height="auto" alt="Kubernetes deployment to replicaset to pod label selector hierarchy diagram" />
 </p>
 
 <p align="center"><em>Deployment manages ReplicaSet via label selectors; ReplicaSet manages Pods via the same labels plus a unique <code>pod-template-hash</code></em></p>
@@ -91,7 +91,7 @@ A Deployment manages a ReplicaSet, which manages Pods. Labels and selectors are 
 Pods request storage through a **PersistentVolumeClaim**. Kubernetes binds the claim to a matching **PersistentVolume** (static) or provisions one automatically via a **StorageClass** (dynamic). The Pod never talks to the storage backend directly.
 
 <p align="center">
-  <img src="./images/23.gif" width="80%" alt="Kubernetes PersistentVolume and PersistentVolumeClaim binding lifecycle from available to bound to released" />
+  <img src="./images/23.gif" width="80%" height="auto" alt="Kubernetes PersistentVolume and PersistentVolumeClaim binding lifecycle from available to bound to released" />
 </p>
 
 <p align="center"><em>PV lifecycle: Available → Bound (when PVC matches) → Released (when PVC is deleted) → reclaimed per policy</em></p>
@@ -103,7 +103,7 @@ Pods request storage through a **PersistentVolumeClaim**. Kubernetes binds the c
 External traffic enters through an **Ingress Controller** (or Gateway API), hits a **Service** (which load-balances across Pod IPs via kube-proxy), and finally reaches a **Pod**. Every hop uses labels and selectors.
 
 <p align="center">
-  <img src="./images/26.png" width="80%" alt="Kubernetes ingress to service to pod traffic flow diagram with kube-proxy routing" />
+  <img src="./images/26.png" width="80%" height="auto" alt="Kubernetes ingress to service to pod traffic flow diagram with kube-proxy routing" />
 </p>
 
 <p align="center"><em>Client request flows: Internet → Ingress Controller → Service (ClusterIP) → kube-proxy selects a Pod IP → Pod responds</em></p>
@@ -115,7 +115,7 @@ External traffic enters through an **Ingress Controller** (or Gateway API), hits
 Every CKA troubleshooting question can be answered with the same four commands, in order. Get the current state, describe for events, check application logs, check system logs — then fix and verify.
 
 <p align="center">
-  <img src="./images/32.png" width="80%" alt="Kubernetes troubleshooting methodology flowchart with kubectl get, describe, logs, and journalctl steps" />
+  <img src="./images/32.png" width="80%" height="auto" alt="Kubernetes troubleshooting methodology flowchart with kubectl get, describe, logs, and journalctl steps" />
 </p>
 
 <p align="center"><em>Problem reported → <code>kubectl get</code> → <code>kubectl describe</code> → <code>kubectl logs</code> → <code>journalctl</code> → Fix → Verify</em></p>

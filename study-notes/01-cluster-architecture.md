@@ -22,7 +22,7 @@
 > 👉 **Deep Dive Lesson:** [Kubernetes Architecture ](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/60080221)
 
 <p align="center">
-  <img src="./images/01.gif" width="80%" alt="Kubernetes cluster architecture diagram with control plane, API server, etcd, and worker nodes" />
+  <img src="./images/01.gif" width="80%" height="auto" alt="Kubernetes cluster architecture diagram with control plane, API server, etcd, and worker nodes" />
 </p>
 
 ### Control Plane Components
@@ -51,7 +51,7 @@
 > 👉 **Deep Dive Lesson:** [RBAC](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55733267) | [ServiceAccounts](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55724447) | [Roles & ClusterRoles](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55724449) | [RoleBindings & ClusterRoleBindings](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55997133)
 
 <p align="center">
-  <img src="./images/02.gif" width="80%" alt="Kubernetes authentication and authorization workflow diagram with API server" />
+  <img src="./images/02.gif" width="80%" height="auto" alt="Kubernetes authentication and authorization workflow diagram with API server" />
 </p>
 
 
@@ -114,7 +114,7 @@ spec:
 
 
 <p align="center">
-  <img src="./images/3.png" width="80%" alt="Kubernetes control plane configuration, static pod manifests, and PKI certificate directory structure" />
+  <img src="./images/3.png" width="80%" height="auto" alt="Kubernetes control plane configuration, static pod manifests, and PKI certificate directory structure" />
 </p>
 
 ### Upgrade Path
@@ -141,7 +141,7 @@ spec:
 ## Extension Interfaces
 
 <p align="center">
-  <img src="./images/04.png" width="80%" alt="Kubernetes CRI vs CNI vs CSI architecture diagram for container runtime, networking, and storage" />
+  <img src="./images/04.png" width="80%" height="auto" alt="Kubernetes CRI vs CNI vs CSI architecture diagram for container runtime, networking, and storage" />
 </p>
 
 
@@ -159,7 +159,7 @@ spec:
 
 
 <p align="center">
-  <img src="./images/05.png" width="80%" alt="Kubernetes CRD and Operator workflow diagram with API server and etcd" />
+  <img src="./images/05.png" width="80%" height="auto" alt="Kubernetes CRD and Operator workflow diagram with API server and etcd" />
 </p>
 
 
@@ -194,7 +194,7 @@ spec:
 > 👉 **Deep Dive Lesson:** [Helm](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/62134793)
 
 <p align="center">
-  <img src="./images/06.png" width="80%" alt="Helm chart deployment workflow with environment-specific values files for Kubernetes" />
+  <img src="./images/06.png" width="80%" height="auto" alt="Helm chart deployment workflow with environment-specific values files for Kubernetes" />
 </p>
 
 ### Helm (Package Manager)
@@ -216,7 +216,7 @@ helm list -A
 ### Kustomize (Template-free customization)
 
 <p align="center">
-  <img src="./images/07.png" width="80%" alt="Kustomize base and overlay workflow for multi-environment Kubernetes deployments" />
+  <img src="./images/07.png" width="80%" height="auto" alt="Kustomize base and overlay workflow for multi-environment Kubernetes deployments" />
 </p>
 
 - Base + Overlays pattern

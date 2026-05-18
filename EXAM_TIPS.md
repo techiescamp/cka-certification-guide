@@ -18,27 +18,13 @@ For the full environment checklist, keyboard shortcuts, node navigation, and pre
 
 You have approximately **6–8 minutes per question** on average. Not all questions are equal — they have different point weights (usually shown in the exam).
 
-**Recommended approach:**
-
-1. **First pass (60 min):** Go through all questions. Solve everything you're confident about in under 5 minutes.
-2. **Second pass (45 min):** Return to harder questions you flagged. Use documentation if needed.
-3. **Buffer (15 min):** Final review, verify contexts, check flagged items.
+For the 3-pass strategy and domain time allocation table, see: 📅 **[Exam Day Guide — Time Management](./EXAM_DAY_GUIDE.md#-time-management-strategy)**
 
 ### Time Signals
 
 - If you've spent **more than 7 minutes** on a question → flag it and move on
 - If a question is worth **1–2%** of the exam → don't spend more than 3 minutes
 - If a question is worth **7–10%** → it deserves 10–15 minutes
-
-### Time Allocation by Domain Weight
-
-| Domain | Weight | Suggested Time |
-|--------|--------|----------------|
-| Troubleshooting | 30% | ~36 min |
-| Cluster Architecture | 25% | ~30 min |
-| Services & Networking | 20% | ~24 min |
-| Workloads & Scheduling | 15% | ~18 min |
-| Storage | 10% | ~12 min |
 
 Cluster upgrade tasks are time-consuming — budget 12–15 min and do them only when confident.
 
@@ -60,24 +46,7 @@ Submitting work in the wrong cluster or namespace is one of the most common ways
 
 ## Setup Your Environment (First 2 Minutes)
 
-Run these immediately when the exam starts:
-
-```bash
-# Must-have alias
-alias k=kubectl
-export do="--dry-run=client -o yaml"
-export now="--force --grace-period=0"
-
-# Enable bash autocompletion
-source <(kubectl completion bash)
-complete -F __start_kubectl k
-
-# Optional: set vim as default editor
-export KUBE_EDITOR=vim
-echo "set tabstop=2" >> ~/.vimrc
-echo "set expandtab" >> ~/.vimrc
-echo "set shiftwidth=2" >> ~/.vimrc
-```
+Run these on every node immediately when the exam starts. See full setup commands: 📅 **[Exam Day Guide — First 5 Minutes](./EXAM_DAY_GUIDE.md#️-first-5-minutes-of-the-exam)**
 
 ---
 

@@ -2,6 +2,8 @@
 
 > **Source:** [CNCF CKA Curriculum v1.35](https://github.com/cncf/curriculum/blob/master/CKA_Curriculum_v1.35.pdf) | **Kubernetes version in exam:** v1.35 | **Updated:** 2026
 
+The Certified Kubernetes Administrator (CKA) exam covers 5 domains tested on Kubernetes v1.35. The exam is 2 hours, performance-based (no multiple choice), and requires a passing score of 66%.
+
 ---
 
 ## 📊 Domain Weights at a Glance
@@ -28,7 +30,6 @@ Each exam domain has a dedicated study guide with core concepts.
 - 💾 **[Domain 3: Storage](./study-notes/03-storage.md)** (10%)
 - 🌐 **[Domain 4: Services & Networking](./study-notes/04-services-networking.md)** (20%)
 - 🛠️ **[Domain 5: Troubleshooting](./study-notes/05-troubleshooting.md)** (30%)
-
 
 ---
 

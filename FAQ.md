@@ -44,7 +44,7 @@ The **Certified Kubernetes Administrator (CKA)** certification is designed to en
 
 ## How much does the exam cost?
 
-Please check the current pricing on the [Linux Foundation Training & Certification Catalog](https://training.linuxfoundation.org/).
+**$395 USD** (single exam). Bundle prices vary. Check the [Linux Foundation Training & Certification Catalog](https://training.linuxfoundation.org/) for current pricing.
 
 > [!TIP]
 > **Discount codes** are frequently available. Check the repo [README.md](./README.md) for current coupon codes.
