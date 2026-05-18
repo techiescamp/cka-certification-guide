@@ -56,7 +56,6 @@ Use code **35KUBECT** to save on following bundles:
 
 > ![weight](https://img.shields.io/badge/Exam%20Weight-25%25-4A90D9?style=flat-square) &nbsp; 📖 [Study Notes](./study-notes/01-cluster-architecture.md)
 
-| # | Sub-topic |
 |---|-----------|
 | 1 | 🔐 [Manage role-based access control (RBAC)](#manage-role-based-access-control-rbac) |
 | 2 | 🖥️ [Prepare underlying infrastructure for installing a Kubernetes cluster](#prepare-underlying-infrastructure-for-installing-a-kubernetes-cluster) |
@@ -72,7 +71,6 @@ Use code **35KUBECT** to save on following bundles:
 
 > ![weight](https://img.shields.io/badge/Exam%20Weight-15%25-7B68EE?style=flat-square) &nbsp; 📖 [Study Notes](./study-notes/02-workloads-scheduling.md)
 
-| # | Sub-topic |
 |---|-----------|
 | 1 | 🔁 [Understand deployments and how to perform rolling updates and rollbacks](#understand-deployments-and-how-to-perform-rolling-update-and-rollbacks) |
 | 2 | 🗂️ [Use ConfigMaps and Secrets to configure applications](#use-configmaps-and-secrets-to-configure-applications) |
@@ -86,7 +84,6 @@ Use code **35KUBECT** to save on following bundles:
 
 > ![weight](https://img.shields.io/badge/Exam%20Weight-10%25-E8A838?style=flat-square) &nbsp; 📖 [Study Notes](./study-notes/03-storage.md)
 
-| # | Sub-topic |
 |---|-----------|
 | 1 | 🏷️ [Implement storage classes and dynamic volume provisioning](#implement-storage-classes-and-dynamic-volume-provisioning) |
 | 2 | 🔧 [Configure volume types, access modes and reclaim policies](#configure-volume-types-access-modes-and-reclaim-policies) |
@@ -98,7 +95,6 @@ Use code **35KUBECT** to save on following bundles:
 
 > ![weight](https://img.shields.io/badge/Exam%20Weight-20%25-2ECC71?style=flat-square) &nbsp; 📖 [Study Notes](./study-notes/04-services-networking.md)
 
-| # | Sub-topic |
 |---|-----------|
 | 1 | 🔗 [Understand connectivity between Pods](#understand-connectivity-between-pods) |
 | 2 | 🛡️ [Define and enforce Network Policies](#define-and-enforce-network-policies) |
@@ -109,14 +105,14 @@ Use code **35KUBECT** to save on following bundles:
 
 ---
 
-### [Troubleshooting](#5-troubleshooting-30) `30%` ⭐ Highest Weight
+### [Troubleshooting](#5-troubleshooting-30) `30%`  Highest Weight
 
 > ![weight](https://img.shields.io/badge/Exam%20Weight-30%25-E74C3C?style=flat-square) &nbsp; 📖 [Study Notes](./study-notes/05-troubleshooting.md)
 
 > [!IMPORTANT]
 > **Troubleshooting is worth 30% of your score** — the single largest domain. Dedicate at least one-third of your study time here.
 
-| # | Sub-topic |
+
 |---|-----------|
 | 1 | 🖥️ [Troubleshoot clusters and nodes](#troubleshoot-clusters-and-nodes) |
 | 2 | ⚙️ [Troubleshoot cluster components](#troubleshoot-cluster-components) |
