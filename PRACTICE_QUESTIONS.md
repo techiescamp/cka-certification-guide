@@ -4,24 +4,25 @@
 > Try each question before reading the solution. Difficulty rated per question.
 
 **Q: How hard are these compared to the real CKA exam?**
-A: Equivalent difficulty. Real CKA tasks are performance-based in a live cluster — these questions mirror that format exactly, including namespace/context awareness requirements.
+
+A: Equivalent difficulty. Real CKA tasks are performance based in a live cluster these questions mirror that format exactly, including namespace/context awareness requirements.
 
 ---
 
 ## How to Use
 
-1. Read the question carefully — note the **namespace** and **cluster context**
+1. Read the question carefully and note the **namespace** and **cluster context**
 2. Attempt the solution yourself
 3. Reveal the solution and compare
 4. If wrong, understand *why* before moving on
 
 ---
 
-## Domain 1 — Cluster Architecture, Installation & Configuration (25%)
+## Cluster Architecture, Installation & Configuration 
 
 ---
 
-### Q1 — RBAC: Create Role and Binding
+### Q1 RBAC: Create Role and Binding
 
 **Task:** In namespace `rbac-test`, create a Role named `pod-manager` that allows `get`, `list`, `watch`, `create`, and `delete` on `pods`. Bind this role to user `alice`.
 
@@ -50,7 +51,7 @@ kubectl auth can-i get secrets --as=alice -n rbac-test  # should be no
 
 ---
 
-### Q2 — RBAC: ClusterRole for Node Read Access
+### Q2 RBAC: ClusterRole for Node Read Access
 
 **Task:** Create a ClusterRole named `node-viewer` that allows `get`, `list`, and `watch` on `nodes`. Create a ClusterRoleBinding named `node-viewer-binding` that binds it to ServiceAccount `monitor-sa` in namespace `monitoring`.
 
@@ -77,7 +78,7 @@ kubectl auth can-i list nodes --as=system:serviceaccount:monitoring:monitor-sa
 
 ---
 
-### Q3 — Cluster Upgrade
+### Q3 Cluster Upgrade
 
 **Task:** Upgrade the control plane node from Kubernetes v1.34.x to v1.35.0 using kubeadm. Ensure the kubelet and kubectl are also upgraded.
 
@@ -115,7 +116,7 @@ kubectl get nodes
 
 ---
 
-### Q4 — ServiceAccount Token
+### Q4 ServiceAccount Token
 
 **Task:** Create a ServiceAccount named `app-sa` in namespace `default`. Create a pod named `sa-pod` using image `nginx` that uses this service account. Verify the token is mounted.
 
@@ -149,7 +150,7 @@ kubectl exec sa-pod -- cat /var/run/secrets/kubernetes.io/serviceaccount/token
 
 ---
 
-### Q5 — Kustomize
+### Q5 Kustomize
 
 **Task:** There is a kustomization directory at `/opt/kustomize/base`. Apply the kustomization to create all resources defined within it.
 
@@ -167,11 +168,11 @@ kubectl get all -n <namespace>
 
 ---
 
-## Domain 2 — Workloads & Scheduling (15%)
+## Workloads & Scheduling 
 
 ---
 
-### Q6 — Deployment with Rolling Update
+### Q6 Deployment with Rolling Update
 
 **Task:** Create a Deployment named `webapp` in namespace `web` with 3 replicas using image `nginx:1.24`. Then update the image to `nginx:1.25` and verify the rollout completes successfully.
 
@@ -198,7 +199,7 @@ kubectl describe deployment webapp -n web | grep Image
 
 ---
 
-### Q7 — Rollback a Deployment
+### Q7 Rollback a Deployment
 
 **Task:** The deployment `api-server` in namespace `production` was recently updated and is now failing. Roll it back to the previous version.
 
@@ -223,7 +224,7 @@ kubectl get pods -n production
 
 ---
 
-### Q8 — ConfigMap & Secret in Pod
+### Q8 ConfigMap & Secret in Pod
 
 **Task:** Create a ConfigMap named `app-config` with key `APP_ENV=production` and `LOG_LEVEL=info`. Create a Secret named `db-secret` with key `DB_PASSWORD=supersecret`. Create a pod named `config-pod` using image `nginx` that exposes both as environment variables.
 
@@ -268,7 +269,7 @@ kubectl exec config-pod -- env | grep -E "APP_ENV|LOG_LEVEL|DB_PASSWORD"
 
 ---
 
-### Q9 — Pod with Resource Limits
+### Q9 Pod with Resource Limits
 
 **Task:** Create a pod named `limited-pod` in namespace `dev` using image `nginx`. Set CPU request to `100m`, CPU limit to `200m`, memory request to `64Mi`, and memory limit to `128Mi`.
 
@@ -287,7 +288,7 @@ kubectl describe pod limited-pod -n dev | grep -A6 "Limits:"
 
 ---
 
-### Q10 — Node Affinity
+### Q10 Node Affinity
 
 **Task:** Label node `node01` with `tier=frontend`. Create a pod named `affinity-pod` using image `nginx` that is **required** to be scheduled on nodes with label `tier=frontend`.
 
@@ -327,7 +328,7 @@ kubectl get pod affinity-pod -o wide
 
 ---
 
-### Q11 — Taint and Toleration
+### Q11 Taint and Toleration
 
 **Task:** Add a taint `env=production:NoSchedule` to node `node02`. Create a pod named `tolerate-pod` using image `busybox` that can be scheduled on this tainted node.
 
@@ -365,7 +366,7 @@ kubectl get pod tolerate-pod -o wide
 
 ---
 
-### Q12 — HorizontalPodAutoscaler
+### Q12 HorizontalPodAutoscaler
 
 **Task:** Create an HPA for deployment `web-app` in namespace `production` that scales between 2 and 8 replicas, targeting 60% CPU utilization.
 
@@ -387,7 +388,7 @@ kubectl describe hpa web-app -n production
 
 ---
 
-### Q13 — Init Container
+### Q13 Init Container
 
 **Task:** Create a pod named `init-pod` in namespace `default` that has an init container using image `busybox` which runs `echo "Init complete" > /shared/init.txt`, and a main container using image `nginx` that mounts the same volume at `/usr/share/data`.
 
@@ -429,11 +430,11 @@ kubectl exec init-pod -- cat /usr/share/data/init.txt
 
 ---
 
-## Domain 3 — Storage (10%)
+## Storage 
 
 ---
 
-### Q14 — PersistentVolume
+### Q14 PersistentVolume
 
 **Task:** Create a PersistentVolume named `pv-local` with `500Mi` capacity, `ReadWriteOnce` access mode, `Retain` reclaim policy, and a `hostPath` of `/mnt/pv-data`. Use `StorageClass: manual`.
 
@@ -468,7 +469,7 @@ kubectl describe pv pv-local
 
 ---
 
-### Q15 — PVC and Pod with Persistent Storage
+### Q15 PVC and Pod with Persistent Storage
 
 **Task:** Create a PersistentVolumeClaim named `app-pvc` requesting `200Mi` with `ReadWriteOnce` and `storageClassName: manual`. Create a pod named `storage-pod` using image `nginx` that mounts this PVC at `/data`.
 
@@ -520,7 +521,7 @@ kubectl exec storage-pod -- ls /data
 
 ---
 
-### Q16 — StorageClass
+### Q16 StorageClass
 
 **Task:** List all StorageClasses in the cluster and identify which one is the default. Then create a PVC named `dynamic-pvc` that uses the default StorageClass and requests `1Gi` with `ReadWriteOnce`.
 
@@ -553,11 +554,11 @@ kubectl get pvc dynamic-pvc
 
 ---
 
-## Domain 4 — Services & Networking (20%)
+## Services & Networking 
 
 ---
 
-### Q17 — Create a Service
+### Q17  Create a Service
 
 **Task:** Expose deployment `frontend` in namespace `web` on port `80` (target port `8080`) as a `ClusterIP` service named `frontend-svc`.
 
@@ -581,7 +582,7 @@ kubectl get endpoints frontend-svc -n web
 
 ---
 
-### Q18 — NodePort Service
+### Q18 NodePort Service
 
 **Task:** Create a NodePort service named `api-nodeport` in namespace `backend` that exposes port `8080` of deployment `api` on node port `30080`.
 
@@ -648,7 +649,7 @@ kubectl describe networkpolicy deny-all -n secure
 
 ---
 
-### Q20 — Network Policy: Allow Specific Traffic
+### Q20  Network Policy: Allow Specific Traffic
 
 **Task:** In namespace `app`, create a NetworkPolicy named `allow-frontend` that allows ingress traffic to pods with label `role=backend` only from pods with label `role=frontend` on port `3000`.
 
@@ -686,7 +687,7 @@ kubectl describe networkpolicy allow-frontend -n app
 
 ---
 
-### Q21 — Ingress Resource
+### Q21  Ingress Resource
 
 **Task:** Create an Ingress named `app-ingress` in namespace `web` that routes traffic from `app.example.com/api` to service `api-svc` on port `80` and from `app.example.com/` to service `frontend-svc` on port `80`.
 
@@ -732,7 +733,7 @@ kubectl describe ingress app-ingress -n web
 
 ---
 
-### Q22 — DNS Troubleshooting
+### Q22  DNS Troubleshooting
 
 **Task:** Pod `debug-pod` in namespace `default` cannot resolve the service `my-service.production.svc.cluster.local`. Diagnose the issue.
 
@@ -763,11 +764,11 @@ kubectl describe pod debug-pod | grep DNS
 
 ---
 
-## Domain 5 — Troubleshooting (30%)
+## Troubleshooting 
 
 ---
 
-### Q23 — Fix NotReady Node
+### Q23 Fix NotReady Node
 
 **Task:** Node `worker01` is in `NotReady` state. Investigate and fix the issue.
 
@@ -808,7 +809,7 @@ kubectl get nodes
 
 ---
 
-### Q24 — Fix CrashLoopBackOff Pod
+### Q24 Fix CrashLoopBackOff Pod
 
 **Task:** Pod `crasher` in namespace `debug` is in `CrashLoopBackOff`. Identify and resolve the issue.
 
@@ -844,7 +845,7 @@ kubectl get pod crasher -n debug
 
 ---
 
-### Q25 — Fix ImagePullBackOff
+### Q25 Fix ImagePullBackOff
 
 **Task:** Pod `bad-image` in namespace `default` is in `ImagePullBackOff`. Fix the image reference so the pod runs successfully.
 
@@ -874,7 +875,7 @@ kubectl get pod bad-image
 
 ---
 
-### Q26 — Service Not Routing Traffic
+### Q26 Service Not Routing Traffic
 
 **Task:** Service `backend-svc` in namespace `production` has no endpoints. Pods are running but traffic is not reaching them. Fix the issue.
 
@@ -912,7 +913,7 @@ kubectl run test --image=busybox --rm -it -- \
 
 ---
 
-### Q27 — Pod Stuck in Pending
+### Q27 Pod Stuck in Pending
 
 **Task:** Pod `pending-pod` in namespace `default` is stuck in `Pending`. Investigate and fix.
 
@@ -953,7 +954,7 @@ kubectl get pod pending-pod
 
 ---
 
-### Q28 — Identify High Resource Consuming Pod
+### Q28 Identify High Resource Consuming Pod
 
 **Task:** Find the pod consuming the most memory across all namespaces and write its name to `/opt/high-mem-pod.txt`.
 
@@ -977,7 +978,7 @@ cat /opt/high-mem-pod.txt
 
 ---
 
-### Q29 — Fix Control Plane Component
+### Q29  Fix Control Plane Component
 
 **Task:** The kube-scheduler is not running. Identify the issue and fix it so pods get scheduled.
 
@@ -1042,7 +1043,7 @@ kubectl get nodes | grep worker02
 
 ---
 
-### Q31 — Debug with Ephemeral Container
+### Q31 Debug with Ephemeral Container
 
 **Task:** Pod `minimal-pod` (using a distroless image) is misbehaving. Attach a debug container to investigate.
 
@@ -1063,7 +1064,7 @@ cat /proc/1/cmdline   # view main process command
 
 ---
 
-### Q32 — Multi-Container Pod Log Analysis
+### Q32  Multi-Container Pod Log Analysis
 
 **Task:** Pod `multi-app` in namespace `logs` has containers named `app` and `sidecar`. The `app` container is failing. Get the last 100 lines of logs from the `app` container only, including logs from before the last restart.
 
@@ -1087,7 +1088,7 @@ kubectl logs multi-app -c app -n logs --previous > /opt/app-logs.txt
 
 ---
 
-### Q33 — Fix a Broken Deployment
+### Q33 Fix a Broken Deployment
 
 **Task:** Deployment `broken-app` in namespace `production` was updated and is now failing with all pods in `Error` state. Identify the issue and roll back.
 
@@ -1119,7 +1120,7 @@ kubectl get pods -n production
 
 ---
 
-### Q34 — Full Scenario: Deploy and Expose a Stateful App
+### Q34 Full Scenario: Deploy and Expose a Stateful App
 
 **Task:** Deploy a MySQL database:
 - Deployment name: `mysql`, namespace: `database`, image: `mysql:8.0`, 1 replica
@@ -1211,7 +1212,7 @@ kubectl get pvc -n database
 
 ---
 
-### Q35 — PodDisruptionBudget
+### Q35 PodDisruptionBudget
 
 **Task:** Create a PodDisruptionBudget named `frontend-pdb` in namespace `production` for deployment `frontend` that ensures at least 2 pods are always available during voluntary disruptions (e.g., node drains).
 

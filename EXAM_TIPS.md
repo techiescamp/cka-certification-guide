@@ -3,6 +3,7 @@
 > Practical advice for passing the Certified Kubernetes Administrator exam (Kubernetes v1.35) on your first attempt.
 
 **Q: What is the most important thing to do before every CKA exam question?**
+
 A: Check your cluster context and namespace. Run `kubectl config use-context <ctx>` and `kubectl config set-context --current --namespace=<ns>`. Wrong context is the #1 reason candidates lose points on correct work.
 
 ## Step-by-Step Exam Approach

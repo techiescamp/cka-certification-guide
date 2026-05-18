@@ -1085,31 +1085,41 @@ gg / G       → Top / Bottom         /pattern → Search
 
 
 **Q: What Kubernetes version is the CKA exam on in 2026?**
+
 A: Kubernetes v1.35. This guide targets v1.35 specifically, matching the current exam environment.
 
 **Q: What is the passing score for the CKA exam?**
+
 A: 66%. Partial credit is awarded — incomplete answers still earn points.
 
 **Q: How many questions are on the CKA exam?**
+
 A: 15–20 performance-based tasks. No multiple choice. All hands-on in a live cluster.
 
 **Q: Can I use kubectl documentation during the CKA exam?**
+
 A: Yes. One browser tab is allowed: kubernetes.io/docs, kubernetes.io/blog, or helm.sh/docs.
 
 **Q: How long is CKA certification valid?**
+
 A: 2 years from the date you pass.
 
 **Q: Does the CKA exam include a free retake?**
+
 A: Yes. One free retake is included, and it must be used within 12 months of purchase.
 
 **Q: What is the hardest domain on the CKA exam?**
+
 A: Troubleshooting (30%) is the highest-weighted domain and most commonly causes candidates to fail. Invest at least one-third of your study time there.
 
 **Q: How do I set up a local Kubernetes cluster for CKA practice?**
+
 A: Use the Vagrant-based lab in `lab-setup/`. Supports Mac Silicon, Mac Intel, Windows, and Ubuntu Desktop. Each folder has its own README with setup steps.
 
 **Q: What kubectl commands are allowed on the CKA exam?**
+
 A: All kubectl commands. The exam is a live terminal — no restrictions on which commands you use. You can also use `vim`, `nano`, `curl`, `systemctl`, and `crictl`.
+
 
 > 📄 Full FAQ: [FAQ.md](./FAQ.md)
 
@@ -1126,7 +1136,7 @@ A: All kubectl commands. The exam is a live terminal — no restrictions on whic
 
 ### How to Use
 
-1. Read the question carefully — note the **namespace** and **cluster context**
+1. Read the question carefully note the **namespace** and **cluster context**
 2. Attempt the solution yourself
 3. Reveal the solution and compare
 4. If wrong, understand *why* before moving on
@@ -1193,9 +1203,9 @@ kubectl get events -n <ns> --sort-by='.lastTimestamp'
 
 Contributions are welcome. Please follow these guidelines.
 
-- **Bug reports / corrections** — Open an issue describing the error and the correct information with a source link.
-- **Content additions** — Open a pull request with your changes. Keep additions focused on CKA v1.35 exam scope.
-- **Typo / formatting fixes** — Pull requests welcome, no issue needed.
+- **Bug reports / corrections**: Open an issue describing the error and the correct information with a source link.
+- **Content additions**: Open a pull request with your changes. Keep additions focused on CKA v1.35 exam scope.
+- **Typo / formatting fixes**: Pull requests welcome, no issue needed.
 
 ### Pull Request Guidelines
 
