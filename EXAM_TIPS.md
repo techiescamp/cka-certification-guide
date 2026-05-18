@@ -1,6 +1,19 @@
-# CKA Exam Tips & Strategy 🎯
+# CKA Exam Tips 2026 — Strategy, Time Management & Common Traps to Avoid 🎯
 
-> Practical advice for passing the Certified Kubernetes Administrator exam on your first attempt.
+> Practical advice for passing the Certified Kubernetes Administrator exam (Kubernetes v1.35) on your first attempt.
+
+**Q: What is the most important thing to do before every CKA exam question?**
+A: Check your cluster context and namespace. Run `kubectl config use-context <ctx>` and `kubectl config set-context --current --namespace=<ns>`. Wrong context is the #1 reason candidates lose points on correct work.
+
+## Step-by-Step Exam Approach
+
+1. **Read the full question** before typing anything — note the namespace, cluster context, and resource names
+2. **Switch context** — `kubectl config use-context <required-context>`
+3. **Set namespace** — `kubectl config set-context --current --namespace=<ns>` or use `-n <ns>` on every command
+4. **Use imperative commands first** — faster than writing YAML from scratch
+5. **Dry-run to YAML if complex** — `kubectl create ... --dry-run=client -o yaml > file.yaml`
+6. **Verify your work** — `kubectl get` / `kubectl describe` after every task
+7. **Flag and skip** if stuck after 3 minutes — return in the second pass
 
 ---
 

@@ -1,6 +1,12 @@
-# Workloads & Scheduling
+# Kubernetes Workloads & Scheduling for CKA — Deployments, HPA, Node Affinity & Probes (15%)
 
 > **Exam Weight: 15%** — Focus on Deployments, scheduling constraints, and resource management.
+
+**Q: How does Kubernetes schedule a pod?**
+A: The kube-scheduler selects a node in two phases: (1) **Filtering** — eliminates nodes that don't meet the pod's requirements (resources, taints, affinity, node selectors); (2) **Scoring** — ranks remaining nodes and picks the highest score. The kubelet on the winning node then pulls the image and starts the container.
+
+**Q: What is the difference between liveness and readiness probes in Kubernetes?**
+A: A **liveness probe** restarts the container if it fails (the process is alive but broken). A **readiness probe** removes the pod from service endpoints if it fails (the pod is up but not ready to handle traffic). A **startup probe** delays both until the app finishes initializing.
 
 ---
 

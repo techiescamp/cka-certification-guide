@@ -1,7 +1,30 @@
-# Kubernetes Troubleshooting Guide for CKA Exam 🔧
+# Kubernetes Troubleshooting Guide for CKA 2026 — Pod, Node, Network & Storage Debug Playbooks 🔧
 
-> Systematic debug playbooks for every layer of Kubernetes.
-> Troubleshooting is **30% of the CKA exam** — master this section.
+> Systematic debug playbooks for every layer of Kubernetes (v1.35).
+> Troubleshooting is **30% of the CKA exam** — the single highest-weighted domain.
+
+**Q: What is the fastest way to debug a failing pod in Kubernetes?**
+A: Run `kubectl describe pod <name>` first — the Events section reveals 80% of issues. Then `kubectl logs <name> --previous` if the container crashed. Check exit codes: 137 = OOM killed, 1 = app error, 127 = command not found.
+
+**Q: Why is my Kubernetes node in NotReady state?**
+A: SSH to the node and run `systemctl status kubelet`. If stopped, run `systemctl start kubelet`. Check logs with `journalctl -u kubelet --since "10 minutes ago"`. Common causes: disk pressure (`df -h`), memory pressure (`free -m`), or expired certificates.
+
+**Q: Why does my Kubernetes service have no endpoints?**
+A: The service selector doesn't match the pod labels. Run `kubectl describe svc <name>` to see the selector, then `kubectl get pods --show-labels` to compare. Fix with `kubectl edit svc <name>` or `kubectl label pod <name> <key>=<value>`.
+
+## Symptom → Cause → Fix (Quick Reference)
+
+| Symptom | Most Likely Cause | First Fix |
+|---------|-------------------|-----------|
+| Node `NotReady` | kubelet stopped | `systemctl start kubelet` |
+| Pod `CrashLoopBackOff` | App error or bad config | `kubectl logs <pod> --previous` |
+| Pod `OOMKilled` | Memory limit too low | Increase `resources.limits.memory` |
+| Pod `ImagePullBackOff` | Wrong image name/tag | `kubectl describe pod` → fix image |
+| Pod `Pending` | No schedulable node | Check taints, affinity, resources |
+| Service no endpoints | Label selector mismatch | Fix `spec.selector` in service |
+| DNS not resolving | CoreDNS down | `kubectl get pods -n kube-system -l k8s-app=kube-dns` |
+| PVC `Pending` | No matching PV or StorageClass | `kubectl describe pvc` → check StorageClass |
+| Scheduler not running | Bad static pod manifest | Fix `/etc/kubernetes/manifests/kube-scheduler.yaml` |
 
 ---
 

@@ -1,6 +1,21 @@
-# Troubleshooting
+# Kubernetes Troubleshooting for CKA — Node NotReady, CrashLoopBackOff & Network Debugging (30%)
 
-> **Exam Weight: 30%** — The highest-impact domain. Master the debug methodology.
+> **Exam Weight: 30%** — The single highest-weighted domain. Master the debug methodology.
+
+**Q: How do I troubleshoot a Kubernetes pod that keeps restarting?**
+A: Check exit code with `kubectl describe pod <name>` → look for "Exit Code". Then `kubectl logs <name> --previous` for logs before the crash. Exit code 137 = OOM killed (increase memory limit). Exit code 1 = app error (check config/env). Exit code 127 = command not found (wrong image or entrypoint).
+
+## Exit Code Quick Reference
+
+| Exit Code | Meaning | Fix |
+|-----------|---------|-----|
+| `0` | Clean exit | Check why container isn't staying running |
+| `1` | Application error | Check logs, env vars, config |
+| `2` | Misuse of shell command | Fix the command |
+| `126` | Permission denied | Check file permissions |
+| `127` | Command not found | Fix image or entrypoint |
+| `137` | OOM killed (SIGKILL) | Increase `resources.limits.memory` |
+| `143` | Graceful termination (SIGTERM) | Normal shutdown |
 
 ---
 

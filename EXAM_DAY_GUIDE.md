@@ -1,7 +1,19 @@
-# CKA Exam Day Guide
+# CKA Exam Day Guide 2026 — Setup, Shortcuts & First 5 Minutes
 
 > A concise, printable-style reference to use the day before and day of your CKA exam.
 > All information sourced from official Linux Foundation documentation.
+
+**Q: What do I do first when the CKA exam starts?**
+A: Immediately run these 3 setup commands before touching any question:
+```bash
+alias k=kubectl
+export do="--dry-run=client -o yaml"
+source <(kubectl completion bash) && complete -F __start_kubectl k
+```
+Then configure vim: `echo -e "set tabstop=2\nset expandtab\nset shiftwidth=2" >> ~/.vimrc`
+
+**Q: What browser shortcuts do I need to know for the CKA exam?**
+A: Use `Ctrl+Alt+W` to close tabs (NOT `Ctrl+W` — that kills your terminal). Copy with `Ctrl+Shift+C`, paste with `Ctrl+Shift+V` in the terminal.
 
 ---
 

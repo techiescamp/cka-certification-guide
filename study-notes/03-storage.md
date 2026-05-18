@@ -1,6 +1,12 @@
-# Storage
+# Kubernetes Storage for CKA — PV, PVC, StorageClasses & Dynamic Provisioning (10%)
 
 > **Exam Weight: 10%** — Focus on PV/PVC lifecycle, StorageClasses, and volume types.
+
+**Q: Why is my Kubernetes PVC stuck in Pending state?**
+A: Three common causes: (1) No PersistentVolume matches the PVC's `storageClassName`, `accessMode`, or capacity — run `kubectl get pv` to check; (2) The StorageClass doesn't exist — `kubectl get sc`; (3) The dynamic provisioner isn't running — `kubectl get pods -n kube-system | grep provisioner`.
+
+**Q: What is the difference between ReadWriteOnce, ReadOnlyMany, and ReadWriteMany in Kubernetes?**
+A: `ReadWriteOnce (RWO)` — mounted read-write by a single node. `ReadOnlyMany (ROX)` — mounted read-only by many nodes. `ReadWriteMany (RWX)` — mounted read-write by many nodes simultaneously. Most cloud block storage (AWS EBS, GCP PD) only supports RWO.
 
 ---
 
