@@ -1083,7 +1083,7 @@ gg / G       → Top / Bottom         /pattern → Search
 <details>
 <summary><strong>❓ CKA FAQ</strong></summary>
 
-<br>
+
 **Q: What Kubernetes version is the CKA exam on in 2026?**
 A: Kubernetes v1.35. This guide targets v1.35 specifically, matching the current exam environment.
 
