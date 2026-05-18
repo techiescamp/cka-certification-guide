@@ -1,4 +1,4 @@
-# Certified Kubernetes Administrator (CKA) Exam Preparation Guide - V1.35 (2026)
+# Certified Kubernetes Administrator (CKA) Exam Preparation Guide V1.35 (2026)
 
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-v1.35-326CE5?logo=kubernetes&logoColor=white)
 ![Exam](https://img.shields.io/badge/CKA-Exam%20Prep-green)
