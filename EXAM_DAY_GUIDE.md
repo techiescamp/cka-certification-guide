@@ -4,6 +4,7 @@
 > All information sourced from official Linux Foundation documentation.
 
 **Q: What do I do first when the CKA exam starts?**
+
 A: Immediately run these 3 setup commands before touching any question:
 ```bash
 alias k=kubectl

@@ -4,9 +4,9 @@ Contributions are welcome. Please follow these guidelines.
 
 ## How to Contribute
 
-- **Bug reports / corrections** — Open an issue describing the error and the correct information with a source link.
-- **Content additions** — Open a pull request with your changes. Keep additions focused on CKA v1.35 exam scope.
-- **Typo / formatting fixes** — Pull requests welcome, no issue needed.
+- **Bug reports / corrections** 👉 Open an issue describing the error and the correct information with a source link.
+- **Content additions** 👉 Open a pull request with your changes. Keep additions focused on CKA v1.35 exam scope.
+- **Typo / formatting fixes** 👉 Pull requests welcome, no issue needed.
 
 ## Pull Request Guidelines
 

@@ -4,12 +4,15 @@
 > Troubleshooting is **30% of the CKA exam** — the single highest-weighted domain.
 
 **Q: What is the fastest way to debug a failing pod in Kubernetes?**
+
 A: Run `kubectl describe pod <name>` first — the Events section reveals 80% of issues. Then `kubectl logs <name> --previous` if the container crashed. Check exit codes: 137 = OOM killed, 1 = app error, 127 = command not found.
 
 **Q: Why is my Kubernetes node in NotReady state?**
+
 A: SSH to the node and run `systemctl status kubelet`. If stopped, run `systemctl start kubelet`. Check logs with `journalctl -u kubelet --since "10 minutes ago"`. Common causes: disk pressure (`df -h`), memory pressure (`free -m`), or expired certificates.
 
 **Q: Why does my Kubernetes service have no endpoints?**
+
 A: The service selector doesn't match the pod labels. Run `kubectl describe svc <name>` to see the selector, then `kubectl get pods --show-labels` to compare. Fix with `kubectl edit svc <name>` or `kubectl label pod <name> <key>=<value>`.
 
 ## Symptom → Cause → Fix (Quick Reference)
@@ -408,7 +411,7 @@ kubectl edit pv <pv-name>
 
 ---
 
-## 6. Application-Level Troubleshooting
+## 6. Application Level Troubleshooting
 
 ### Liveness/Readiness Probe Failures
 
@@ -447,7 +450,7 @@ kubectl exec <pod> -- cat /path/to/mounted/file
 
 ---
 
-## 7. Cluster-Wide Diagnostics
+## 7. Cluster Wide Diagnostics
 
 ### Full Cluster Health Check
 
@@ -485,7 +488,7 @@ systemctl restart kubelet
 
 ---
 
-## 8. Quick-Reference Diagnostic Commands
+## 8. Quick Reference Diagnostic Commands
 
 ```bash
 # Pod resource usage

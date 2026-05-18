@@ -5,6 +5,7 @@
 Pass the CKA by building a *visual mental model first*, then reinforcing it with commands. Every topic in these notes is paired with an architecture diagram so you understand the *why* before you memorise the *how*.
 
 **Q: Which CKA domain should I study first?**
+
 A: Start with Troubleshooting (30% weight) — it's the highest-impact domain and most commonly fails candidates. Then Cluster Architecture (25%) → Services & Networking (20%) → Workloads & Scheduling (15%) → Storage (10%).
 
 ---
@@ -17,7 +18,7 @@ A: Start with Troubleshooting (30% weight) — it's the highest-impact domain an
 | [02 — Workloads & Scheduling](./02-workloads-scheduling.md) | Workloads & Scheduling | **15%** |
 | [03 — Storage](./03-storage.md) | Storage | **10%** |
 | [04 — Services & Networking](./04-services-networking.md) | Services & Networking | **20%** |
-| [05 — Troubleshooting](./05-troubleshooting.md) | Troubleshooting | **30% ⭐** |
+| [05 — Troubleshooting](./05-troubleshooting.md) | Troubleshooting | **30%** |
 
 > **Highest-impact domain: Troubleshooting (30%).** If you are short on time, study Domain 5 and Domain 1 first.
 
@@ -143,7 +144,7 @@ Every CKA troubleshooting question can be answered with the same four commands, 
 | **Workloads & Scheduling (15%)** | Deployment rolling updates & rollbacks; Taints/Tolerations; Node Affinity; HPA; Init Containers |
 | **Storage (10%)** | StorageClass + dynamic provisioning; PV/PVC lifecycle; access modes; reclaim policies |
 | **Services & Networking (20%)** | ClusterIP / NodePort / LoadBalancer; NetworkPolicy AND vs OR; CoreDNS FQDN; Ingress; Gateway API |
-| **Troubleshooting (30%) ⭐** | `kubectl describe` / `logs` / `events`; `journalctl -u kubelet`; `kubectl top`; drain & cordon |
+| **Troubleshooting (30%)** | `kubectl describe` / `logs` / `events`; `journalctl -u kubelet`; `kubectl top`; drain & cordon |
 
 ---
 

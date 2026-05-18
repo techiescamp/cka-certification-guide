@@ -1,9 +1,10 @@
 # Kubernetes Troubleshooting for CKA — Node NotReady, CrashLoopBackOff & Network Debugging (30%)
 
-> **Exam Weight: 30%** — The single highest-weighted domain. Master the debug methodology.
+> **Exam Weight: 30%** -> The single highest-weighted domain. Master the debug methodology.
 
 **Q: How do I troubleshoot a Kubernetes pod that keeps restarting?**
-A: Check exit code with `kubectl describe pod <name>` → look for "Exit Code". Then `kubectl logs <name> --previous` for logs before the crash. Exit code 137 = OOM killed (increase memory limit). Exit code 1 = app error (check config/env). Exit code 127 = command not found (wrong image or entrypoint).
+
+A: Check exit code with `kubectl describe pod <name>` -> look for "Exit Code". Then `kubectl logs <name> --previous` for logs before the crash. Exit code 137 = OOM killed (increase memory limit). Exit code 1 = app error (check config/env). Exit code 127 = command not found (wrong image or entrypoint).
 
 ## Exit Code Quick Reference
 
@@ -586,14 +587,14 @@ is empty.
 
 ## Exam Focus Points 
 
-1. **Node NotReady** — kubelet troubleshooting is almost always tested
-2. **Service endpoints** — selector mismatch is the #1 networking issue
-3. **Pod states** — know all states and their causes
-4. **Log analysis** — `kubectl logs`, `--previous`, `journalctl -u kubelet`
-5. **kubectl top** — know how to identify resource-hungry pods
-6. **drain/uncordon** — maintenance workflow is commonly tested
-7. **Control plane components** — know how to debug static pod manifests
-8. **Kubeadm Troubleshooting** — Understand static pod manifests, certificates, and kubelet integration
+1. **Node NotReady** -> kubelet troubleshooting is almost always tested
+2. **Service endpoints** -> selector mismatch is the #1 networking issue
+3. **Pod states** -> know all states and their causes
+4. **Log analysis** -> `kubectl logs`, `--previous`, `journalctl -u kubelet`
+5. **kubectl top** -> know how to identify resource-hungry pods
+6. **drain/uncordon** -> maintenance workflow is commonly tested
+7. **Control plane components** -> know how to debug static pod manifests
+8. **Kubeadm Troubleshooting** -> Understand static pod manifests, certificates, and kubelet integration
 
 ---
 
