@@ -43,7 +43,7 @@ Use code **35KUBECT** to save on following bundles:
 | 2 | 📦 Workloads & Scheduling | **15%** | [Notes](./study-notes/02-workloads-scheduling.md) | Deployments, ConfigMaps, Secrets, HPA, affinity |
 | 3 | 💾 Storage | **10%** | [Notes](./study-notes/03-storage.md) | StorageClasses, PV, PVC, dynamic provisioning |
 | 4 | 🌐 Services & Networking | **20%** | [Notes](./study-notes/04-services-networking.md) | NetworkPolicies, Gateway API, Ingress, CoreDNS |
-| 5 | 🛠️ Troubleshooting | **30%** ⭐ | [Notes](./study-notes/05-troubleshooting.md) | Pod failures, node issues, control plane, networking |
+| 5 | 🛠️ Troubleshooting | **30%**  | [Notes](./study-notes/05-troubleshooting.md) | Pod failures, node issues, control plane, networking |
 
 > [!TIP]
 > **Troubleshooting (30%)** is the highest-weighted domain. Invest at least 1/3 of your study time there.
@@ -56,7 +56,8 @@ Use code **35KUBECT** to save on following bundles:
 
 > ![weight](https://img.shields.io/badge/Exam%20Weight-25%25-4A90D9?style=flat-square) &nbsp; 📖 [Study Notes](./study-notes/01-cluster-architecture.md)
 
-|---|-----------|
+| # | Topic |
+|---|-------|
 | 1 | 🔐 [Manage role-based access control (RBAC)](#manage-role-based-access-control-rbac) |
 | 2 | 🖥️ [Prepare underlying infrastructure for installing a Kubernetes cluster](#prepare-underlying-infrastructure-for-installing-a-kubernetes-cluster) |
 | 3 | ⚙️ [Create and manage Kubernetes clusters using kubeadm](#create-and-manage-kubernetes-clusters-using-kubeadm) |
@@ -71,7 +72,8 @@ Use code **35KUBECT** to save on following bundles:
 
 > ![weight](https://img.shields.io/badge/Exam%20Weight-15%25-7B68EE?style=flat-square) &nbsp; 📖 [Study Notes](./study-notes/02-workloads-scheduling.md)
 
-|---|-----------|
+| # | Topic |
+|---|-------|
 | 1 | 🔁 [Understand deployments and how to perform rolling updates and rollbacks](#understand-deployments-and-how-to-perform-rolling-update-and-rollbacks) |
 | 2 | 🗂️ [Use ConfigMaps and Secrets to configure applications](#use-configmaps-and-secrets-to-configure-applications) |
 | 3 | 📈 [Configure workload autoscaling](#configure-workload-autoscaling) |
@@ -84,7 +86,8 @@ Use code **35KUBECT** to save on following bundles:
 
 > ![weight](https://img.shields.io/badge/Exam%20Weight-10%25-E8A838?style=flat-square) &nbsp; 📖 [Study Notes](./study-notes/03-storage.md)
 
-|---|-----------|
+| # | Topic |
+|---|-------|
 | 1 | 🏷️ [Implement storage classes and dynamic volume provisioning](#implement-storage-classes-and-dynamic-volume-provisioning) |
 | 2 | 🔧 [Configure volume types, access modes and reclaim policies](#configure-volume-types-access-modes-and-reclaim-policies) |
 | 3 | 📀 [Manage persistent volumes and persistent volume claims](#manage-persistent-volumes-and-persistent-volume-claims) |
@@ -95,7 +98,8 @@ Use code **35KUBECT** to save on following bundles:
 
 > ![weight](https://img.shields.io/badge/Exam%20Weight-20%25-2ECC71?style=flat-square) &nbsp; 📖 [Study Notes](./study-notes/04-services-networking.md)
 
-|---|-----------|
+| # | Topic |
+|---|-------|
 | 1 | 🔗 [Understand connectivity between Pods](#understand-connectivity-between-pods) |
 | 2 | 🛡️ [Define and enforce Network Policies](#define-and-enforce-network-policies) |
 | 3 | 🔀 [Use ClusterIP, NodePort, LoadBalancer service types and endpoints](#use-clusterip-nodeport-loadbalancer-service-types-and-endpoints) |
@@ -112,8 +116,8 @@ Use code **35KUBECT** to save on following bundles:
 > [!IMPORTANT]
 > **Troubleshooting is worth 30% of your score** — the single largest domain. Dedicate at least one-third of your study time here.
 
-
-|---|-----------|
+| # | Topic |
+|---|-------|
 | 1 | 🖥️ [Troubleshoot clusters and nodes](#troubleshoot-clusters-and-nodes) |
 | 2 | ⚙️ [Troubleshoot cluster components](#troubleshoot-cluster-components) |
 | 3 | 📊 [Monitor cluster and application resource usage](#monitor-cluster-and-application-resource-usage) |
@@ -158,7 +162,8 @@ k auth can-i <verb> <resource> --as=<username>
 
 ### Multi Part Kubeadm Cluster Initialization
 > [Kubeadm Cluster Bootstrap](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/60080225) : Initialize a Kubernetes cluster using a multi-part kubeadm configuration file, customizing the Kubelet, Kube Proxy, and Scheduler settings.
-```bash
+
+```yaml
 # Edit the config file (Sample Configuration)
 ---
 apiVersion: kubeadm.k8s.io/v1beta4
@@ -211,7 +216,9 @@ conntrack:
   min: 131072
   tcpCloseWaitTimeout: "1h"
   tcpEstablishedTimeout: "24h"
+```
 
+```bash
 # Initialize the cluster using the config file
 sudo kubeadm init --config=[CONFIG_FILE] --ignore-preflight-errors=NumCPU
 
@@ -248,9 +255,6 @@ helm upgrade <release-name> <chart-name>
 # Search for a chart
 helm search repo <chart-name>
 
-# Install helm chart
-helm install <release-name> <chart-name>
-
 # Uninstall a helm release
 helm uninstall <release-name>
 ```
@@ -264,9 +268,8 @@ example-app/
   ├── service.yaml
   └── kustomization.yaml
 
-# Use Kustomize to apply resources
-k apply -k kustomization.yaml
-
+# Use Kustomize to apply resources (pass the directory, not the file)
+k apply -k ./example-app/
 ```
 
 ### Understand extension interfaces (CNI, CSI, CRI, etc.).
@@ -284,10 +287,9 @@ crictl inspect <container-id>
 
 # View container logs
 crictl logs <container-id>
-
 ```
 
-> [Network Plugin](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/60189043) : Kubernetes uses network plugins (CNI) to manage pod networking, get a good understanding of  popular plugins like Calico, Flannel, and Weave Net, and understand the role of CNIs in providing network connectivity, security policies, and IPAM.
+> [Network Plugin](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/60189043) : Kubernetes uses network plugins (CNI) to manage pod networking, get a good understanding of popular plugins like Calico, Flannel, and Weave Net, and understand the role of CNIs in providing network connectivity, security policies, and IPAM.
 
 ```bash
 # List installed CNI plugins
@@ -305,7 +307,9 @@ kubectl -n kube-system get pod -l component=kube-controller-manager -o yaml | gr
 
 # Modify the Custom Resource manifest with the cluster CIDR
 vi custom-resource.yaml
+```
 
+```yaml
 apiVersion: operator.tigera.io/v1
 kind: Installation
 metadata:
@@ -319,12 +323,14 @@ spec:
       encapsulation: VXLANCrossSubnet
       natOutgoing: Enabled
       nodeSelector: all()
+```
 
+```bash
 # Apply the Custom Resource manifest
 k apply -f custom-resource.yaml
 
 # Validate the Pod and Node status
-k get po -a
+k get po -A
 k get no
 ```
 
@@ -345,11 +351,13 @@ k get crd
 # Describe a CRD
 k describe crd <crd-name>
 
-# Delete a CRD
+# Delete a CRD instance
 k delete <resource-name> <name>
 ```
 
 > Operator pattern : The Operator pattern allows you to automate the lifecycle of applications running on Kubernetes by packaging operational knowledge into Kubernetes-native applications.
+
+---
 
 ## 2. Workloads & Scheduling (15%)
 
@@ -363,7 +371,7 @@ Following are the subtopics under Workloads & Scheduling
 k create deploy <deployment-name> --image=<image-name> --replicas=3
 
 # Create deployment manifest file
-k create deploy <deployment-name> --image <image-name> --replicas=3  --dry-run=client -o yaml > deploy.yaml
+k create deploy <deployment-name> --image <image-name> --replicas=3 --dry-run=client -o yaml > deploy.yaml
 
 # Scale deployment replicas
 k scale deploy <deployment-name> --replicas=2
@@ -388,7 +396,6 @@ k rollout resume deploy <deployment-name>
 
 # Rollout & restart a deployment
 k rollout restart deploy <deployment-name>
-
 ```
 
 ### Use ConfigMaps and Secrets to configure applications.
@@ -397,7 +404,6 @@ k rollout restart deploy <deployment-name>
 ```bash
 # Create configmap
 k create cm <configmap-name>
-
 
 # Create configmap manifest file
 k create cm <configmap-name> --dry-run=client -o yaml > cm.yaml
@@ -423,11 +429,11 @@ k create secret tls <secret-name> --cert=tls.crt --key=tls.key
 ```
 
 ### Configure workload autoscaling.
-[Autoscaling Workloads](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/58713870) : Practice setting up Horizontal Pod Autoscaler (HPA).
+> [Autoscaling Workloads](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/58713870) : Practice setting up Horizontal Pod Autoscaler (HPA).
 
 ```bash
-# Using autoscaling
-k autoscale deploy <deployment-name> --min=2 --max=5
+# Using autoscaling (--cpu-percent is required for HPA to function)
+k autoscale deploy <deployment-name> --min=2 --max=5 --cpu-percent=80
 ```
 
 ### Understand the primitives used to create robust, self-healing, application deployments.
@@ -471,31 +477,31 @@ spec:
 
 > Configure Liveness, Readiness and Startup Probes : Using liveness and readiness probes in your deployment ensure that your applications are self-healing and automatically recover from failures.
 
-```bash
+```yaml
 # Startup probe
 startupProbe:
-    httpGet:
+  httpGet:
     path: /startup
     port: 8080
-    failureThreshold: 30
-    periodSeconds: 10
+  failureThreshold: 30
+  periodSeconds: 10
 
 # Liveness probe
 livenessProbe:
-    httpGet:
+  httpGet:
     path: /healthz
     port: 8080
-    initialDelaySeconds: 15
-    failureThreshold: 1
-    periodSeconds: 10
+  initialDelaySeconds: 15
+  failureThreshold: 1
+  periodSeconds: 10
 
 # Readiness probe
 readinessProbe:
-    httpGet:
+  httpGet:
     path: /ready
     port: 8080
-    failureThreshold: 30
-    periodSeconds: 10
+  failureThreshold: 30
+  periodSeconds: 10
 ```
 
 ### Configure Pod admission and scheduling (limits, node affinity, etc.).
@@ -509,14 +515,16 @@ k run <pod-name> --image=<image-name> --restart=Never
 k run -it <pod-name> --image=<image-name> --rm --restart=Never -- sh
 
 # Delete pod immediately
-k delete po <pod-name> --grace-period 0 --force
+k delete po <pod-name> --grace-period=0 --force
+```
 
+```yaml
 # Pod resource limits
 resources:
-    requests:
+  requests:
     memory: "64Mi"
     cpu: "250m"
-    limits:
+  limits:
     memory: "128Mi"
     cpu: "500m"
 ```
@@ -544,7 +552,7 @@ k get po --selector <label-key>=<label-value>
 k label po <pod-name> <label-key>-
 ```
 
-> [Taints and Tolerations](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55659898) : Use taints on critical nodes like control plane nodes or nodes to prevent general-purpose workloads from being scheduled on them.
+> [Taints and Tolerations](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55659898) : Use taints on critical nodes like control plane nodes to prevent general-purpose workloads from being scheduled on them.
 
 ```bash
 # Check taints on nodes
@@ -552,7 +560,9 @@ k describe no <node-name> | egrep "Name:|Taints:"
 
 # Taint a node
 k taint nodes <node-name> <key>=<value>:<effect>
+```
 
+```yaml
 # Add toleration to a pod
 tolerations:
 - key: <key>
@@ -560,7 +570,9 @@ tolerations:
   value: <value>
   effect: <effect>
   tolerationSeconds: <in seconds>
+```
 
+```bash
 # Remove taint from a node
 k taint no <node-name> <key>=<value>-
 ```
@@ -571,32 +583,35 @@ k taint no <node-name> <key>=<value>-
 # Label a node
 k label no <node-name> <label-key>=<label-value>
 
-# Use node selector on pod
-nodeSelector:
-  <label-key>: <label-value>
-
 # Remove labels from a node
 k label no <node-name> <label-key>-
 ```
 
-> [Node Affinity](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55687979) : Use node affinity to control the placement of your pods, ensuring that workloads are distributed efficiently across nodes as per there requirements.
+```yaml
+# Use node selector on pod
+nodeSelector:
+  <label-key>: <label-value>
+```
 
-```bash
+> [Node Affinity](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55687979) : Use node affinity to control the placement of your pods, ensuring that workloads are distributed efficiently across nodes as per their requirements.
+
+```yaml
 # Example Node affinity
 affinity:
-nodeAffinity:
+  nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
-    nodeSelectorTerms:
-    - matchExpressions:
+      nodeSelectorTerms:
+      - matchExpressions:
         - key: <label-key>
-        operator: In
-        values:
-        - <label-value>
+          operator: In
+          values:
+          - <label-value>
 ```
 
 ### Using Init Containers in Pods
-> [Init Containers](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55299962) : Init containers to prepare the Pod before the main container runs.
-```bash
+> [Init Containers](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55299962) : Use init containers to prepare the Pod before the main container runs.
+
+```yaml
 # Add init container section under the `spec` section.
 initContainers:
   - name: write-ip
@@ -611,14 +626,16 @@ initContainers:
 
 > [Admission Controllers Reference](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/) : Use admission controllers to enforce policies such as resource quotas, pod security policies, and image validation.
 
+---
+
 ## 3. Storage (10%)
 
 Following are the subtopics under Storage
 
 ### Implement storage classes and dynamic volume provisioning.
-> [Storage Classes](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55786335) : Understand the difference between default storage class and other classes
+> [Storage Classes](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55786335) : Understand the difference between default storage class and other classes.
 
-```bash
+```yaml
 # Example storage class manifest file
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
@@ -627,7 +644,9 @@ metadata:
 provisioner: kubernetes.io/no-provisioner
 volumeBindingMode: WaitForFirstConsumer
 reclaimPolicy: Delete
+```
 
+```bash
 # List storageclasses
 k get sc
 
@@ -641,9 +660,9 @@ k describe sc <storageclass-name>
 
 > [Volumes](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55791431) : Understand which type of persistent storage is supported (like AWS EBS, GCE Persistent Disks) and practice using them.
 
-> [Persistent Volumes](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55792087) : Remember to know the different reclaim policies: Retain, Delete, and Recycle. Understand access modes like ReadWriteOnce, ReadOnlyMany.
+> [Persistent Volumes](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55792087) : Remember the different reclaim policies: Retain, Delete, and Recycle. Understand access modes like ReadWriteOnce, ReadOnlyMany.
 
-```bash
+```yaml
 # Create a Persistent Volume
 apiVersion: v1
 kind: PersistentVolume
@@ -681,16 +700,18 @@ k delete pvc <persistentvolumeclaim-name>
 ### Manage persistent volumes and persistent volume claims.
 > [Configure a Pod to Use a PersistentVolume for Storage](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55792290) : Practice creating a pod with persistent storage defined in a YAML manifest. Ensure familiarity with both bindings and mounting.
 
-```bash
-# Example volume bindings and mounting
+```yaml
+# Example volume bindings and mounting (correct indentation)
 volumeMounts:
 - name: mysql-storage
   mountPath: /var/lib/mysql
 volumes:
 - name: mysql-storage
-persistentVolumeClaim:
-  claimName: mysql-pvc
+  persistentVolumeClaim:
+    claimName: mysql-pvc
 ```
+
+---
 
 ## 4. Services & Networking (20%)
 
@@ -719,7 +740,7 @@ k exec <pod-name> -- ifconfig
 ### Define and enforce Network Policies.
 > [Network Policies](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/57421520) : Practice setting up network policies to restrict traffic flow between pods.
 
-```bash
+```yaml
 # Create a Network Policy
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -729,11 +750,13 @@ spec:
   podSelector: {}
   policyTypes:
   - Ingress
+```
 
+```bash
 # List network policies
 k get netpol
 
-# Description network policies
+# Describe network policies
 k describe netpol <policy-name>
 ```
 
@@ -750,9 +773,11 @@ k get svc
 # List service endpoints
 k get ep
 ```
+
 ### Use the Gateway API to manage Ingress traffic.
 > [Gateway API](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/61100920) : The Gateway API provides more flexibility and extensibility compared to traditional Ingress. Use it when you need advanced traffic routing, such as assigning multiple gateways with different capabilities to different services.
-```bash
+
+```yaml
 # Create a Gateway
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
@@ -767,11 +792,12 @@ spec:
     port: 80
     hostname: "[HOST_NAME]"
     tls:
-        mode: Terminate
-        certificateRefs:
-          - kind: Secret
-            name: [TLS_SECRET_NAME]
+      mode: Terminate
+      certificateRefs:
+        - kind: Secret
+          name: [TLS_SECRET_NAME]
 
+---
 # Create a HTTPRoute to map the routing rules.
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
@@ -792,9 +818,9 @@ spec:
 ```
 
 ### Know how to use Ingress controllers and Ingress resources.
-> [Ingress](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/56659356) : Practice creating Ingress resources with different rules to route traffic to services based on hostnames and paths, you can also define multiple services under a single Ingress resource by utilizing both path-based and host-based rules.
+> [Ingress](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/56659356) : Practice creating Ingress resources with different rules to route traffic to services based on hostnames and paths. You can also define multiple services under a single Ingress resource by utilizing both path-based and host-based rules.
 
-```bash
+```yaml
 # Example manifest file to create ingress object
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -814,7 +840,9 @@ spec:
             name: example
             port:
               number: 80
+```
 
+```bash
 # List all ingress resources
 k get ing
 
@@ -836,6 +864,8 @@ k edit cm coredns -n kube-system
 k logs -n kube-system -l k8s-app=kube-dns
 ```
 
+---
+
 ## 5. Troubleshooting (30%)
 
 ### Troubleshoot cluster components.
@@ -850,11 +880,11 @@ k logs -n kube-system -l k8s-app=kube-dns
 # Check kubectl configuration
 k config view
 
-# Get logs of kubectl
+# Get logs of kubelet
 journalctl -u kubelet
 
-# Check status of kubectl
-k get --raw /healthz
+# Check status of kubelet
+systemctl status kubelet
 
 # Check status of API server
 k get --raw /healthz
@@ -865,18 +895,17 @@ kubectl get pods -n kube-system -l tier=control-plane
 > [Metrics Server](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/60080228) : Use kubectl top to monitor resource utilization.
 
 ```bash
-# Get no cpu and memory usage
+# Get node CPU and memory usage
 k top no
 
-# Sort pods based on cpu utilization
+# Sort pods based on CPU utilization
 k top po --sort-by=cpu
 
 # Sort pods based on memory usage
 k top po --sort-by=memory
 
-# Get pod cpu and memory usage
-k top pod
-
+# Get pod CPU and memory usage
+k top po
 ```
 
 ### Manage and evaluate container output streams.
@@ -891,7 +920,6 @@ k logs <pod-name> -c <container-name>
 
 # Get live logs of a pod
 k logs <pod-name> -f
-
 ```
 
 ### Troubleshoot services and networking.
@@ -899,13 +927,13 @@ k logs <pod-name> -f
 
 ```bash
 # Describe a pod
-k describe pod <pod-name> 
+k describe pod <pod-name>
 
 # Describe a service
 k describe svc <service-name>
 
 # Check recent events in the cluster
-k get events
+k get events --sort-by='.lastTimestamp'
 ```
 
 ---
@@ -928,7 +956,7 @@ kubectl config set-context --current --namespace=<required-namespace>
 ### Imperative Commands (save time)
 
 ```bash
-k run nginx --image=nginx
+k run nginx --image=nginx --restart=Never
 k create deployment nginx --image=nginx
 k expose deployment nginx --port=80
 k create configmap cm --from-literal=k=v
@@ -941,7 +969,7 @@ k set image deployment/nginx nginx=nginx:1.26
 ### Dry-run → Edit → Apply (for complex YAML)
 
 ```bash
-k create deployment nginx --image=nginx $do > deploy.yaml
+k create deployment nginx --image=nginx --dry-run=client -o yaml > deploy.yaml
 vim deploy.yaml
 k apply -f deploy.yaml
 ```
@@ -993,8 +1021,8 @@ k apply -f deploy.yaml
 ### First 5 Minutes
 
 ```bash
-# Verify alias and completion
-k version --short
+# Verify kubectl works
+k version
 
 # Speed shortcuts
 alias k=kubectl
@@ -1082,7 +1110,6 @@ A: Use the Vagrant-based lab in `lab-setup/`. Supports Mac Silicon, Mac Intel, W
 
 **Q: What kubectl commands are allowed on the CKA exam?**
 A: All kubectl commands. The exam is a live terminal — no restrictions on which commands you use. You can also use `vim`, `nano`, `curl`, `systemctl`, and `crictl`.
-
 
 > 📄 Full FAQ: [FAQ.md](./FAQ.md)
 
@@ -1184,4 +1211,3 @@ Contributions are welcome. Please follow these guidelines.
 ---
 
 > ⭐ If this guide helped you, please star the repo!
-

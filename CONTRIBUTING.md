@@ -1,4 +1,4 @@
-# Contributing
+# Contributing to the CKA Certification Guide
 
 Contributions are welcome. Please follow these guidelines.
 

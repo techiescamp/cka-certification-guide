@@ -1,6 +1,12 @@
-# Services & Networking
+# Kubernetes Services & Networking for CKA — ClusterIP, NetworkPolicies, Ingress & CoreDNS (20%)
 
 > **Exam Weight: 20%** — Focus on Services, Network Policies, Ingress, and DNS.
+
+**Q: Why does my Kubernetes service have no endpoints?**
+A: The service's `spec.selector` labels don't match any pod labels. Run `kubectl describe svc <name>` to see the selector, then `kubectl get pods --show-labels` to compare. Fix by editing the service selector or adding the missing label to the pods.
+
+**Q: What is the DNS name format for a Kubernetes service?**
+A: `<service-name>.<namespace>.svc.cluster.local`. From within the same namespace you can use just `<service-name>`. Cross-namespace requires `<service-name>.<namespace>` or the full FQDN.
 
 ---
 

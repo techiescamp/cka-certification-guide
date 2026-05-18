@@ -1,7 +1,19 @@
-# CKA Frequently Asked Questions (FAQ)
+# CKA Exam FAQ 2026 — Cost, Format, Passing Score, Retake Policy & Requirements
 
 > Official answers sourced from the [Linux Foundation CKA/CKAD/CKS FAQ](https://docs.linuxfoundation.org/tc-docs/certification/faq-cka-ckad-cks).
 > Last verified: April 2026.
+
+**Q: How much does the CKA exam cost?**
+A: $395 USD. Use coupon code **35KUBECT** at [kube.promo/cka](https://kube.promo/cka) for a discount.
+
+**Q: What is the passing score for the CKA exam?**
+A: 66%. Partial credit applies — you earn points for incomplete but partially correct answers.
+
+**Q: Is there a free retake for the CKA exam?**
+A: Yes. One free retake is included with every purchase. It must be scheduled within 12 months of your original purchase date.
+
+**Q: How is the CKA exam scored?**
+A: Auto-scored immediately on submission. Results are emailed within 24 hours. Each task has a point value; partial credit is awarded for partially correct solutions.
 
 ---
 

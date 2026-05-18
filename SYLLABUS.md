@@ -1,6 +1,12 @@
-# CKA v1.35 Official Syllabus
+# CKA Exam Syllabus 2026 — Domain Weights & Official CNCF Curriculum (Kubernetes v1.35)
 
 > **Source:** [CNCF CKA Curriculum v1.35](https://github.com/cncf/curriculum/blob/master/CKA_Curriculum_v1.35.pdf) | **Kubernetes version in exam:** v1.35 | **Updated:** 2026
+
+**Q: How many questions are in each CKA exam domain?**
+A: The exam has 15–20 tasks total, weighted by domain percentage. Troubleshooting (30%) typically has the most tasks, followed by Cluster Architecture (25%) and Services & Networking (20%).
+
+**Q: Which CKA domain should I study first?**
+A: Start with Troubleshooting (30%) — it has the most exam weight. Then Cluster Architecture (25%), Services & Networking (20%), Workloads & Scheduling (15%), and Storage (10%) last.
 
 The Certified Kubernetes Administrator (CKA) exam covers 5 domains tested on Kubernetes v1.35. The exam is 2 hours, performance-based (no multiple choice), and requires a passing score of 66%.
 

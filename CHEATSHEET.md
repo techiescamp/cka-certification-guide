@@ -1,7 +1,23 @@
-# CKA Exam Cheatsheet ⚡
+# CKA kubectl Cheatsheet 2026 — Every Command You Need for the Kubernetes Administrator Exam ⚡
 
-> Quick-reference command guide for the Certified Kubernetes Administrator exam.
+> Quick-reference command guide for the Certified Kubernetes Administrator exam (Kubernetes v1.35).
 > Organized by exam domain weight. Use `k` as alias for `kubectl`.
+
+## Command → Exam Domain Map
+
+| Command | Domain | Weight |
+|---------|--------|--------|
+| `kubectl create role/clusterrole` | Cluster Architecture | 25% |
+| `kubeadm init/upgrade` | Cluster Architecture | 25% |
+| `kubectl create deploy / set image / rollout` | Workloads & Scheduling | 15% |
+| `kubectl create cm / secret` | Workloads & Scheduling | 15% |
+| `kubectl autoscale` | Workloads & Scheduling | 15% |
+| `kubectl get/describe pv/pvc` | Storage | 10% |
+| `kubectl expose / get svc / get ep` | Services & Networking | 20% |
+| `kubectl get netpol` | Services & Networking | 20% |
+| `kubectl describe node / drain / cordon` | Troubleshooting | 30% |
+| `kubectl logs / describe pod` | Troubleshooting | 30% |
+| `journalctl -u kubelet` | Troubleshooting | 30% |
 
 ---
 
