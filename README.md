@@ -1060,28 +1060,33 @@ gg / G       → Top / Bottom         /pattern → Search
 <summary><strong>❓ CKA FAQ</strong></summary>
 
 <br>
+**Q: What Kubernetes version is the CKA exam on in 2026?**
+A: Kubernetes v1.35. This guide targets v1.35 specifically, matching the current exam environment.
 
-| Question | Answer |
-|----------|--------|
-| **Cost** | $395 USD |
-| **Duration** | 2 hours |
-| **Passing score** | 66% |
-| **Format** | 15–20 performance-based tasks, no multiple choice |
-| **Kubernetes version** | v1.35 |
-| **Results** | Emailed within 24 hours |
-| **Certification validity** | 2 years |
-| **Free retake?** | Yes — 1 retake, must be used within 12 months of purchase |
-| **Simulator included?** | Yes — 2 Killer.sh attempts (36 hrs each) via LF portal |
-| **Allowed resources** | One tab: `kubernetes.io/docs`, `kubernetes.io/blog`, or `helm.sh/docs` |
-| **Languages** | English, Simplified Chinese, Japanese |
+**Q: What is the passing score for the CKA exam?**
+A: 66%. Partial credit is awarded — incomplete answers still earn points.
 
-### ID Requirements
+**Q: How many questions are on the CKA exam?**
+A: 15–20 performance-based tasks. No multiple choice. All hands-on in a live cluster.
 
-Valid, unexpired, government-issued physical ID with name + photo + signature. Name must exactly match your LF portal verified name.
+**Q: Can I use kubectl documentation during the CKA exam?**
+A: Yes. One browser tab is allowed: kubernetes.io/docs, kubernetes.io/blog, or helm.sh/docs.
 
-### Scoring
+**Q: How long is CKA certification valid?**
+A: 2 years from the date you pass.
 
-Auto-scored on completion. Partial credit exists — incomplete answers still earn points.
+**Q: Does the CKA exam include a free retake?**
+A: Yes. One free retake is included, and it must be used within 12 months of purchase.
+
+**Q: What is the hardest domain on the CKA exam?**
+A: Troubleshooting (30%) is the highest-weighted domain and most commonly causes candidates to fail. Invest at least one-third of your study time there.
+
+**Q: How do I set up a local Kubernetes cluster for CKA practice?**
+A: Use the Vagrant-based lab in `lab-setup/`. Supports Mac Silicon, Mac Intel, Windows, and Ubuntu Desktop. Each folder has its own README with setup steps.
+
+**Q: What kubectl commands are allowed on the CKA exam?**
+A: All kubectl commands. The exam is a live terminal — no restrictions on which commands you use. You can also use `vim`, `nano`, `curl`, `systemctl`, and `crictl`.
+
 
 > 📄 Full FAQ: [FAQ.md](./FAQ.md)
 
