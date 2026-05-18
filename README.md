@@ -25,24 +25,33 @@ Use code **35KUBECT** to save on following bundles:
 - CKA + CKAD + CKS Exam bundle (35% Discount): [kube.promo/k8s-bundle](https://kube.promo/k8s-bundle)
 - KCNA + KCSA + CKA + CKAD + CKS: [kube.promo/kubestronaut](https://kube.promo/kubestronaut)
 
----
-## 🗂️ Quick Navigation
-
-| Resource | Description |
-|--------------------------------------------------|---------------------------------------------------------------|
-| 🗒️ [Syllabus.md](./SYLLABUS.md)                | **NEW**  Full CKA v1.35 official syllabus with all sub-topics & commands |
-| 📋 [Cheatsheet.md](./CHEATSHEET.md)             | Fast kubectl command reference organized by exam domain       |
-| 📝 [Practice-questions.md](./PRACTICE_QUESTIONS.md) | 35 exam-style scenario questions with full solutions      |
-| 🔧 [Troubleshooting-guide.md](./TROUBLESHOOTING_GUIDE.md) | Deep-dive debug playbooks for every cluster layer  |
-| 🎯 [Exam-tips.md](./EXAM_TIPS.md)               | Time management, strategy, common traps, last-minute checklist|
-| 📅 [Exam-day-guide.md](./EXAM_DAY_GUIDE.md)    | **NEW** Printable exam-day reference: checklist, shortcuts, time strategy |
-| ❓ [CKA FAQ.md](./FAQ.md)                           | **NEW**  Official CKA FAQ (scoring, ID, proctoring, simulator, renewal) |
-
-## 📚 CKA Exam Detailed Study Guide & References
-
-Here is the detailed list of topics with references to study notes, detailed lessons and refenrece commands.
 
 ---
+
+## 📚 CKA Exam Detailed Study Guide
+
+<details>
+<summary><strong>Syllabus and Study Notes</strong></summary>
+
+<br>
+
+> **Source:** [CNCF CKA Curriculum v1.35](https://github.com/cncf/curriculum/blob/master/CKA_Curriculum_v1.35.pdf) | **Kubernetes version:** v1.35 | **Updated:** 2026
+
+| # | Domain | Weight | Study Notes | Key Topics |
+|:-:|--------|:------:|:-----------:|------------|
+| 1 | 🏗️ Cluster Architecture, Installation & Configuration | **25%** | [Notes](./study-notes/01-cluster-architecture.md) | RBAC, kubeadm, Helm, Kustomize, CRDs, Operators |
+| 2 | 📦 Workloads & Scheduling | **15%** | [Notes](./study-notes/02-workloads-scheduling.md) | Deployments, ConfigMaps, Secrets, HPA, affinity |
+| 3 | 💾 Storage | **10%** | [Notes](./study-notes/03-storage.md) | StorageClasses, PV, PVC, dynamic provisioning |
+| 4 | 🌐 Services & Networking | **20%** | [Notes](./study-notes/04-services-networking.md) | NetworkPolicies, Gateway API, Ingress, CoreDNS |
+| 5 | 🛠️ Troubleshooting | **30%** ⭐ | [Notes](./study-notes/05-troubleshooting.md) | Pod failures, node issues, control plane, networking |
+
+> [!TIP]
+> **Troubleshooting (30%)** is the highest-weighted domain. Invest at least 1/3 of your study time there.
+
+</details>
+
+---
+
 ### [Cluster Architecture, Installation & Configuration](#1-cluster-architecture-installation--configuration-25) `25%`
 
 > ![weight](https://img.shields.io/badge/Exam%20Weight-25%25-4A90D9?style=flat-square) &nbsp; 📖 [Study Notes](./study-notes/01-cluster-architecture.md)
@@ -360,20 +369,8 @@ k create deploy <deployment-name> --image=<image-name> --replicas=3
 # Create deployment manifest file
 k create deploy <deployment-name> --image <image-name> --replicas=3  --dry-run=client -o yaml > deploy.yaml
 
-# List deployment
-k get deploy
-
-# Check replicaSet
-k get rs
-
-# Describe the deployment
-k describe deploy <deployment-name>
-
 # Scale deployment replicas
 k scale deploy <deployment-name> --replicas=2
-
-# View Deployments Manifest file
-k get deploy <deployment-name> -o yaml
 
 # Update container image in a deployment
 k set image deploy <deployment-name> nginx=<image-name>
@@ -396,8 +393,6 @@ k rollout resume deploy <deployment-name>
 # Rollout & restart a deployment
 k rollout restart deploy <deployment-name>
 
-# Delete deployment
-k delete deploy <deployment-name>
 ```
 
 ### Use ConfigMaps and Secrets to configure applications.
@@ -407,8 +402,6 @@ k delete deploy <deployment-name>
 # Create configmap
 k create cm <configmap-name>
 
-# Edit the configmap
-k edit cm <configmap-name>
 
 # Create configmap manifest file
 k create cm <configmap-name> --dry-run=client -o yaml > cm.yaml
@@ -849,27 +842,6 @@ k logs -n kube-system -l k8s-app=kube-dns
 
 ## 5. Troubleshooting (30%)
 
-Following are the subtopics under Troubleshooting
-
-### Troubleshoot clusters and nodes.
-> Troubleshooting Clusters : When draining a node, use --ignore-daemonsets to safely move workloads that can be moved while ignoring daemonsets.
-
-```bash
-# List all available nodes
-k get no
-
-# Describe nodes
-k describe no <node-name>
-
-# Drain a node
-k drain <node-name> --ignore-daemonsets
-
-# Cordon/uncordon a node
-k cordon <node-name>
-k uncordon <node-name>
-
-```
-
 ### Troubleshoot cluster components.
 > Troubleshooting kubectl : Make sure your kubectl is configured to connect to the correct cluster context.
 
@@ -939,12 +911,276 @@ k describe svc <service-name>
 # Check recent events in the cluster
 k get events
 ```
-# Kubectl Tips for CKA Exam
 
-For kubectl shortcuts, productivity tips, and imperative command patterns, see:
+---
 
-- ⚡ [Cheatsheet](./CHEATSHEET.md) — Fast command reference organized by exam domain
-- 🎯 [Exam Tips](./EXAM_TIPS.md) — Strategy, common traps, and speed techniques
-- 📅 [Exam Day Guide](./EXAM_DAY_GUIDE.md) — Printable reference with keyboard shortcuts and vim commands
+## 📖 Exam References
 
-Good luck with your CKA exam preparation! Remember, speed and accuracy come with consistent practice.
+<details>
+<summary><strong>🎯 Exam Tips &amp; Strategy</strong></summary>
+
+<br>
+
+### Check Your Context — Every Single Question
+
+```bash
+kubectl config get-contexts
+kubectl config use-context <required-context>
+kubectl config set-context --current --namespace=<required-namespace>
+```
+
+### Imperative Commands (save time)
+
+```bash
+k run nginx --image=nginx
+k create deployment nginx --image=nginx
+k expose deployment nginx --port=80
+k create configmap cm --from-literal=k=v
+k create secret generic sec --from-literal=k=v
+k create role r --verb=get --resource=pods
+k scale deployment nginx --replicas=3
+k set image deployment/nginx nginx=nginx:1.26
+```
+
+### Dry-run → Edit → Apply (for complex YAML)
+
+```bash
+k create deployment nginx --image=nginx $do > deploy.yaml
+vim deploy.yaml
+k apply -f deploy.yaml
+```
+
+### Common Traps
+
+| Trap | Prevention |
+|------|-----------|
+| Wrong namespace | Set `-n <namespace>` or `k config set-context --current --namespace=<ns>` |
+| Wrong cluster context | Run `k config use-context <ctx>` before every task |
+| Tabs in YAML | Always 2 spaces, never tabs |
+| Not verifying work | After each task: `k get` / `k describe` to confirm |
+| Static pod edits | Changes to `/etc/kubernetes/manifests/` auto-restart — wait for reload |
+| Missing `--restart=Never` | Required for one-off pods |
+
+### Last-Minute Checklist
+
+- [ ] Practice switching contexts: `kubectl config use-context`
+- [ ] Know how to drain/uncordon a node
+- [ ] Review NetworkPolicy YAML syntax
+- [ ] Review PV/PVC creation and binding
+- [ ] Practice RBAC resources imperatively
+- [ ] Know how to find and fix a broken kubelet
+- [ ] Get comfortable with `kubectl explain`
+- [ ] Practice `--dry-run=client -o yaml` for every resource type
+
+> 📄 Full guide: [EXAM_TIPS.md](./EXAM_TIPS.md)
+
+</details>
+
+---
+
+<details>
+<summary><strong>📅 Exam Day Guide</strong></summary>
+
+<br>
+
+### Quick Stats
+
+| Item | Detail |
+|------|--------|
+| **Duration** | 2 hours |
+| **Tasks** | 15–20 performance-based |
+| **Passing Score** | 66% |
+| **Kubernetes Version** | v1.35 |
+| **Results** | Emailed within 24 hours |
+| **Retake** | 1 free retake included |
+
+### First 5 Minutes
+
+```bash
+# Verify alias and completion
+k version --short
+
+# Speed shortcuts
+alias k=kubectl
+export do="--dry-run=client -o yaml"
+export now="--force --grace-period=0"
+
+# Enable bash completion
+source <(kubectl completion bash)
+complete -F __start_kubectl k
+
+# Configure vim
+echo "set tabstop=2" >> ~/.vimrc
+echo "set expandtab" >> ~/.vimrc
+echo "set shiftwidth=2" >> ~/.vimrc
+export KUBE_EDITOR=vim
+```
+
+### Keyboard Shortcuts
+
+| Action | Shortcut |
+|--------|----------|
+| Close tab (Chrome) | `Ctrl+Alt+W` (**NOT** `Ctrl+W`) |
+| Copy (terminal) | `Ctrl+Shift+C` |
+| Paste (terminal) | `Ctrl+Shift+V` |
+| Find in Firefox | `Ctrl+F` |
+| Vim INSERT mode | `i` (INSERT key is disabled on remote desktop) |
+| Exit Vim INSERT | `Esc` |
+
+### Vim Quick Reference
+
+```
+i            → INSERT mode          :wq      → Save and quit
+Esc          → COMMAND mode         :q!      → Quit without saving
+dd           → Delete line          yy       → Copy line
+p            → Paste                u        → Undo
+gg / G       → Top / Bottom         /pattern → Search
+:%s/old/new/g → Replace all         :set paste → Paste mode
+```
+
+### Time Management
+
+| Domain | Weight | Suggested Time |
+|--------|--------|---------------|
+| Troubleshooting | 30% | ~36 min |
+| Cluster Architecture | 25% | ~30 min |
+| Services & Networking | 20% | ~24 min |
+| Workloads & Scheduling | 15% | ~18 min |
+| Storage | 10% | ~12 min |
+
+**3-pass approach:** First pass (60 min) — easy wins. Second pass (45 min) — flagged questions. Buffer (15 min) — verify all.
+
+> 📄 Full guide: [EXAM_DAY_GUIDE.md](./EXAM_DAY_GUIDE.md)
+
+</details>
+
+---
+
+<details>
+<summary><strong>❓ CKA FAQ</strong></summary>
+
+<br>
+
+| Question | Answer |
+|----------|--------|
+| **Cost** | $395 USD |
+| **Duration** | 2 hours |
+| **Passing score** | 66% |
+| **Format** | 15–20 performance-based tasks, no multiple choice |
+| **Kubernetes version** | v1.35 |
+| **Results** | Emailed within 24 hours |
+| **Certification validity** | 2 years |
+| **Free retake?** | Yes — 1 retake, must be used within 12 months of purchase |
+| **Simulator included?** | Yes — 2 Killer.sh attempts (36 hrs each) via LF portal |
+| **Allowed resources** | One tab: `kubernetes.io/docs`, `kubernetes.io/blog`, or `helm.sh/docs` |
+| **Languages** | English, Simplified Chinese, Japanese |
+
+### ID Requirements
+
+Valid, unexpired, government-issued physical ID with name + photo + signature. Name must exactly match your LF portal verified name.
+
+### Scoring
+
+Auto-scored on completion. Partial credit exists — incomplete answers still earn points.
+
+> 📄 Full FAQ: [FAQ.md](./FAQ.md)
+
+</details>
+
+---
+
+<details>
+<summary><strong>📝 Practice Questions</strong></summary>
+
+<br>
+
+35 exam-style scenario questions covering all 5 CKA domains. Try each before reading the solution.
+
+### How to Use
+
+1. Read the question carefully — note the **namespace** and **cluster context**
+2. Attempt the solution yourself
+3. Reveal the solution and compare
+4. If wrong, understand *why* before moving on
+
+### Score Yourself
+
+| Questions Solved | Result |
+|-----------------|--------|
+| 29–35 | Exam-ready 🟢 |
+| 22–28 | Almost there 🟡 |
+| 15–21 | More practice needed 🟠 |
+| < 15  | Focus on fundamentals 🔴 |
+
+> 📄 Full guide: [PRACTICE_QUESTIONS.md](./PRACTICE_QUESTIONS.md)
+
+</details>
+
+---
+
+<details>
+<summary><strong>🔧 Troubleshooting Guide</strong></summary>
+
+<br>
+
+Systematic debug playbooks for every layer of Kubernetes. Troubleshooting is **30% of the CKA exam**.
+
+### Universal Debug Checklist
+
+```bash
+# 1. What's the resource state?
+kubectl get <resource> -n <ns> -o wide
+
+# 2. What do events say?
+kubectl describe <resource> <name> -n <ns>
+
+# 3. Are there logs?
+kubectl logs <pod> -n <ns>
+kubectl logs <pod> -n <ns> --previous   # if crashed
+
+# 4. Any cluster-wide events?
+kubectl get events -n <ns> --sort-by='.lastTimestamp'
+```
+
+### Pod State Quick Reference
+
+| State | Root Cause |
+|-------|-----------|
+| `Pending` | No schedulable node: resources, taints, affinity, PVC |
+| `CrashLoopBackOff` | App crash — check logs + exit code |
+| `OOMKilled` | Memory limit too low |
+| `ImagePullBackOff` | Wrong image name/tag or missing registry secret |
+| `Terminating` (stuck) | Finalizer blocking deletion |
+
+> 📄 Full guide: [TROUBLESHOOTING_GUIDE.md](./TROUBLESHOOTING_GUIDE.md)
+
+</details>
+
+---
+
+<details>
+<summary><strong>🤝 Contributing</strong></summary>
+
+<br>
+
+Contributions are welcome. Please follow these guidelines.
+
+- **Bug reports / corrections** — Open an issue describing the error and the correct information with a source link.
+- **Content additions** — Open a pull request with your changes. Keep additions focused on CKA v1.35 exam scope.
+- **Typo / formatting fixes** — Pull requests welcome, no issue needed.
+
+### Pull Request Guidelines
+
+1. Fork the repo and create a branch from `main`.
+2. Keep each PR scoped to one topic or fix.
+3. Verify all commands against Kubernetes v1.35.
+4. Link to official Kubernetes docs or CNCF curriculum when adding new content.
+
+> 📄 Full guide: [CONTRIBUTING.md](./CONTRIBUTING.md)
+
+</details>
+
+---
+
+> ⭐ If this guide helped you, please star the repo!
+

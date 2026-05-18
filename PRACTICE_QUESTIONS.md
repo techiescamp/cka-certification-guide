@@ -1,6 +1,6 @@
 # CKA Practice Questions 📝
 
-> 34 exam-style scenario questions with full solutions.
+> 35 exam-style scenario questions with full solutions.
 > Cover all 5 CKA exam domains. Try each question before reading the solution.
 
 ---
@@ -72,7 +72,6 @@ kubectl auth can-i list nodes --as=system:serviceaccount:monitoring:monitor-sa
 ```
 </details>
 
----
 ---
 
 ### Q3 — Cluster Upgrade

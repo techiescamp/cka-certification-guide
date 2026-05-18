@@ -46,7 +46,7 @@
 A Deployment manages a ReplicaSet; the ReplicaSet manages Pods via label selectors. The `pod-template-hash` label is added automatically so two ReplicaSets can coexist during a rolling update.
 
 <p align="center">
-  <img src="./images/08.png" width="80%" alt="Kubernetes deployment to replicaset to pod label selector hierarchy diagram" />
+  <img src="./images/08.png" width="80%" height="auto" alt="Kubernetes deployment to replicaset to pod label selector hierarchy diagram" />
 </p>
 
 <p align="center"><em>Deployment → ReplicaSet → Pod: selectors chain through each layer via labels</em></p>
@@ -54,7 +54,7 @@ A Deployment manages a ReplicaSet; the ReplicaSet manages Pods via label selecto
 ### Rolling Update in Action
 
 <p align="center">
-  <img src="./images/11.gif" width="80%" alt="Kubernetes rolling update animation showing old pods replaced by new pods during deployment" />
+  <img src="./images/11.gif" width="80%" height="auto" alt="Kubernetes rolling update animation showing old pods replaced by new pods during deployment" />
 </p>
 
 ### Deployment Strategy Types
@@ -104,7 +104,7 @@ kubectl set image deployment/webapp nginx=nginx:1.26
 ### How the Scheduler Works
 
 <p align="center">
-  <img src="./images/09.gif" width="80%" alt="Kubernetes scheduler workflow diagram with filtering and scoring phases for pod placement" />
+  <img src="./images/09.gif" width="80%" height="auto" alt="Kubernetes scheduler workflow diagram with filtering and scoring phases for pod placement" />
 </p>
 
 1. **Filtering:** Remove nodes that don't meet requirements (resources, taints, affinity)
@@ -117,7 +117,7 @@ kubectl set image deployment/webapp nginx=nginx:1.26
 > 👉 **Deep Dive Lesson:** [Resource Requests vs Limits](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55682021)
 
 <p align="center">
-  <img src="./images/10.gif" width="80%" alt="Kubernetes pod resource requests vs limits diagram showing CPU and memory allocation on nodes" />
+  <img src="./images/10.gif" width="80%" height="auto" alt="Kubernetes pod resource requests vs limits diagram showing CPU and memory allocation on nodes" />
 </p>
 
 | | Request | Limit |
@@ -151,7 +151,7 @@ resources:
 
 
 <p align="center">
-  <img src="./images/12.gif" width="80%" alt="Kubernetes ConfigMap and Secret injection into pods as environment variables and volume mounts" />
+  <img src="./images/12.gif" width="80%" height="auto" alt="Kubernetes ConfigMap and Secret injection into pods as environment variables and volume mounts" />
 </p>
 
 ```yaml
@@ -171,7 +171,7 @@ kubectl label node node01 gpu="true"
 
 
 <p align="center">
-  <img src="./images/13.gif" width="80%" alt="Kubernetes CPU and memory resource requests and limits diagram with QoS classes" />
+  <img src="./images/13.gif" width="80%" height="auto" alt="Kubernetes CPU and memory resource requests and limits diagram with QoS classes" />
 </p>
 
 ```yaml
@@ -228,7 +228,7 @@ spec:
 
 
 <p align="center">
-  <img src="./images/14.gif" width="80%" alt="Kubernetes horizontal pod autoscaler HPA scaling pods based on CPU and memory metrics" />
+  <img src="./images/14.gif" width="80%" height="auto" alt="Kubernetes horizontal pod autoscaler HPA scaling pods based on CPU and memory metrics" />
 </p>  
 
 **Taints** on nodes prevent pods from scheduling there (unless they tolerate).
@@ -261,7 +261,7 @@ spec:
 
 
 <p align="center">
-  <img src="./images/15.gif" width="80%" alt="Kubernetes liveness readiness and startup probe lifecycle diagram for pod health checks" />
+  <img src="./images/15.gif" width="80%" height="auto" alt="Kubernetes liveness readiness and startup probe lifecycle diagram for pod health checks" />
 </p>  
 
 ### ConfigMap Usage Patterns
@@ -295,7 +295,7 @@ containers:
 
 
 <p align="center">
-  <img src="./images/16.png" width="80%" alt="Kubernetes pod disruption budget PDB diagram ensuring minimum available pods during maintenance" />
+  <img src="./images/16.png" width="80%" height="auto" alt="Kubernetes pod disruption budget PDB diagram ensuring minimum available pods during maintenance" />
 </p>  
 
 ### Secret Types
@@ -350,7 +350,7 @@ startupProbe:
 
 
 <p align="center">
-  <img src="./images/17.png" width="80%" alt="Kubernetes init container execution order diagram showing sequential run-to-completion before app container" />
+  <img src="./images/17.png" width="80%" height="auto" alt="Kubernetes init container execution order diagram showing sequential run-to-completion before app container" />
 </p>  
 
 
@@ -377,7 +377,7 @@ spec:
 
 
 <p align="center">
-  <img src="./images/18.gif" width="80%" alt="Kubernetes taints and tolerations diagram showing NoSchedule, NoExecute, and PreferNoSchedule effects" />
+  <img src="./images/18.gif" width="80%" height="auto" alt="Kubernetes taints and tolerations diagram showing NoSchedule, NoExecute, and PreferNoSchedule effects" />
 </p>  
 
 - Managed directly by `kubelet` on a node (not by the API server)
@@ -399,7 +399,7 @@ cat /var/lib/kubelet/config.yaml | grep staticPodPath
 
 
 <p align="center">
-  <img src="./images/19.png" width="80%" alt="Kubernetes node affinity and anti-affinity rules diagram with requiredDuringScheduling examples" />
+  <img src="./images/19.png" width="80%" height="auto" alt="Kubernetes node affinity and anti-affinity rules diagram with requiredDuringScheduling examples" />
 </p>  
 
 ```yaml
@@ -427,7 +427,7 @@ Higher priority pods can **preempt** (evict) lower priority pods when resources 
 
 
 <p align="center">
-  <img src="./images/20.gif" width="80%" alt="Kubernetes pod scheduling lifecycle diagram from API server to kubelet node placement" />
+  <img src="./images/20.gif" width="80%" height="auto" alt="Kubernetes pod scheduling lifecycle diagram from API server to kubelet node placement" />
 </p>  
 
 ```bash
