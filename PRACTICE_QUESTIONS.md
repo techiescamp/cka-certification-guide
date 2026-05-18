@@ -617,7 +617,7 @@ kubectl get svc api-nodeport -n backend
 
 ---
 
-### Q19 — Network Policy: Default Deny
+### Q19 Network Policy: Default Deny
 
 **Task:** Create a NetworkPolicy named `deny-all` in namespace `secure` that denies all ingress and egress traffic to all pods in that namespace.
 
@@ -1014,7 +1014,7 @@ kubectl get pods -A | grep Pending
 
 ---
 
-### Q30 — Drain and Cordon a Node
+### Q30 Drain and Cordon a Node
 
 **Task:** Node `worker02` needs maintenance. Drain all workloads from it (ignoring DaemonSets) and then mark it as unschedulable. After "maintenance", bring it back online.
 

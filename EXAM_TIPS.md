@@ -200,7 +200,7 @@ For the full troubleshooting flow and debug playbooks, see:
 
 ---
 
-## Day of Exam — Official Reminders
+## Day of Exam Official Reminders
 
 - Launch the PSI Secure Browser **before** your exam start time to complete check-in
 - Use `Ctrl+Alt+W` to close tabs, **NOT** `Ctrl+W`

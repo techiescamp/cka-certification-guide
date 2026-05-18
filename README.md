@@ -1090,7 +1090,7 @@ A: Kubernetes v1.35. This guide targets v1.35 specifically, matching the current
 
 **Q: What is the passing score for the CKA exam?**
 
-A: 66%. Partial credit is awarded — incomplete answers still earn points.
+A: 66%. Partial credit is awarded  incomplete answers still earn points.
 
 **Q: How many questions are on the CKA exam?**
 
