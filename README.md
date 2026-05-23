@@ -39,11 +39,11 @@ Use code **35KUBECT** to save on following bundles:
 
 | # | Domain | Weight | Study Notes | Key Topics |
 |:-:|--------|:------:|:-----------:|------------|
-| 1 | 🏗️ Cluster Architecture, Installation & Configuration | **25%** | [Notes](./study-notes/01-cluster-architecture.md) | RBAC, kubeadm, Helm, Kustomize, CRDs, Operators |
-| 2 | 📦 Workloads & Scheduling | **15%** | [Notes](./study-notes/02-workloads-scheduling.md) | Deployments, ConfigMaps, Secrets, HPA, affinity |
-| 3 | 💾 Storage | **10%** | [Notes](./study-notes/03-storage.md) | StorageClasses, PV, PVC, dynamic provisioning |
-| 4 | 🌐 Services & Networking | **20%** | [Notes](./study-notes/04-services-networking.md) | NetworkPolicies, Gateway API, Ingress, CoreDNS |
-| 5 | 🛠️ Troubleshooting | **30%**  | [Notes](./study-notes/05-troubleshooting.md) | Pod failures, node issues, control plane, networking |
+| 1 |  Cluster Architecture, Installation & Configuration | **25%** | [Notes](./study-notes/01-cluster-architecture.md) | RBAC, kubeadm, Helm, Kustomize, CRDs, Operators |
+| 2 |  Workloads & Scheduling | **15%** | [Notes](./study-notes/02-workloads-scheduling.md) | Deployments, ConfigMaps, Secrets, HPA, affinity |
+| 3 |  Storage | **10%** | [Notes](./study-notes/03-storage.md) | StorageClasses, PV, PVC, dynamic provisioning |
+| 4 |  Services & Networking | **20%** | [Notes](./study-notes/04-services-networking.md) | NetworkPolicies, Gateway API, Ingress, CoreDNS |
+| 5 |  Troubleshooting | **30%**  | [Notes](./study-notes/05-troubleshooting.md) | Pod failures, node issues, control plane, networking |
 
 > [!TIP]
 > **Troubleshooting (30%)** is the highest-weighted domain. Invest at least 1/3 of your study time there.
