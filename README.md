@@ -130,29 +130,6 @@ Use code **35KUBECT** to save on following bundles:
 
 Following are the subtopics under Cluster Architecture, Installation & Configuration
 
-### Manage role based access control (RBAC).
-> [RBAC](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55733398) | [Service Accounts](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55724447) | [Roles & ClusterRoles](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55997133) : Understand the difference between Roles (namespace level) and ClusterRoles (cluster level).
-
-```bash
-# Create a service account
-k create sa <sa-name> -n <namespace>
-
-# Create a role
-k create role <role-name> --verb=<verbs> --resource=<resources> -n <namespace>
-
-# Create rolebinding
-k create rolebinding <binding-name> --role=<role-name> --user=<username> -n <namespace>
-
-# Create a clusterrole
-k create clusterrole <clusterrole-name> --verb=<verbs> --resource=<resources>
-
-# Create clusterrolebinding
-k create clusterrolebinding <binding-name> --clusterrole=<clusterrole-name> --user=<username>
-
-# Check RBAC authorization
-k auth can-i <verb> <resource> --as=<username>
-```
-
 ### Prepare underlying infrastructure for installing a Kubernetes cluster.
 > [Setup Virtual Machines](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/60080222) : Ensure that each virtual machine (VM) meets the minimum system requirements for setting up a Kubernetes cluster.
 
@@ -239,39 +216,6 @@ kubeadm join ....
 ### Manage the lifecycle of Kubernetes clusters.
 > [Perform Cluster Version upgrade Using Kubeadm](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55120133) : Managing the lifecycle involves upgrading clusters, managing control plane nodes, and ensuring consistency across versions.
 
-### Use Helm and Kustomize to install cluster components.
-> Helm : Helm makes it easier to package and deploy Kubernetes applications. Practice installing, upgrading, and uninstalling releases.
-
-```bash
-# Install a helm chart
-helm install <release-name> <chart-name>
-
-# List helm releases
-helm list
-
-# Upgrade a helm release
-helm upgrade <release-name> <chart-name>
-
-# Search for a chart
-helm search repo <chart-name>
-
-# Uninstall a helm release
-helm uninstall <release-name>
-```
-
-> Kustomize : Start by creating a directory containing all the Kubernetes manifests you want to manage with Kustomize.
-
-```bash
-# Example directory structure
-example-app/
-  ├── deployment.yaml
-  ├── service.yaml
-  └── kustomization.yaml
-
-# Use Kustomize to apply resources (pass the directory, not the file)
-k apply -k ./example-app/
-```
-
 ### Understand extension interfaces (CNI, CSI, CRI, etc.).
 > Container Runtime Interface (CRI) : Kubernetes uses the CRI to communicate with container runtimes.
 
@@ -341,6 +285,62 @@ k get no
 k get csidrivers
 ```
 
+### Manage role based access control (RBAC).
+> [RBAC](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55733398) | [Service Accounts](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55724447) | [Roles & ClusterRoles](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55997133) : Understand the difference between Roles (namespace level) and ClusterRoles (cluster level).
+
+```bash
+# Create a service account
+k create sa <sa-name> -n <namespace>
+
+# Create a role
+k create role <role-name> --verb=<verbs> --resource=<resources> -n <namespace>
+
+# Create rolebinding
+k create rolebinding <binding-name> --role=<role-name> --user=<username> -n <namespace>
+
+# Create a clusterrole
+k create clusterrole <clusterrole-name> --verb=<verbs> --resource=<resources>
+
+# Create clusterrolebinding
+k create clusterrolebinding <binding-name> --clusterrole=<clusterrole-name> --user=<username>
+
+# Check RBAC authorization
+k auth can-i <verb> <resource> --as=<username>
+```
+
+### Use Helm and Kustomize to install cluster components.
+> Helm : Helm makes it easier to package and deploy Kubernetes applications. Practice installing, upgrading, and uninstalling releases.
+
+```bash
+# Install a helm chart
+helm install <release-name> <chart-name>
+
+# List helm releases
+helm list
+
+# Upgrade a helm release
+helm upgrade <release-name> <chart-name>
+
+# Search for a chart
+helm search repo <chart-name>
+
+# Uninstall a helm release
+helm uninstall <release-name>
+```
+
+> Kustomize : Start by creating a directory containing all the Kubernetes manifests you want to manage with Kustomize.
+
+```bash
+# Example directory structure
+example-app/
+  ├── deployment.yaml
+  ├── service.yaml
+  └── kustomization.yaml
+
+# Use Kustomize to apply resources (pass the directory, not the file)
+k apply -k ./example-app/
+```
+
 ### Understand CRDs, install and configure operators.
 > Custom Resources : CRDs allows you to extend Kubernetes APIs to create new kinds of Kubernetes objects beyond the built-in ones.
 
@@ -396,112 +396,6 @@ k rollout resume deploy <deployment-name>
 
 # Rollout & restart a deployment
 k rollout restart deploy <deployment-name>
-```
-
-### Use ConfigMaps and Secrets to configure applications.
-> [ConfigMaps](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55993034) : Use ConfigMaps to separate environment-specific configurations from the container image.
-
-```bash
-# Create configmap
-k create cm <configmap-name>
-
-# Create configmap manifest file
-k create cm <configmap-name> --dry-run=client -o yaml > cm.yaml
-
-# Create configmap from literal values
-k create cm <configmap-name> --from-literal=<key1>=<value1> --from-literal=<key2>=<value2>
-
-# Create configmap from a file
-k create cm <configmap-name> --from-file=<file-name>
-
-# Create an immutable configmap
-k create cm <configmap-name> --from-literal=<key>=<value> --immutable
-```
-
-> [Secrets](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55993473) : Remember that Secrets are base64-encoded and not encrypted and they are for storing sensitive data.
-
-```bash
-# Create generic secret from literal values
-k create secret generic <secret-name> --from-literal=<key1>=<value1> --from-literal=<key2>=<value2>
-
-# Create TLS secret from certificate files
-k create secret tls <secret-name> --cert=tls.crt --key=tls.key
-```
-
-### Configure workload autoscaling.
-> [Autoscaling Workloads](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/58713870) : Practice setting up Horizontal Pod Autoscaler (HPA).
-
-```bash
-# Using autoscaling (--cpu-percent is required for HPA to function)
-k autoscale deploy <deployment-name> --min=2 --max=5 --cpu-percent=80
-```
-
-### Understand the primitives used to create robust, self-healing, application deployments.
-> Configure Pod Priorities using Priority Class to ensure mission critical applications are available and handled during resource crunch.
-
-**Detailed Lesson:** [Pod Priority & Priority Class](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/60175740)
-
-Here is how you can create and apply Pod Priorities to a Deployment.
-
-```yaml
-apiVersion: scheduling.k8s.io/v1
-kind: PriorityClass
-metadata:
-  name: high-priority
-value: 100000
-globalDefault: false
-description: "High priority for important workloads"
-
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nginx-deployment
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: nginx
-  template:
-    metadata:
-      labels:
-        app: nginx
-    spec:
-      priorityClassName: high-priority
-      containers:
-      - name: nginx
-        image: nginx
-        ports:
-        - containerPort: 80
-```
-
-> Configure Liveness, Readiness and Startup Probes : Using liveness and readiness probes in your deployment ensure that your applications are self-healing and automatically recover from failures.
-
-```yaml
-# Startup probe
-startupProbe:
-  httpGet:
-    path: /startup
-    port: 8080
-  failureThreshold: 30
-  periodSeconds: 10
-
-# Liveness probe
-livenessProbe:
-  httpGet:
-    path: /healthz
-    port: 8080
-  initialDelaySeconds: 15
-  failureThreshold: 1
-  periodSeconds: 10
-
-# Readiness probe
-readinessProbe:
-  httpGet:
-    path: /ready
-    port: 8080
-  failureThreshold: 30
-  periodSeconds: 10
 ```
 
 ### Configure Pod admission and scheduling (limits, node affinity, etc.).
@@ -622,6 +516,112 @@ initContainers:
       valueFrom:
         fieldRef:
           fieldPath: status.podIP
+```
+
+### Understand the primitives used to create robust, self-healing, application deployments.
+> Configure Pod Priorities using Priority Class to ensure mission critical applications are available and handled during resource crunch.
+
+**Detailed Lesson:** [Pod Priority & Priority Class](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/60175740)
+
+Here is how you can create and apply Pod Priorities to a Deployment.
+
+```yaml
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: high-priority
+value: 100000
+globalDefault: false
+description: "High priority for important workloads"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      priorityClassName: high-priority
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+```
+
+> Configure Liveness, Readiness and Startup Probes : Using liveness and readiness probes in your deployment ensure that your applications are self-healing and automatically recover from failures.
+
+```yaml
+# Startup probe
+startupProbe:
+  httpGet:
+    path: /startup
+    port: 8080
+  failureThreshold: 30
+  periodSeconds: 10
+
+# Liveness probe
+livenessProbe:
+  httpGet:
+    path: /healthz
+    port: 8080
+  initialDelaySeconds: 15
+  failureThreshold: 1
+  periodSeconds: 10
+
+# Readiness probe
+readinessProbe:
+  httpGet:
+    path: /ready
+    port: 8080
+  failureThreshold: 30
+  periodSeconds: 10
+```
+
+### Use ConfigMaps and Secrets to configure applications.
+> [ConfigMaps](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55993034) : Use ConfigMaps to separate environment-specific configurations from the container image.
+
+```bash
+# Create configmap
+k create cm <configmap-name>
+
+# Create configmap manifest file
+k create cm <configmap-name> --dry-run=client -o yaml > cm.yaml
+
+# Create configmap from literal values
+k create cm <configmap-name> --from-literal=<key1>=<value1> --from-literal=<key2>=<value2>
+
+# Create configmap from a file
+k create cm <configmap-name> --from-file=<file-name>
+
+# Create an immutable configmap
+k create cm <configmap-name> --from-literal=<key>=<value> --immutable
+```
+
+> [Secrets](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55993473) : Remember that Secrets are base64-encoded and not encrypted and they are for storing sensitive data.
+
+```bash
+# Create generic secret from literal values
+k create secret generic <secret-name> --from-literal=<key1>=<value1> --from-literal=<key2>=<value2>
+
+# Create TLS secret from certificate files
+k create secret tls <secret-name> --cert=tls.crt --key=tls.key
+```
+
+### Configure workload autoscaling.
+> [Autoscaling Workloads](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/58713870) : Practice setting up Horizontal Pod Autoscaler (HPA).
+
+```bash
+# Using autoscaling (--cpu-percent is required for HPA to function)
+k autoscale deploy <deployment-name> --min=2 --max=5 --cpu-percent=80
 ```
 
 > [Admission Controllers Reference](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/) : Use admission controllers to enforce policies such as resource quotas, pod security policies, and image validation.
