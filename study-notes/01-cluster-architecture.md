@@ -6,10 +6,6 @@
 
 A: A `Role` grants permissions within a single namespace. A `ClusterRole` grants permissions across all namespaces (or for cluster-scoped resources like nodes). A `RoleBinding` can reference either — but a RoleBinding always limits scope to its own namespace. Use ClusterRole + ClusterRoleBinding for cluster-wide access.
 
-**Q: How do I upgrade a Kubernetes cluster with kubeadm?**
-
-A: One minor version at a time. On the control plane: upgrade kubeadm → `kubeadm upgrade apply vX.Y.Z` → upgrade kubelet/kubectl → restart kubelet → uncordon. Then repeat for each worker node. Never skip minor versions.
-
 ---
 
 ## Index

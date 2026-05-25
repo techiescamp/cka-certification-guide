@@ -5,7 +5,7 @@
 
 **Q: How much does the CKA exam cost?**
 
-A: $395 USD. Use coupon code **35KUBECT** at [kube.promo/cka](https://kube.promo/cka) for a discount.
+A: $395 USD. Use coupon code **MM26CCCT** at [kube.promo/cka](https://kube.promo/cka) for a discount.
 
 **Q: What is the passing score for the CKA exam?**
 

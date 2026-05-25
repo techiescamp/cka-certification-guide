@@ -5,11 +5,9 @@
 
 **Q: What do I do first when the CKA exam starts?**
 
-A: Immediately run these 3 setup commands before touching any question:
+A: Immediately run this setup command before touching any question:
 ```bash
-alias k=kubectl
 export do="--dry-run=client -o yaml"
-source <(kubectl completion bash) && complete -F __start_kubectl k
 ```
 Then configure vim: `echo -e "set tabstop=2\nset expandtab\nset shiftwidth=2" >> ~/.vimrc`
 
@@ -37,7 +35,7 @@ A: Use `Ctrl+Alt+W` to close tabs (NOT `Ctrl+W` — that kills your terminal). C
 Run through this the day before your exam:
 
 - [ ] Run [PSI system check](https://syscheck.bridge.psiexams.com/) on your exam machine
-- [ ] Single monitor only — dual monitors are **NOT** supported
+- [ ] Single monitor only  dual monitors are **NOT** supported
 - [ ] Screen size ≥ 15", resolution 1080p recommended
 - [ ] **Wired internet connection** preferred over Wi-Fi
 - [ ] Close bandwidth-heavy apps (Dropbox, BitTorrent, video calls)
@@ -52,9 +50,9 @@ Run through this the day before your exam:
 - [ ] Name on ID must **exactly** match your verified name on the LF portal
 
 ### Room Requirements
-- [ ] Clutter-free desk — no paper, electronics, or other objects
-- [ ] Clear walls — no paper/printouts (paintings are OK)
-- [ ] Well-lit room — proctor must see your face, hands, and workspace
+- [ ] Clutter-free desk 👉  no paper, electronics, or other objects
+- [ ] Clear walls 👉  no paper/printouts (paintings are OK)
+- [ ] Well-lit room 👉  proctor must see your face, hands, and workspace
 - [ ] Private, quiet space (no coffee shops, open offices, etc.)
 - [ ] You must stay within the camera frame throughout
 

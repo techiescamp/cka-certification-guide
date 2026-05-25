@@ -8,13 +8,11 @@ A: Check your cluster context and namespace. Run `kubectl config use-context <ct
 
 ## Step-by-Step Exam Approach
 
-1. **Read the full question** before typing anything — note the namespace, cluster context, and resource names
-2. **Switch context** — `kubectl config use-context <required-context>`
-3. **Set namespace** — `kubectl config set-context --current --namespace=<ns>` or use `-n <ns>` on every command
-4. **Use imperative commands first** — faster than writing YAML from scratch
-5. **Dry-run to YAML if complex** — `kubectl create ... --dry-run=client -o yaml > file.yaml`
-6. **Verify your work** — `kubectl get` / `kubectl describe` after every task
-7. **Flag and skip** if stuck after 3 minutes — return in the second pass
+1. **Read the full question**: before typing anything note the namespace, cluster context, and resource names   
+2. **Use imperative commands first**: faster than writing YAML from scratch
+3. **Dry-run to YAML if complex**: `kubectl create ... --dry-run=client -o yaml > file.yaml`
+4. **Verify your work**: `kubectl get` / `kubectl describe` after every task
+5. **Flag and skip**: if stuck after 3 minutes - return in the second pass
 
 ---
 
@@ -41,20 +39,6 @@ For the 3-pass strategy and domain time allocation table, see: 📅 **[Exam Day 
 - If a question is worth **7–10%** → it deserves 10–15 minutes
 
 Cluster upgrade tasks are time-consuming — budget 12–15 min and do them only when confident.
-
----
-
-## The Most Important Habit: Check Your Context
-
-**Every single question** — before typing anything else:
-
-```bash
-kubectl config get-contexts
-kubectl config use-context <required-context>
-kubectl config set-context --current --namespace=<required-namespace>
-```
-
-Submitting work in the wrong cluster or namespace is one of the most common ways to lose points.
 
 ---
 

@@ -78,44 +78,6 @@ kubectl auth can-i list nodes --as=system:serviceaccount:monitoring:monitor-sa
 
 ---
 
-### Q3 Cluster Upgrade
-
-**Task:** Upgrade the control plane node from Kubernetes v1.34.x to v1.35.0 using kubeadm. Ensure the kubelet and kubectl are also upgraded.
-
-<details>
-<summary>Solution</summary>
-
-```bash
-# Step 1: Drain the control plane node first
-kubectl drain controlplane --ignore-daemonsets --delete-emptydir-data
-
-# Step 2: Upgrade kubeadm to the TARGET version (1.35.x)
-apt-get update
-apt-mark unhold kubeadm
-apt-get install -y kubeadm=1.35.0-*
-apt-mark hold kubeadm
-
-# Step 3: Plan and apply upgrade
-kubeadm upgrade plan
-kubeadm upgrade apply v1.35.0
-
-# Step 4: Upgrade kubelet and kubectl to TARGET version (1.35.x)
-apt-mark unhold kubelet kubectl
-apt-get install -y kubelet=1.35.0-* kubectl=1.35.0-*
-apt-mark hold kubelet kubectl
-systemctl daemon-reload
-systemctl restart kubelet
-
-# Step 5: Uncordon
-kubectl uncordon controlplane
-
-# Verify
-kubectl get nodes
-```
-</details>
-
----
-
 ### Q4 ServiceAccount Token
 
 **Task:** Create a ServiceAccount named `app-sa` in namespace `default`. Create a pod named `sa-pod` using image `nginx` that uses this service account. Verify the token is mounted.
