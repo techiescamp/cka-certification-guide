@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: hello-spring
-          image: catninjauser/helloapps-java:1.1.0
+          image: catninjauser/helloapps-java:3.1.0
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
