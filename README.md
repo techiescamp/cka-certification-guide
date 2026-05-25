@@ -363,41 +363,6 @@ k delete <resource-name> <name>
 
 Following are the subtopics under Workloads & Scheduling
 
-### Understand deployments and how to perform rolling update and rollbacks.
-> [Deployments](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55402667) : Understand rolling updates and rollbacks. Use `kubectl rollout history` to inspect revision history.
-
-```bash
-# Create deployment with 3 replicas
-k create deploy <deployment-name> --image=<image-name> --replicas=3
-
-# Create deployment manifest file
-k create deploy <deployment-name> --image <image-name> --replicas=3 --dry-run=client -o yaml > deploy.yaml
-
-# Scale deployment replicas
-k scale deploy <deployment-name> --replicas=2
-
-# Update container image in a deployment
-k set image deploy <deployment-name> nginx=<image-name>
-
-# Rollback to previous deployment version
-k rollout undo deploy <deployment-name>
-
-# View deployment rollout history
-k rollout history deploy <deployment-name>
-
-# Rollback to a specific revision
-k rollout undo deploy <deployment-name> --to-revision=1
-
-# Pause deployment rollout
-k rollout pause deploy <deployment-name>
-
-# Resume deployment rollout
-k rollout resume deploy <deployment-name>
-
-# Rollout & restart a deployment
-k rollout restart deploy <deployment-name>
-```
-
 ### Configure Pod admission and scheduling (limits, node affinity, etc.).
 > [Pods](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55219547) : Always remember that a Pod may contain one or more containers, and they share storage/network resources, making communication between containers in the same Pod fast and efficient.
 
@@ -516,6 +481,41 @@ initContainers:
       valueFrom:
         fieldRef:
           fieldPath: status.podIP
+```
+
+### Understand deployments and how to perform rolling update and rollbacks.
+> [Deployments](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55402667) : Understand rolling updates and rollbacks. Use `kubectl rollout history` to inspect revision history.
+
+```bash
+# Create deployment with 3 replicas
+k create deploy <deployment-name> --image=<image-name> --replicas=3
+
+# Create deployment manifest file
+k create deploy <deployment-name> --image <image-name> --replicas=3 --dry-run=client -o yaml > deploy.yaml
+
+# Scale deployment replicas
+k scale deploy <deployment-name> --replicas=2
+
+# Update container image in a deployment
+k set image deploy <deployment-name> nginx=<image-name>
+
+# Rollback to previous deployment version
+k rollout undo deploy <deployment-name>
+
+# View deployment rollout history
+k rollout history deploy <deployment-name>
+
+# Rollback to a specific revision
+k rollout undo deploy <deployment-name> --to-revision=1
+
+# Pause deployment rollout
+k rollout pause deploy <deployment-name>
+
+# Resume deployment rollout
+k rollout resume deploy <deployment-name>
+
+# Rollout & restart a deployment
+k rollout restart deploy <deployment-name>
 ```
 
 ### Understand the primitives used to create robust, self-healing, application deployments.
