@@ -31,7 +31,7 @@ A: `ReadWriteOnce (RWO)` — mounted read-write by a single node. `ReadOnlyMany 
 ## Storage Hierarchy
 
 <p align="center">
-  <img src="./images/21.png" width="80%" height="auto" alt="Kubernetes storage hierarchy diagram with StorageClass, PersistentVolume, and PersistentVolumeClaim" />
+  <img src="./images/21.png" width="60%" height="auto" alt="Kubernetes storage hierarchy diagram with StorageClass, PersistentVolume, and PersistentVolumeClaim" />
 </p>
 
 ---
