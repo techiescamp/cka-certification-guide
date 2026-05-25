@@ -1,0 +1,46 @@
+site_name: CKA Exam Study Guide 2026
+site_description: Free Kubernetes v1.35 CKA exam preparation guide with practice questions, troubleshooting playbooks, kubectl cheatsheets, and exam-day strategy.
+site_url: https://techiescamp.github.io/cka-certification-guide
+repo_url: https://github.com/techiescamp/cka-certification-guide
+repo_name: techiescamp/cka-certification-guide
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+
+plugins:
+  - search
+
+nav:
+  - Home: README.md
+  - Syllabus: SYLLABUS.md
+  - Study Notes:
+      - Overview: study-notes/README.md
+      - "Cluster Architecture (25%)": study-notes/01-cluster-architecture.md
+      - "Workloads & Scheduling (15%)": study-notes/02-workloads-scheduling.md
+      - "Storage (10%)": study-notes/03-storage.md
+      - "Services & Networking (20%)": study-notes/04-services-networking.md
+      - "Troubleshooting (30%)": study-notes/05-troubleshooting.md
+  - Practice Questions: PRACTICE_QUESTIONS.md
+  - Cheatsheet: CHEATSHEET.md
+  - Troubleshooting Guide: TROUBLESHOOTING_GUIDE.md
+  - Exam Prep:
+      - Exam Tips: EXAM_TIPS.md
+      - Exam Day Guide: EXAM_DAY_GUIDE.md
+      - FAQ: FAQ.md
+  - Lab Setup:
+      - Mac Silicon: lab-setup/mac-silicon/README.md
+      - Mac Intel: lab-setup/mac-intel/README.md
+      - Windows: lab-setup/windows/README.md
+      - Ubuntu Desktop: lab-setup/ubuntu-desktop/README.md
+  - Contributing: CONTRIBUTING.md

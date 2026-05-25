@@ -36,5 +36,7 @@ Temporary Items
 .apdisk
 
 lab-setup/mac-silicon/manifests/
-README-V2.md
+lab-setup/mac-silicon/manifests/
+lab-setup/mac-silicon/common.sh
 
+.claude/
