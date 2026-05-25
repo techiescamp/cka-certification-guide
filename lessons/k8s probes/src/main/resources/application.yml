@@ -1,0 +1,52 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: hello-spring
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/hellodb}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres123}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-timeout: 5000
+      validation-timeout: 3000
+      maximum-pool-size: 5
+      minimum-idle: 0
+      initialization-fail-timeout: -1
+
+  sql:
+    init:
+      mode: never
+
+# Actuator configuration for Kubernetes probes
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+      group:
+        liveness:
+          include: livenessState
+        readiness:
+          include: readinessState,db
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+    db:
+      enabled: true
+
+logging:
+  level:
+    com.example.hello: INFO
+    com.zaxxer.hikari: WARN
