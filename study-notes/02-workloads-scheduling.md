@@ -53,17 +53,17 @@ A: A **liveness probe** restarts the container if it fails (the process is alive
 
 A Deployment manages a ReplicaSet; the ReplicaSet manages Pods via label selectors. The `pod-template-hash` label is added automatically so two ReplicaSets can coexist during a rolling update.
 
-<p align="center">
-  <img src="./images/08.png" width="80%" height="auto" alt="Kubernetes deployment to replicaset to pod label selector hierarchy diagram" />
-</p>
+
+  <img src="./images/08.png" width="50%" height="auto" alt="Kubernetes deployment to replicaset to pod label selector hierarchy diagram" />
+
 
 <p align="center"><em>Deployment → ReplicaSet → Pod: selectors chain through each layer via labels</em></p>
 
 ### Rolling Update in Action
 
-<p align="center">
-  <img src="./images/11.gif" width="80%" height="auto" alt="Kubernetes rolling update animation showing old pods replaced by new pods during deployment" />
-</p>
+
+  <img src="./images/11.gif" width="50%" height="auto" alt="Kubernetes rolling update animation showing old pods replaced by new pods during deployment" />
+
 
 ### Deployment Strategy Types
 
@@ -111,9 +111,9 @@ kubectl set image deployment/webapp nginx=nginx:1.26
 
 ### How the Scheduler Works
 
-<p align="center">
-  <img src="./images/09.gif" width="80%" height="auto" alt="Kubernetes scheduler workflow diagram with filtering and scoring phases for pod placement" />
-</p>
+
+  <img src="./images/09.gif" width="40%" height="auto" alt="Kubernetes scheduler workflow diagram with filtering and scoring phases for pod placement" />
+
 
 1. **Filtering:** Remove nodes that don't meet requirements (resources, taints, affinity)
 2. **Scoring:** Rank remaining nodes (least utilized, image locality, etc.)
@@ -124,9 +124,9 @@ kubectl set image deployment/webapp nginx=nginx:1.26
 
 > 👉 **Deep Dive Lesson:** [Resource Requests vs Limits](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55682021)
 
-<p align="center">
-  <img src="./images/10.gif" width="80%" height="auto" alt="Kubernetes pod resource requests vs limits diagram showing CPU and memory allocation on nodes" />
-</p>
+
+  <img src="./images/10.gif" width="50%" height="auto" alt="Kubernetes pod resource requests vs limits diagram showing CPU and memory allocation on nodes" />
+
 
 | | Request | Limit |
 |--|---------|-------|
@@ -158,9 +158,9 @@ resources:
 > 👉 **Deep Dive Lesson:** [Node Selector](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55686799)
 
 
-<p align="center">
-  <img src="./images/12.gif" width="80%" height="auto" alt="Kubernetes ConfigMap and Secret injection into pods as environment variables and volume mounts" />
-</p>
+
+  <img src="./images/12.gif" width="50%" height="auto" alt="Kubernetes node selector diagram showing a pod scheduled only on nodes with matching labels" />
+
 
 ```yaml
 spec:
@@ -178,9 +178,9 @@ kubectl label node node01 gpu="true"
 > 👉 **Deep Dive Lesson:** [Node Affinity](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55687979)
 
 
-<p align="center">
-  <img src="./images/13.gif" width="80%" height="auto" alt="Kubernetes CPU and memory resource requests and limits diagram with QoS classes" />
-</p>
+
+  <img src="./images/13.gif" width="50%" height="auto" alt="Kubernetes node affinity diagram comparing required and preferred scheduling rules" />
+
 
 ```yaml
 spec:
@@ -235,9 +235,8 @@ spec:
 > 👉 **Deep Dive Lesson:** [Taints & Tolerations](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55659898)
 
 
-<p align="center">
-  <img src="./images/14.gif" width="80%" height="auto" alt="Kubernetes horizontal pod autoscaler HPA scaling pods based on CPU and memory metrics" />
-</p>  
+
+  <img src="./images/14.gif" style="width:60%; aspect-ratio: 1080 / 760; object-fit: cover; object-position: top;" alt="Kubernetes taints and tolerations diagram showing pods scheduled only onto nodes with matching tolerations" />
 
 **Taints** on nodes prevent pods from scheduling there (unless they tolerate).
 
@@ -268,9 +267,9 @@ spec:
 > 👉 **Deep Dive Lesson:** [ConfigMaps](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55993034)
 
 
-<p align="center">
-  <img src="./images/15.gif" width="80%" height="auto" alt="Kubernetes liveness readiness and startup probe lifecycle diagram for pod health checks" />
-</p>  
+
+  <img src="./images/15.gif" width="60%" height="auto" alt="Kubernetes ConfigMap diagram showing externalized application configuration injected at runtime" />
+
 
 ### ConfigMap Usage Patterns
 
@@ -302,9 +301,9 @@ containers:
 > 👉 **Deep Dive Lesson:** [Secrets](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55993473)
 
 
-<p align="center">
-  <img src="./images/16.png" width="80%" height="auto" alt="Kubernetes pod disruption budget PDB diagram ensuring minimum available pods during maintenance" />
-</p>  
+
+  <img src="./images/16.png" width="50%" height="auto" alt="Kubernetes Secret manifest diagram showing stringData converted to base64 encoded data" />
+
 
 ### Secret Types
 
@@ -357,9 +356,9 @@ startupProbe:
 > 👉 **Deep Dive Lesson:** [Init Containers](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55993474)
 
 
-<p align="center">
-  <img src="./images/17.png" width="80%" height="auto" alt="Kubernetes init container execution order diagram showing sequential run-to-completion before app container" />
-</p>  
+
+  <img src="./images/17.png" width="50%" height="auto" alt="Kubernetes init container execution order diagram showing sequential run-to-completion before app container" />
+
 
 
 - Run to completion **before** main containers start
@@ -384,9 +383,10 @@ spec:
 > 👉 **Deep Dive Lesson:** [Static Pods](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55279551)
 
 
-<p align="center">
-  <img src="./images/18.gif" width="80%" height="auto" alt="Kubernetes taints and tolerations diagram showing NoSchedule, NoExecute, and PreferNoSchedule effects" />
-</p>  
+
+  <img src="./images/18.gif" width="50%" height="auto" alt="Kubernetes static pod diagram showing kubelet monitoring staticPodPath and creating mirror pods" />
+
+
 
 - Managed directly by `kubelet` on a node (not by the API server)
 - Manifests stored at `staticPodPath` in kubelet config (default: `/etc/kubernetes/manifests/`)
@@ -406,9 +406,10 @@ cat /var/lib/kubelet/config.yaml | grep staticPodPath
 > 👉 **Deep Dive Lesson:** [Pod Priority & Preemption](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/60175740)
 
 
-<p align="center">
-  <img src="./images/19.png" width="80%" height="auto" alt="Kubernetes node affinity and anti-affinity rules diagram with requiredDuringScheduling examples" />
-</p>  
+
+  <img src="./images/19.png" width="40%" height="auto" alt="Kubernetes pod priority and preemption diagram showing high priority pods preempting low priority pods" />
+
+
 
 ```yaml
 # 1. Create PriorityClass
@@ -434,9 +435,10 @@ Higher priority pods can **preempt** (evict) lower priority pods when resources 
 > 👉 **Deep Dive Lesson:** [Horizontal Pod Autoscaler](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/61061646)
 
 
-<p align="center">
-  <img src="./images/20.gif" width="80%" height="auto" alt="Kubernetes pod scheduling lifecycle diagram from API server to kubelet node placement" />
-</p>  
+
+  <img src="./images/20.gif" width="50%" height="auto" alt="Kubernetes HorizontalPodAutoscaler diagram showing metrics API queries and replica scaling" />
+
+
 
 ```bash
 kubectl autoscale deployment <name> \

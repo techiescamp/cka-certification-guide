@@ -945,14 +945,6 @@ k get events --sort-by='.lastTimestamp'
 
 <br>
 
-### Check Your Context — Every Single Question
-
-```bash
-kubectl config get-contexts
-kubectl config use-context <required-context>
-kubectl config set-context --current --namespace=<required-namespace>
-```
-
 ### Imperative Commands (save time)
 
 ```bash
@@ -987,8 +979,6 @@ k apply -f deploy.yaml
 
 ### Last-Minute Checklist
 
-- [ ] Practice switching contexts: `kubectl config use-context`
-- [ ] Know how to drain/uncordon a node
 - [ ] Review NetworkPolicy YAML syntax
 - [ ] Review PV/PVC creation and binding
 - [ ] Practice RBAC resources imperatively

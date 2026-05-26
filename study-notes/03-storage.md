@@ -30,18 +30,16 @@ A: `ReadWriteOnce (RWO)` — mounted read-write by a single node. `ReadOnlyMany 
 
 ## Storage Hierarchy
 
-  <img src="./images/21.png" width="30%" height="auto" alt="Kubernetes storage hierarchy diagram with StorageClass, PersistentVolume, and PersistentVolumeClaim" />
+  <img src="./images/21.png" width="50%" height="auto" alt="Kubernetes storage hierarchy diagram with StorageClass, PersistentVolume, and PersistentVolumeClaim" />
 
- <img width="300" alt="21" src="https://github.com/user-attachments/assets/3f016ac0-337b-4bb6-8518-2cf7b006d48a" />
-
+ 
 ## Kubernetes Volumes
 
 > 👉 **Deep Dive Lesson:** [Kubernetes Volumes](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55791431)
 
 
-<p align="center">
-  <img src="./images/22.gif" width="80%" height="auto" alt="Kubernetes volume types diagram showing emptyDir, hostPath, configMap, and PVC mounts in pods" />
-</p>
+  <img src="./images/22.gif" width="50%" height="auto" alt="Kubernetes volume types diagram showing emptyDir, hostPath, configMap, and PVC mounts in pods" />
+
 
 ### Volume Types
 
@@ -88,9 +86,7 @@ volumes:
 
 > 👉 **Deep Dive Lesson:** [Persistent Volumes](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55792087)
 
-<p align="center">
-  <img src="./images/23.gif" width="80%" height="auto" alt="Kubernetes PersistentVolume and PersistentVolumeClaim binding lifecycle from available to bound to released" />
-</p>
+  <img src="./images/23.gif" width="50%" height="auto" alt="Kubernetes PersistentVolume and PersistentVolumeClaim binding lifecycle from available to bound to released" />
 
 ### Access Modes
 
@@ -144,9 +140,7 @@ spec:
 
 > 👉 **Deep Dive Lesson:** [Persistent Volumes Claims](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55792087)
 
-<p align="center">
-  <img src="./images/24.gif" width="80%" height="auto" alt="Kubernetes storage access modes diagram comparing ReadWriteOnce, ReadOnlyMany, and ReadWriteMany" />
-</p>
+  <img src="./images/24.gif" width="50%" height="auto" alt="Kubernetes storage access modes diagram comparing ReadWriteOnce, ReadOnlyMany, and ReadWriteMany" />
 
 - PVC is a **request** for storage
 - Kubernetes binds a PVC to a PV that satisfies all requirements
@@ -183,9 +177,7 @@ spec:
 
 > 👉 **Deep Dive Lesson:** [Storage Classes](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55786335)
 
-<p align="center">
-  <img src="./images/25.gif" width="80%" height="auto" alt="Kubernetes PersistentVolume reclaim policy diagram showing Retain, Delete, and Recycle behaviors" />
-</p>
+  <img src="./images/25.gif" width="50%" height="auto" alt="Kubernetes PersistentVolume reclaim policy diagram showing Retain, Delete, and Recycle behaviors" />
 
 StorageClasses enable **dynamic provisioning** — PVs are automatically created when a PVC is created.
 

@@ -31,9 +31,9 @@ A: Check exit code with `kubectl describe pod <name>` -> look for "Exit Code". T
 
 ## Troubleshooting Methodology
 
-<p align="center">
-  <img src="./images/32.png" width="80%" height="auto" alt="Kubernetes troubleshooting methodology flowchart with kubectl get, describe, logs, and journalctl steps" />
-</p>
+
+  <img src="./images/32.png" width="55%" height="auto" alt="Kubernetes troubleshooting methodology flowchart with kubectl get, describe, logs, and journalctl steps" />
+
 
 ---
 

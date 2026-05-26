@@ -2,17 +2,12 @@
 
 > Practical advice for passing the Certified Kubernetes Administrator exam (Kubernetes v1.35) on your first attempt.
 
-**Q: What is the most important thing to do before every CKA exam question?**
-
-A: Check your cluster context and namespace. Run `kubectl config use-context <ctx>` and `kubectl config set-context --current --namespace=<ns>`. Wrong context is the #1 reason candidates lose points on correct work.
-
 ## Step-by-Step Exam Approach
-
-1. **Read the full question**: before typing anything note the namespace, cluster context, and resource names   
-2. **Use imperative commands first**: faster than writing YAML from scratch
-3. **Dry-run to YAML if complex**: `kubectl create ... --dry-run=client -o yaml > file.yaml`
-4. **Verify your work**: `kubectl get` / `kubectl describe` after every task
-5. **Flag and skip**: if stuck after 3 minutes - return in the second pass
+  
+1. **Use imperative commands first**: faster than writing YAML from scratch
+2. **Dry-run to YAML if complex**: `kubectl create ... --dry-run=client -o yaml > file.yaml`
+3. **Verify your work**: `kubectl get` / `kubectl describe` after every task
+4. **Flag and skip**: if stuck after 3 minutes  return in the second pass
 
 ---
 
@@ -34,11 +29,11 @@ For the 3-pass strategy and domain time allocation table, see: 📅 **[Exam Day 
 
 ### Time Signals
 
-- If you've spent **more than 7 minutes** on a question → flag it and move on
-- If a question is worth **1–2%** of the exam → don't spend more than 3 minutes
-- If a question is worth **7–10%** → it deserves 10–15 minutes
+- If you've spent **more than 7 minutes** on a question flag it and move on
+- If a question is worth **1–2%** of the exam  don't spend more than 3 minutes
+- If a question is worth **7–10%** it deserves 10–15 minutes
 
-Cluster upgrade tasks are time-consuming — budget 12–15 min and do them only when confident.
+Cluster upgrade tasks are time-consuming and budget 12–15 min and do them only when confident.
 
 ---
 
