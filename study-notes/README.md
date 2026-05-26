@@ -14,11 +14,11 @@ A: Start with Troubleshooting (30% weight). It's the highest-impact domain and m
 
 | File | Domain | Weight |
 |------|---------|--------|
-| [01 — Cluster Architecture](./01-cluster-architecture.md) | Cluster Architecture, Installation & Configuration | **25%** |
-| [02 — Workloads & Scheduling](./02-workloads-scheduling.md) | Workloads & Scheduling | **15%** |
-| [03 — Storage](./03-storage.md) | Storage | **10%** |
-| [04 — Services & Networking](./04-services-networking.md) | Services & Networking | **20%** |
-| [05 — Troubleshooting](./05-troubleshooting.md) | Troubleshooting | **30%** |
+| [01 Cluster Architecture](./01-cluster-architecture.md) | Cluster Architecture, Installation & Configuration | **25%** |
+| [02 Workloads & Scheduling](./02-workloads-scheduling.md) | Workloads & Scheduling | **15%** |
+| [03 Storage](./03-storage.md) | Storage | **10%** |
+| [04 Services & Networking](./04-services-networking.md) | Services & Networking | **20%** |
+| [05 Troubleshooting](./05-troubleshooting.md) | Troubleshooting | **30%** |
 
 > **Highest-impact domain: Troubleshooting (30%).** If you are short on time, study Domain 5 and Domain 1 first.
 
@@ -35,7 +35,7 @@ Build the full mental model here before diving into each section.
 Every `kubectl` command flows through the **API Server** at the heart of the Control Plane. The Scheduler places workloads, the Controller Manager keeps them healthy, and `etcd` holds the cluster's source of truth. Worker Nodes run your containers via `kubelet` and expose network rules via `kube-proxy`.
 
 <p align="center">
-  <img src="./images/01.gif" width="60%" height="auto" alt="Kubernetes cluster architecture diagram with control plane, API server, etcd, and worker nodes" />
+  <img src="./images/01.gif" width="50%" height="auto" alt="Kubernetes cluster architecture diagram with control plane, API server, etcd, and worker nodes" />
   <br />
   <em>Control Plane components (API Server, etcd, Scheduler, Controller Manager) talk to Worker Nodes over mTLS</em>
 </p>
@@ -59,7 +59,7 @@ Before any API request is processed, Kubernetes answers two questions: **Who are
 After `kubeadm init`, the control plane lives in `/etc/kubernetes/`. Knowing this layout is essential for upgrades, certificate rotation, and debugging static pod failures.
 
 <p align="center">
-  <img src="./images/3.png" width="50%" height="auto" alt="Kubernetes control plane configuration, static pod manifests, and PKI certificate directory structure" />
+  <img src="./images/3.png" width="40%" height="auto" alt="Kubernetes control plane configuration, static pod manifests, and PKI certificate directory structure" />
   <br />
   <em>Kubeconfig files for each component, static pod manifests in <code>manifests/</code>, and all certificates under <code>pki/</code></em>
 </p>
@@ -71,7 +71,7 @@ After `kubeadm init`, the control plane lives in `/etc/kubernetes/`. Knowing thi
 Kubernetes delegates container execution, networking, and storage to pluggable interfaces. Swapping a CNI plugin (e.g. Flannel → Calico) never requires changes to `kubelet` — the interface contract stays the same.
 
 <p align="center">
-  <img src="./images/04.png" width="60%" height="auto" alt="Kubernetes CRI vs CNI vs CSI architecture diagram for container runtime, networking, and storage" />
+  <img src="./images/04.png" width="50%" height="auto" alt="Kubernetes CRI vs CNI vs CSI architecture diagram for container runtime, networking, and storage" />
   <br />
   <em>CRI lets kubelet talk to any container runtime; CNI gives each Pod network connectivity; CSI mounts persistent storage from any provider</em>
 </p>
@@ -83,7 +83,7 @@ Kubernetes delegates container execution, networking, and storage to pluggable i
 A Deployment manages a ReplicaSet, which manages Pods. Labels and selectors are the glue. The Deployment adds a `pod-template-hash` label to uniquely identify each ReplicaSet's Pods — this is why rolling updates can run two ReplicaSets in parallel during a transition.
 
 <p align="center">
-  <img src="./images/08.png" width="60%" height="auto" alt="Kubernetes deployment to replicaset to pod label selector hierarchy diagram" />
+  <img src="./images/08.png" width="50%" height="auto" alt="Kubernetes deployment to replicaset to pod label selector hierarchy diagram" />
   <br />
   <em>Deployment manages ReplicaSet via label selectors; ReplicaSet manages Pods via the same labels plus a unique <code>pod-template-hash</code></em>
 </p>
