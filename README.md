@@ -12,7 +12,7 @@ This is a detailed study guide with tips and practical examples to ace the Certi
 ## Hit the Star! :star:
 If you are planning to use this repo for reference, please hit the star. Thanks!
 
-## CKA Exam Coupon (Exclusive 65% Discount)
+## CKA Exam Coupon (65% Discount - Ends in Few Hours)
 
 To save on CKA exam registration, use the following coupon code.
 > [!IMPORTANT]
