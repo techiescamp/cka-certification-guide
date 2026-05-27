@@ -38,9 +38,8 @@ A: `<service-name>.<namespace>.svc.cluster.local`. From within the same namespac
 
 ### Network Flow
 
-<p align="center">
-  <img src="./images/26.png" width="80%" height="auto" alt="Kubernetes service types diagram showing ClusterIP, NodePort, and LoadBalancer traffic flow" />
-</p>
+
+  <img src="./images/26.png" width="60%" height="auto" alt="Kubernetes ingress to service to pod request flow through kube-proxy and ClusterIP" />
 
 
 ---
@@ -114,7 +113,7 @@ kubectl get endpoints <svc-name>
 
 ---
 
-### DNS in Kubernetes
+## DNS in Kubernetes
 
 CoreDNS provides DNS resolution. All services and pods get DNS entries.
 
@@ -158,9 +157,8 @@ kubectl run dns-test --image=busybox --rm -it -- \
 
 By default, all pods can communicate with all other pods. Network Policies restrict this.
 
-<p align="center">
-  <img src="./images/27.gif" width="80%" height="auto" alt="Kubernetes pod-to-pod networking diagram with CNI plugin and cluster IP routing" />
-</p>
+
+  <img src="./images/27.gif" style="width:50%; aspect-ratio: 1080 / 760; object-fit: cover; object-position: top;" alt="Kubernetes NetworkPolicy diagram showing pod traffic controlled by CNI virtual firewall rules" />
 
 
 ### Key Concepts
@@ -257,9 +255,9 @@ from:
 > 👉 **Deep Dive Lesson:** [Ingress](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/56659356)
 
 
-<p align="center">
-  <img src="./images/28.gif" width="80%" height="auto" alt="Kubernetes NetworkPolicy diagram showing ingress and egress rules with pod and namespace selectors" />
-</p>
+
+  <img src="./images/28.gif" width="50%" height="auto" alt="Kubernetes Ingress diagram showing DNS names routed through an external load balancer and nginx ingress controller" />
+
 
 Ingress manages external HTTP/HTTPS access to services.
 
@@ -326,9 +324,9 @@ spec:
 
 > 👉 **Deep Dive Lesson:** [Gateway API](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/61100920)
 
-<p align="center">
-  <img src="./images/30.png" width="80%" height="auto" alt="Kubernetes Gateway API architecture diagram with GatewayClass, Gateway, and HTTPRoute resources" />
-</p>
+
+  <img src="./images/30.png" width="50%" height="auto" alt="Kubernetes Gateway API architecture diagram with GatewayClass, Gateway, and HTTPRoute resources" />
+
 
 Gateway API is the successor to Ingress, with more features and better extensibility.
 
@@ -377,7 +375,7 @@ spec:
 
 ---
 
-### CoreDNS Configuration
+## CoreDNS Configuration
 
 > 👉 **Deep Dive Lesson:** [CoreDNS](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55120286)
 
@@ -414,9 +412,8 @@ kubectl get configmap coredns -n kube-system -o yaml
 
 > 👉 **Deep Dive Lesson:** [kube-proxy Modes](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/58129596)
 
-<p align="center">
-  <img src="./images/31.png" width="80%" height="auto" alt="Kubernetes kube-proxy modes diagram comparing iptables and IPVS for service routing" />
-</p>
+
+  <img src="./images/31.png" width="40%" height="auto" alt="Kubernetes kube-proxy service routing diagram showing ClusterIP, NodePort, endpoints, and iptables/IPVS" />
 
 
 | Mode | How it Works |

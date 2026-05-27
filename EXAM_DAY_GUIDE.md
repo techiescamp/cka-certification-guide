@@ -21,7 +21,7 @@ A: Use `Ctrl+Alt+W` to close tabs (NOT `Ctrl+W` — that kills your terminal). C
 | Item | Detail |
 |------|--------|
 | **Duration** | 2 hours |
-| **Tasks** | 15–20 performance-based |
+| **Tasks** | 15–20 performance based |
 | **Passing Score** | 66% |
 | **Kubernetes Version** | v1.35 |
 | **Results** | Emailed within 24 hours |
