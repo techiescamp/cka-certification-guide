@@ -16,9 +16,9 @@ If you are planning to use this repo for reference, please hit the star. Thanks!
 
 To save flat 35% on CKA exam registration, use the following coupon code.
 > [!IMPORTANT]
-> **Coupon:** Use code **JULY26CCCT** at [kube.promo/cka](https://kube.promo/cka)
+> **Coupon:** Use code **SUMMER26CT** at [kube.promo/cka](https://kube.promo/cka)
 
-Use code **JULY26BUNCT** to save upto 45% on the following bundles:
+Use code **SUMMER26CT** to save upto 48% on the following bundles:
 
 - CKA + CKAD ($370+ Savings): [kube.promo/cka-ckad](https://kube.promo/cka-ckad)
 - CKA + CKS Bundle ($370+ Savings): [kube.promo/bundle](https://kube.promo/bundle)
