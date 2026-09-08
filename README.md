@@ -28,6 +28,9 @@ Use code **AUG26F40** to save up to 48% on the following bundles:
 
 ## 📚 CKA Exam Detailed Study Guide
 
+> [!NOTE]
+>Note: If you are looking for a structured course to learn Kubernetes and prepare for the CKA exam, check out the [Complete Kubernetes and CKA course](https://courses.devopscube.com/p/certified-kubernetes-administrator-course). Use code **DCUBE30** to get a 30% discount.
+
 <details>
 <summary><strong>Syllabus and Study Notes</strong></summary>
 
