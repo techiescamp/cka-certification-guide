@@ -61,7 +61,7 @@ Use code **DCUBE30** to save up to 40% on the following bundles:
 |---|-------|
 | 1 | 🔐 [Manage role-based access control (RBAC)](#manage-role-based-access-control-rbac) |
 | 2 | 🖥️ [Prepare underlying infrastructure for installing a Kubernetes cluster](#prepare-underlying-infrastructure-for-installing-a-kubernetes-cluster) |
-| 3 | ⚙️ [Create and manage Kubernetes clusters using kubeadm](#create-and-manage-kubernetes-clusters-using-kubeadm) |
+| 3 | ⚙️ [Create and manage Kubernetes clusters using kubeadm](#multi-part-kubeadm-cluster-initialization) |
 | 4 | 🔄 [Manage the lifecycle of Kubernetes clusters](#manage-the-lifecycle-of-kubernetes-clusters) |
 | 5 | 📦 [Use Helm and Kustomize to install cluster components](#use-helm-and-kustomize-to-install-cluster-components) |
 | 6 | 🔌 [Understand extension interfaces (CNI, CSI, CRI, etc.)](#understand-extension-interfaces-cni-csi-cri-etc) |
