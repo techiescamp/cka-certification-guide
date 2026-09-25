@@ -5,8 +5,8 @@ metadata:
 type: Opaque
 stringData:
   POSTGRES_USER: postgres
-  POSTGRES_PASSWORD: postgres123
-  POSTGRES_DB: hellodb
+  POSTGRES_PASSWORD: [PASSWORD]
+  POSTGRES_DB: staffdb
 ---
 apiVersion: v1
 kind: Service

@@ -3,10 +3,10 @@ server:
 
 spring:
   application:
-    name: hello-spring
+    name: staff-registry
 
   datasource:
-    url: ${DB_URL:jdbc:postgresql://localhost:5432/hellodb}
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/staffdb}
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:postgres123}
     driver-class-name: org.postgresql.Driver
@@ -21,7 +21,6 @@ spring:
     init:
       mode: never
 
-# Actuator configuration for Kubernetes probes
 management:
   endpoints:
     web:
@@ -48,5 +47,5 @@ management:
 
 logging:
   level:
-    com.example.hello: INFO
+    com.example.staffregistry: INFO
     com.zaxxer.hikari: WARN

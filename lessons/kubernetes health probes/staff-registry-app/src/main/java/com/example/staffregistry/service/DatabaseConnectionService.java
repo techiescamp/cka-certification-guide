@@ -1,20 +1,26 @@
-package com.example.hello.service;
+package com.example.staffregistry.service;
 
+import com.example.staffregistry.model.ConnectionLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class DatabaseConnectionService {
 
     private static final Logger logger = LoggerFactory.getLogger(DatabaseConnectionService.class);
+    private static final DateTimeFormatter FMT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private final DataSource dataSource;
     private volatile boolean databaseConnected = false;
@@ -29,31 +35,58 @@ public class DatabaseConnectionService {
         tryConnectAndLog();
     }
 
+    // initialDelay prevents double-fire with onApplicationReady
+    @Scheduled(fixedDelay = 5000, initialDelay = 10000)
+    public void refreshDatabaseStatus() {
+        if (!databaseConnected) {
+            tryConnectAndLog();
+        } else {
+            try (Connection conn = dataSource.getConnection()) {
+                // connection ok
+            } catch (Exception e) {
+                databaseConnected = false;
+                logger.warn("Lost database connection: {}", e.getMessage());
+            }
+        }
+    }
+
     public void tryConnectAndLog() {
         try (Connection conn = dataSource.getConnection()) {
-            // Create table if not exists
             createTableIfNotExists(conn);
-            
-            // Count existing rows
-            long existingCount = countRows(conn);
-            
-            // Determine message
-            String message;
-            if (existingCount == 0) {
-                message = "application connected";
-            } else {
-                message = "restarted " + existingCount;
-            }
 
-            // Insert new row
+            long existingCount = countRows(conn);
+            String message = existingCount == 0 ? "application connected" : "restarted " + existingCount;
+
             insertLog(conn, message);
-            
+
             databaseConnected = true;
             logger.info("Database connection logged: {}", message);
 
         } catch (Exception e) {
             databaseConnected = false;
             logger.warn("Database not available: {}. Application continues without DB.", e.getMessage());
+        }
+    }
+
+    public List<ConnectionLog> getConnectionLogs() {
+        if (!databaseConnected) return List.of();
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "SELECT id, message, timestamp FROM connection_log ORDER BY id DESC LIMIT 20";
+            try (Statement stmt = conn.createStatement();
+                 ResultSet rs = stmt.executeQuery(sql)) {
+                List<ConnectionLog> logs = new ArrayList<>();
+                while (rs.next()) {
+                    logs.add(new ConnectionLog(
+                        rs.getLong("id"),
+                        rs.getString("message"),
+                        rs.getTimestamp("timestamp").toLocalDateTime().format(FMT)
+                    ));
+                }
+                return logs;
+            }
+        } catch (Exception e) {
+            logger.warn("Failed to fetch connection logs: {}", e.getMessage());
+            return List.of();
         }
     }
 
@@ -71,13 +104,9 @@ public class DatabaseConnectionService {
     }
 
     private long countRows(Connection conn) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM connection_log";
         try (Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-            if (rs.next()) {
-                return rs.getLong(1);
-            }
-            return 0;
+             ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM connection_log")) {
+            return rs.next() ? rs.getLong(1) : 0;
         }
     }
 

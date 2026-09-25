@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-app-config
+  labels:
+    {{- include "staff-registry.labels" . | nindent 4 }}
+data:
+  DB_URL: "jdbc:postgresql://{{ include "staff-registry.postgresServiceName" . }}:{{ .Values.postgres.port }}/{{ .Values.postgres.database }}"
+  DB_USERNAME: {{ .Values.postgres.username | quote }}

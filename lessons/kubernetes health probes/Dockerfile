@@ -1,8 +1,8 @@
 # Build stage
-FROM eclipse-temurin:21-jdk-alpine AS build
+FROM eclipse-temurin:25-jdk-alpine AS build
 WORKDIR /app
-COPY pom.xml .
-COPY src ./src
+COPY staff-registry-app/pom.xml .
+COPY staff-registry-app/src ./src
 
 # Install Maven
 RUN apk add --no-cache maven
@@ -11,7 +11,7 @@ RUN apk add --no-cache maven
 RUN mvn clean package -DskipTests
 
 # Runtime stage
-FROM eclipse-temurin:21-jre-alpine
+FROM eclipse-temurin:25-jre-alpine
 WORKDIR /app
 
 # Copy the built artifact

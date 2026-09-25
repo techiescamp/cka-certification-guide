@@ -1,0 +1,12 @@
+apiVersion: v2
+name: staff-registry
+description: Staff Registry, an employee directory with Spring Boot and PostgreSQL
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+keywords:
+  - spring-boot
+  - postgresql
+  - employee-directory
+maintainers:
+  - name: catninjauser

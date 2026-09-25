@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "staff-registry.postgresServiceName" . }}
+  labels:
+    {{- include "staff-registry.labels" . | nindent 4 }}
+spec:
+  selector:
+    app: {{ include "staff-registry.postgresName" . }}
+  ports:
+    - port: {{ .Values.postgres.port }}
+      targetPort: {{ .Values.postgres.port }}
+  clusterIP: None  # Headless for StatefulSet DNS
