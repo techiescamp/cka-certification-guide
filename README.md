@@ -132,14 +132,14 @@ Use code **OCTPRIME26BCT** to save up to 55% on the following bundles:
 Following are the subtopics under Cluster Architecture, Installation & Configuration
 
 ### Prepare underlying infrastructure for installing a Kubernetes cluster.
-> [Setup Virtual Machines](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/60080222) : Ensure that each virtual machine (VM) meets the minimum system requirements for setting up a Kubernetes cluster.
+> [Setup Virtual Machines](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/60080222) : Ensure that each virtual machine (VM) meets the minimum system requirements for setting up a Kubernetes cluster.
 
-> [Kubeadm Cluster Prerequisites](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/60080223) : Ensure that all VMs can communicate with each other, as Kubernetes requires all nodes to have unrestricted communication for pod-to-pod networking.
+> [Kubeadm Cluster Prerequisites](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/60080223) : Ensure that all VMs can communicate with each other, as Kubernetes requires all nodes to have unrestricted communication for pod-to-pod networking.
 
-> [Provision underlying infrastructure to deploy a Kubernetes cluster](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/60080224) : Tools like VirtualBox, VMware, or KVM can be used to set up virtual machines locally and for cloud environments, consider providers like AWS, GCP, or Azure for flexibility and scalability.
+> [Provision underlying infrastructure to deploy a Kubernetes cluster](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/60080224) : Tools like VirtualBox, VMware, or KVM can be used to set up virtual machines locally and for cloud environments, consider providers like AWS, GCP, or Azure for flexibility and scalability.
 
 ### Multi Part Kubeadm Cluster Initialization
-> [Kubeadm Cluster Bootstrap](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/60080225) : Initialize a Kubernetes cluster using a multi-part kubeadm configuration file, customizing the Kubelet, Kube Proxy, and Scheduler settings.
+> [Kubeadm Cluster Bootstrap](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/60080225) : Initialize a Kubernetes cluster using a multi-part kubeadm configuration file, customizing the Kubelet, Kube Proxy, and Scheduler settings.
 
 ```yaml
 # Edit the config file (Sample Configuration)
@@ -215,7 +215,7 @@ kubeadm join ....
 ```
 
 ### Manage the lifecycle of Kubernetes clusters.
-> [Perform Cluster Version upgrade Using Kubeadm](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55120133) : Managing the lifecycle involves upgrading clusters, managing control plane nodes, and ensuring consistency across versions.
+> [Perform Cluster Version upgrade Using Kubeadm](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55120133) : Managing the lifecycle involves upgrading clusters, managing control plane nodes, and ensuring consistency across versions.
 
 ### Understand extension interfaces (CNI, CSI, CRI, etc.).
 > Container Runtime Interface (CRI) : Kubernetes uses the CRI to communicate with container runtimes.
@@ -234,7 +234,7 @@ crictl inspect <container-id>
 crictl logs <container-id>
 ```
 
-> [Network Plugin](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/60189043) : Kubernetes uses network plugins (CNI) to manage pod networking, get a good understanding of popular plugins like Calico, Flannel, and Weave Net, and understand the role of CNIs in providing network connectivity, security policies, and IPAM.
+> [Network Plugin](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/60189043) : Kubernetes uses network plugins (CNI) to manage pod networking, get a good understanding of popular plugins like Calico, Flannel, and Weave Net, and understand the role of CNIs in providing network connectivity, security policies, and IPAM.
 
 ```bash
 # List installed CNI plugins
@@ -287,7 +287,7 @@ k get csidrivers
 ```
 
 ### Manage role based access control (RBAC).
-> [RBAC](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55733398) | [Service Accounts](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55724447) | [Roles & ClusterRoles](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55997133) : Understand the difference between Roles (namespace level) and ClusterRoles (cluster level).
+> [RBAC](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55733398) | [Service Accounts](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55724447) | [Roles & ClusterRoles](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55997133) : Understand the difference between Roles (namespace level) and ClusterRoles (cluster level).
 
 ```bash
 # Create a service account
@@ -365,7 +365,7 @@ k delete <resource-name> <name>
 Following are the subtopics under Workloads & Scheduling
 
 ### Configure Pod admission and scheduling (limits, node affinity, etc.).
-> [Pods](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55219547) : Always remember that a Pod may contain one or more containers, and they share storage/network resources, making communication between containers in the same Pod fast and efficient.
+> [Pods](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55219547) : Always remember that a Pod may contain one or more containers, and they share storage/network resources, making communication between containers in the same Pod fast and efficient.
 
 ```bash
 # Create a Pod
@@ -389,14 +389,14 @@ resources:
     cpu: "500m"
 ```
 
-> [Static Pods](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55279551) : To create a static pod, place the manifest in /etc/kubernetes/manifests on the desired node.
+> [Static Pods](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55279551) : To create a static pod, place the manifest in /etc/kubernetes/manifests on the desired node.
 
 ```bash
 # Static pod manifest path
 /etc/kubernetes/manifests
 ```
 
-> [Labels and Selectors](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55658123) : When using selectors, you can filter Kubernetes resources by these labels to perform operations like scaling or applying configuration changes.
+> [Labels and Selectors](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55658123) : When using selectors, you can filter Kubernetes resources by these labels to perform operations like scaling or applying configuration changes.
 
 ```bash
 # Add a label to a pod
@@ -412,7 +412,7 @@ k get po --selector <label-key>=<label-value>
 k label po <pod-name> <label-key>-
 ```
 
-> [Taints and Tolerations](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55659898) : Use taints on critical nodes like control plane nodes to prevent general-purpose workloads from being scheduled on them.
+> [Taints and Tolerations](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55659898) : Use taints on critical nodes like control plane nodes to prevent general-purpose workloads from being scheduled on them.
 
 ```bash
 # Check taints on nodes
@@ -437,7 +437,7 @@ tolerations:
 k taint no <node-name> <key>=<value>-
 ```
 
-> [Node Name & Node Selector](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55686799) : Node Selectors are used to schedule pods onto specific nodes by using labels on the nodes.
+> [Node Name & Node Selector](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55686799) : Node Selectors are used to schedule pods onto specific nodes by using labels on the nodes.
 
 ```bash
 # Label a node
@@ -453,7 +453,7 @@ nodeSelector:
   <label-key>: <label-value>
 ```
 
-> [Node Affinity](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55687979) : Use node affinity to control the placement of your pods, ensuring that workloads are distributed efficiently across nodes as per their requirements.
+> [Node Affinity](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55687979) : Use node affinity to control the placement of your pods, ensuring that workloads are distributed efficiently across nodes as per their requirements.
 
 ```yaml
 # Example Node affinity
@@ -469,7 +469,7 @@ affinity:
 ```
 
 ### Using Init Containers in Pods
-> [Init Containers](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55299962) : Use init containers to prepare the Pod before the main container runs.
+> [Init Containers](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55299962) : Use init containers to prepare the Pod before the main container runs.
 
 ```yaml
 # Add init container section under the `spec` section.
@@ -485,7 +485,7 @@ initContainers:
 ```
 
 ### Understand deployments and how to perform rolling update and rollbacks.
-> [Deployments](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55402667) : Understand rolling updates and rollbacks. Use `kubectl rollout history` to inspect revision history.
+> [Deployments](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55402667) : Understand rolling updates and rollbacks. Use `kubectl rollout history` to inspect revision history.
 
 ```bash
 # Create deployment with 3 replicas
@@ -522,7 +522,7 @@ k rollout restart deploy <deployment-name>
 ### Understand the primitives used to create robust, self-healing, application deployments.
 > Configure Pod Priorities using Priority Class to ensure mission critical applications are available and handled during resource crunch.
 
-**Detailed Lesson:** [Pod Priority & Priority Class](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/60175740)
+**Detailed Lesson:** [Pod Priority & Priority Class](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/60175740)
 
 Here is how you can create and apply Pod Priorities to a Deployment.
 
@@ -588,7 +588,7 @@ readinessProbe:
 ```
 
 ### Use ConfigMaps and Secrets to configure applications.
-> [ConfigMaps](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55993034) : Use ConfigMaps to separate environment-specific configurations from the container image.
+> [ConfigMaps](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55993034) : Use ConfigMaps to separate environment-specific configurations from the container image.
 
 ```bash
 # Create configmap
@@ -607,7 +607,7 @@ k create cm <configmap-name> --from-file=<file-name>
 k create cm <configmap-name> --from-literal=<key>=<value> --immutable
 ```
 
-> [Secrets](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55993473) : Remember that Secrets are base64-encoded and not encrypted and they are for storing sensitive data.
+> [Secrets](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55993473) : Remember that Secrets are base64-encoded and not encrypted and they are for storing sensitive data.
 
 ```bash
 # Create generic secret from literal values
@@ -618,7 +618,7 @@ k create secret tls <secret-name> --cert=tls.crt --key=tls.key
 ```
 
 ### Configure workload autoscaling.
-> [Autoscaling Workloads](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/58713870) : Practice setting up Horizontal Pod Autoscaler (HPA).
+> [Autoscaling Workloads](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/58713870) : Practice setting up Horizontal Pod Autoscaler (HPA).
 
 ```bash
 # Using autoscaling (--cpu-percent is required for HPA to function)
@@ -634,7 +634,7 @@ k autoscale deploy <deployment-name> --min=2 --max=5 --cpu-percent=80
 Following are the subtopics under Storage
 
 ### Implement storage classes and dynamic volume provisioning.
-> [Storage Classes](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55786335) : Understand the difference between default storage class and other classes.
+> [Storage Classes](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55786335) : Understand the difference between default storage class and other classes.
 
 ```yaml
 # Example storage class manifest file
@@ -659,9 +659,9 @@ k describe sc <storageclass-name>
 
 ### Configure volume types, access modes and reclaim policies.
 
-> [Volumes](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55791431) : Understand which type of persistent storage is supported (like AWS EBS, GCE Persistent Disks) and practice using them.
+> [Volumes](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55791431) : Understand which type of persistent storage is supported (like AWS EBS, GCE Persistent Disks) and practice using them.
 
-> [Persistent Volumes](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55792087) : Remember the different reclaim policies: Retain, Delete, and Recycle. Understand access modes like ReadWriteOnce, ReadOnlyMany.
+> [Persistent Volumes](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55792087) : Remember the different reclaim policies: Retain, Delete, and Recycle. Understand access modes like ReadWriteOnce, ReadOnlyMany.
 
 ```yaml
 # Create a Persistent Volume
@@ -699,7 +699,7 @@ k delete pvc <persistentvolumeclaim-name>
 ```
 
 ### Manage persistent volumes and persistent volume claims.
-> [Configure a Pod to Use a PersistentVolume for Storage](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55792290) : Practice creating a pod with persistent storage defined in a YAML manifest. Ensure familiarity with both bindings and mounting.
+> [Configure a Pod to Use a PersistentVolume for Storage](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55792290) : Practice creating a pod with persistent storage defined in a YAML manifest. Ensure familiarity with both bindings and mounting.
 
 ```yaml
 # Example volume bindings and mounting (correct indentation)
@@ -719,7 +719,7 @@ volumes:
 Following are the subtopics under Services & Networking
 
 ### Understand connectivity between Pods.
-> [Cluster Configurations](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55120218) : Use kubectl exec to test network connectivity between pods.
+> [Cluster Configurations](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55120218) : Use kubectl exec to test network connectivity between pods.
 
 ```bash
 # Execute shell in a pod
@@ -739,7 +739,7 @@ k exec <pod-name> -- ifconfig
 ```
 
 ### Define and enforce Network Policies.
-> [Network Policies](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/57421520) : Practice setting up network policies to restrict traffic flow between pods.
+> [Network Policies](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/57421520) : Practice setting up network policies to restrict traffic flow between pods.
 
 ```yaml
 # Create a Network Policy
@@ -762,7 +762,7 @@ k describe netpol <policy-name>
 ```
 
 ### Use ClusterIP, NodePort, LoadBalancer service types and endpoints.
-> [Service](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55809546) : Practice exposing deployments using all types of services: ClusterIP, NodePort, and LoadBalancer.
+> [Service](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55809546) : Practice exposing deployments using all types of services: ClusterIP, NodePort, and LoadBalancer.
 
 ```bash
 # Expose deployment as a service
@@ -776,7 +776,7 @@ k get ep
 ```
 
 ### Use the Gateway API to manage Ingress traffic.
-> [Gateway API](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/61100920) : The Gateway API provides more flexibility and extensibility compared to traditional Ingress. Use it when you need advanced traffic routing, such as assigning multiple gateways with different capabilities to different services.
+> [Gateway API](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/61100920) : The Gateway API provides more flexibility and extensibility compared to traditional Ingress. Use it when you need advanced traffic routing, such as assigning multiple gateways with different capabilities to different services.
 
 ```yaml
 # Create a Gateway
@@ -819,7 +819,7 @@ spec:
 ```
 
 ### Know how to use Ingress controllers and Ingress resources.
-> [Ingress](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/56659356) : Practice creating Ingress resources with different rules to route traffic to services based on hostnames and paths. You can also define multiple services under a single Ingress resource by utilizing both path-based and host-based rules.
+> [Ingress](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/56659356) : Practice creating Ingress resources with different rules to route traffic to services based on hostnames and paths. You can also define multiple services under a single Ingress resource by utilizing both path-based and host-based rules.
 
 ```yaml
 # Example manifest file to create ingress object
@@ -852,7 +852,7 @@ k describe ing <ingress-name>
 ```
 
 ### Understand and use CoreDNS.
-> [CoreDNS](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55120286) : CoreDNS is used for service discovery within the Kubernetes cluster. Familiarize yourself with modifying the Corefile configuration to add custom DNS behaviors like forwarding queries for specific domains outside the cluster.
+> [CoreDNS](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55120286) : CoreDNS is used for service discovery within the Kubernetes cluster. Familiarize yourself with modifying the Corefile configuration to add custom DNS behaviors like forwarding queries for specific domains outside the cluster.
 
 ```bash
 # Get CoreDNS ConfigMap in the kube-system namespace
@@ -893,7 +893,7 @@ kubectl get pods -n kube-system -l tier=control-plane
 ```
 
 ### Monitor cluster and application resource usage.
-> [Metrics Server](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/60080228) : Use kubectl top to monitor resource utilization.
+> [Metrics Server](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/60080228) : Use kubectl top to monitor resource utilization.
 
 ```bash
 # Get node CPU and memory usage
@@ -924,7 +924,7 @@ k logs <pod-name> -f
 ```
 
 ### Troubleshoot services and networking.
-> [Debugging a ReplicaSet](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55300118) | [Debug a Deployment](https://techiescamp.com/courses/certified-kubernetes-administrator-course/lectures/55403687) : Practice using the describe and logs commands to inspect failed services or pods.
+> [Debugging a ReplicaSet](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55300118) | [Debug a Deployment](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55403687) : Practice using the describe and logs commands to inspect failed services or pods.
 
 ```bash
 # Describe a pod
