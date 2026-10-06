@@ -10,15 +10,15 @@ This is a detailed study guide with tips and practical examples to ace the Certi
 
 ---
 ## Hit the Star! :star:
-If you are planning to use this repo for reference, please hit the star. Thanks!
+If you plan to use this repo as a reference, please hit the star. Thanks!
 
 ## CKA Exam Coupon (Expires Soon)
 
-To save a flat 30% on CKA exam registration, use the following coupon code.
+To save a flat 40% on CKA exam registration, use the following coupon code.
 > [!IMPORTANT]
-> **Coupon:** Use code **DCUBE30** at [kube.promo/cka](https://kube.promo/cka)
+> **Coupon:** Use code **OCTPRIME26CCCT** at [kube.promo/cka](https://kube.promo/cka)
 
-Use code **DCUBE30** to save up to 40% on the following bundles:
+Use code **OCTPRIME26BCT** to save up to 55% on the following bundles:
 
 - CKA + CKAD ($370+ Savings): [kube.promo/cka-ckad](https://kube.promo/cka-ckad)
 - CKA + CKS Bundle ($370+ Savings): [kube.promo/bundle](https://kube.promo/bundle)
