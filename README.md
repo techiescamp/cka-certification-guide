@@ -14,15 +14,15 @@ If you plan to use this repo as a reference, please hit the star. Thanks!
 
 ## CKA Exam Coupon (Expires Soon)
 
-To save a flat 40% on CKA exam registration, use the following coupon code.
+To save a flat 35% on CKA exam registration, use the following coupon code.
 > [!IMPORTANT]
-> **Coupon:** Use code **OCTPRIME26CCCT** at [kube.promo/cka](https://kube.promo/cka)
+> **Coupon:** Use code **OCT26NONCYBERCT** at [kube.promo/cka](https://kube.promo/cka)
 
-Use code **OCTPRIME26BCT** to save up to 55% on the following bundles:
+Use code **OCT26NONCYBERCT** to save up to 40% on the following bundles:
 
-- CKA + CKAD ($370+ Savings): [kube.promo/cka-ckad](https://kube.promo/cka-ckad)
-- CKA + CKS Bundle ($370+ Savings): [kube.promo/bundle](https://kube.promo/bundle)
-- CKA + CKAD + CKS Exam bundle (35% Discount): [kube.promo/k8s-bundle](https://kube.promo/k8s-bundle)
+- CKA + CKAD: [kube.promo/cka-ckad](https://kube.promo/cka-ckad)
+- CKA + CKS Bundle: [kube.promo/bundle](https://kube.promo/bundle)
+- CKA + CKAD + CKS Exam bundle: [kube.promo/k8s-bundle](https://kube.promo/k8s-bundle)
 - KCNA + KCSA + CKA + CKAD + CKS: [kube.promo/kubestronaut](https://kube.promo/kubestronaut)
 ---
 
