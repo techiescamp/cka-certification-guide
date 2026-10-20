@@ -6,13 +6,13 @@
 ![Duration](https://img.shields.io/badge/Duration-2%20Hours-orange)
 ![License](https://img.shields.io/badge/License-All%20Rights%20Reserved-red)
 
-This is a detailed study guide with tips and practical examples to ace the Certified Kubernetes Administrator exam.
+This detailed study guide includes tips and practical examples to help you ace the Certified Kubernetes Administrator exam.
 
 ---
 ## Hit the Star! :star:
 If you plan to use this repo as a reference, please hit the star. Thanks!
 
-## CKA Exam Coupon (Expires Soon)
+## CKA Exam Coupon (Expires Today)
 
 To save a flat 35% on CKA exam registration, use the following coupon code.
 > [!IMPORTANT]
