@@ -12,7 +12,7 @@ Contributions are welcome. Please follow these guidelines.
 
 1. Fork the repo and create a branch from `main`.
 2. Keep each PR scoped to one topic or fix.
-3. Verify all commands against Kubernetes v1.35.
+3. Verify all commands against Kubernetes v1.37.
 4. Link to official Kubernetes docs or CNCF curriculum when adding new content.
 5. Do not add content that is out of scope for the CKA exam domains.
 
