@@ -36,7 +36,7 @@ Use code **OCT26NONCYBERCT** to save up to 40% on the following bundles:
 
 <br>
 
-> **Source:** [CNCF CKA Curriculum v1.35](https://github.com/cncf/curriculum/blob/master/CKA_Curriculum_v1.35.pdf) | **Kubernetes version:** v1.35 | **Updated:** 2026
+> **Source:** [CNCF CKA Curriculum v1.37](https://github.com/cncf/curriculum/blob/master/CKA_Curriculum_v1.37.pdf) | **Kubernetes version:** v1.37 | **Updated:** 2026
 
 | # | Domain | Weight | Study Notes | Key Topics |
 |:-:|--------|:------:|:-----------:|------------|
