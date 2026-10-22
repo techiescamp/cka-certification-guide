@@ -1,6 +1,6 @@
-# CKA Study Notes — Visual Domain Guides with Architecture Diagrams (Kubernetes v1.35)
+# CKA Study Notes — Visual Domain Guides with Architecture Diagrams (Kubernetes v1.37)
 
-> **Kubernetes v1.35 · 2026 Edition**
+> **Kubernetes v1.37 · 2026 Edition**
 
 Pass the CKA by building a **visual mental model first**, then reinforcing it with commands. Every topic in these notes is paired with an architecture diagram so you understand the **why** before you memorise the **how**.
 
