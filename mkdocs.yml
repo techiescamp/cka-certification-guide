@@ -1,5 +1,5 @@
 site_name: CKA Exam Study Guide 2026
-site_description: Free Kubernetes v1.35 CKA exam preparation guide with practice questions, troubleshooting playbooks, kubectl cheatsheets, and exam-day strategy.
+site_description: Free Kubernetes v1.37 CKA exam preparation guide with practice questions, troubleshooting playbooks, kubectl cheatsheets, and exam-day strategy.
 site_url: https://techiescamp.github.io/cka-certification-guide
 repo_url: https://github.com/techiescamp/cka-certification-guide
 repo_name: techiescamp/cka-certification-guide
