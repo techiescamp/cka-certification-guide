@@ -16,14 +16,14 @@ A: Use `Ctrl+Alt+W` to close tabs (NOT `Ctrl+W` — that kills your terminal). C
 
 ---
 
-## ⏰ Quick Stats (CKA v1.35)
+## ⏰ Quick Stats (CKA v1.37)
 
 | Item | Detail |
 |------|--------|
 | **Duration** | 2 hours |
 | **Tasks** | 15–20 performance based |
 | **Passing Score** | 66% |
-| **Kubernetes Version** | v1.35 |
+| **Kubernetes Version** | v1.37 |
 | **Results** | Emailed within 24 hours |
 | **Validity** | 2 years |
 | **Retake** | 1 free retake included |
