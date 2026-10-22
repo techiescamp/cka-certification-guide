@@ -1,6 +1,6 @@
 # CKA kubectl Cheatsheet 2026 — Every Command You Need for the Kubernetes Administrator Exam ⚡
 
-> Quick-reference command guide for the Certified Kubernetes Administrator exam (Kubernetes v1.35).
+> Quick-reference command guide for the Certified Kubernetes Administrator exam (Kubernetes v1.37).
 > Organized by exam domain weight. Use `k` as alias for `kubectl`.
 
 ## Command → Exam Domain Map
@@ -27,7 +27,7 @@
 
 ```bash
 # Initialize control plane
-kubeadm init --pod-network-cidr=192.168.0.0/16 --kubernetes-version=1.35.0
+kubeadm init --pod-network-cidr=192.168.0.0/16 --kubernetes-version=1.37.1
 
 # Join worker node (run on worker)
 kubeadm token create --print-join-command
