@@ -1,6 +1,6 @@
 # CKA Exam Syllabus 2026 — Domain Weights & Official CNCF Curriculum (Kubernetes v1.37)
 
-> **Source:** [CNCF CKA Curriculum v1.35](https://github.com/cncf/curriculum/blob/master/CKA_Curriculum_v1.35.pdf) | **Kubernetes version in exam:** v1.35 | **Updated:** 2026
+> **Source:** [CNCF CKA Curriculum v1.37](https://github.com/cncf/curriculum/blob/master/CKA_Curriculum_v1.37.pdf) | **Kubernetes version in exam:** v1.37 | **Updated:** 2026
 
 **Q: How many questions are in each CKA exam domain?**
 
@@ -45,7 +45,7 @@ Each exam domain has a dedicated study guide with core concepts.
 
 | Resource | Link |
 |----------|------|
-| CNCF CKA Curriculum v1.35 | [GitHub PDF](https://github.com/cncf/curriculum/blob/master/CKA_Curriculum_v1.35.pdf) |
+| CNCF CKA Curriculum v1.37 | [GitHub PDF](https://github.com/cncf/curriculum/blob/master/CKA_Curriculum_v1.37.pdf) |
 | LF Important Instructions | [docs.linuxfoundation.org](https://docs.linuxfoundation.org/tc-docs/certification/tips-cka-and-ckad) |
 | LF Exam FAQ | [docs.linuxfoundation.org](https://docs.linuxfoundation.org/tc-docs/certification/faq-cka-ckad-cks) |
 | Kubernetes Docs (allowed in exam) | [kubernetes.io/docs](https://kubernetes.io/docs) |
