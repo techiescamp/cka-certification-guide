@@ -1,6 +1,6 @@
 # CKA Exam Tips 2026 — Strategy, Time Management & Common Traps to Avoid 🎯
 
-> Practical advice for passing the Certified Kubernetes Administrator exam (Kubernetes v1.35) on your first attempt.
+> Practical advice for passing the Certified Kubernetes Administrator exam (Kubernetes v1.37) on your first attempt.
 
 ## Step-by-Step Exam Approach
   
