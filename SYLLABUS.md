@@ -1,4 +1,4 @@
-# CKA Exam Syllabus 2026 — Domain Weights & Official CNCF Curriculum (Kubernetes v1.35)
+# CKA Exam Syllabus 2026 — Domain Weights & Official CNCF Curriculum (Kubernetes v1.37)
 
 > **Source:** [CNCF CKA Curriculum v1.35](https://github.com/cncf/curriculum/blob/master/CKA_Curriculum_v1.35.pdf) | **Kubernetes version in exam:** v1.35 | **Updated:** 2026
 
