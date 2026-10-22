@@ -1,6 +1,6 @@
 # Certified Kubernetes Administrator (CKA) Exam Preparation Guide V1.37 (2026)
 
-![Kubernetes](https://img.shields.io/badge/Kubernetes-v1.35-326CE5?logo=kubernetes&logoColor=white)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-v1.37-326CE5?logo=kubernetes&logoColor=white)
 ![Exam](https://img.shields.io/badge/CKA-Exam%20Prep-green)
 ![Passing Score](https://img.shields.io/badge/Passing%20Score-66%25-blue)
 ![Duration](https://img.shields.io/badge/Duration-2%20Hours-orange)
