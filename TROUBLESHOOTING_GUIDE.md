@@ -1,6 +1,6 @@
 # Kubernetes Troubleshooting Guide for CKA 2026 — Pod, Node, Network & Storage Debug Playbooks 🔧
 
-> Systematic debug playbooks for every layer of Kubernetes (v1.35).
+> Systematic debug playbooks for every layer of Kubernetes (v1.37).
 > Troubleshooting is **30% of the CKA exam** — the single highest-weighted domain.
 
 **Q: What is the fastest way to debug a failing pod in Kubernetes?**
