@@ -148,6 +148,6 @@ Every CKA troubleshooting question can be answered with the same four commands, 
 
 ---
 
-*Diagrams by [Bibin Wilson / DevOpsCube](https://devopscube.com) · Guide maintained for CKA v1.35 (2026)*
+*Diagrams by [Bibin Wilson / DevOpsCube](https://devopscube.com) · Guide maintained for CKA v1.37 (2026)*
 
 *← Back to [main guide](../README.md)*
