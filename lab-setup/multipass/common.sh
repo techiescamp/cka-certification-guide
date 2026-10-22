@@ -5,9 +5,10 @@
 set -euxo pipefail
 
 # Kubernetes Variable Declaration
-KUBERNETES_VERSION="v1.34"
-CRICTL_VERSION="v1.34.0"
-KUBERNETES_INSTALL_VERSION="1.34.0-1.1"
+KUBERNETES_VERSION="v1.37"
+CRIO_VERSION="v1.36"
+CRICTL_VERSION="v1.37.0"
+KUBERNETES_INSTALL_VERSION="1.37.0-1.1"
 
 # Disable swap
 sudo swapoff -a
@@ -36,36 +37,29 @@ EOF
 sudo sysctl --system
 
 sudo apt-get update -y
-sudo apt-get install -y apt-transport-https ca-certificates curl gpg
+sudo apt-get install -y apt-transport-https ca-certificates curl gpg gnupg
 
-# Install containerd Runtime
+# Install CRI-O Runtime
 sudo apt-get update -y
 sudo apt-get install -y software-properties-common curl apt-transport-https ca-certificates
 
-sudo apt-get update
-sudo apt-get install ca-certificates curl gnupg
 sudo install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-sudo chmod a+r /etc/apt/keyrings/docker.gpg
 
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt-get update
-sudo apt-get install containerd.io
+# Add CRI-O apt repository
+curl -fsSL https://download.opensuse.org/repositories/isv:/cri-o:/stable:/$CRIO_VERSION/deb/Release.key |
+    sudo gpg --dearmor --yes -o /etc/apt/keyrings/cri-o-apt-keyring.gpg
+
+echo "deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.gpg] https://download.opensuse.org/repositories/isv:/cri-o:/stable:/$CRIO_VERSION/deb/ /" |
+    sudo tee /etc/apt/sources.list.d/cri-o.list
+
+sudo apt-get update -y
+sudo apt-get install -y cri-o
 
 sudo systemctl daemon-reload
-sudo systemctl enable containerd --now
-sudo systemctl start containerd.service
+sudo systemctl enable crio --now
+sudo systemctl start crio.service
 
-echo "Containerd runtime installed successfully"
-
-# Generate the default containerd configuration
-sudo containerd config default | sudo tee /etc/containerd/config.toml
-
-# Enable SystemdCgroup
-sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/g' /etc/containerd/config.toml
-
-# Restart containerd to apply changes
-sudo systemctl restart containerd
+echo "CRI-O runtime installed successfully"
 
 # Detect architecture for downloads (amd64 vs arm64)
 ARCH="$(dpkg --print-architecture)"
@@ -83,22 +77,22 @@ curl -LO "https://github.com/kubernetes-sigs/cri-tools/releases/download/${CRICT
 sudo tar zxvf "crictl-${CRICTL_VERSION}-linux-${CRICTL_ARCH}.tar.gz" -C /usr/local/bin
 rm -f "crictl-${CRICTL_VERSION}-linux-${CRICTL_ARCH}.tar.gz"
 
-# Configure crictl to use containerd
+# Configure crictl to use CRI-O socket
 cat <<EOF | sudo tee /etc/crictl.yaml
-runtime-endpoint: unix:///run/containerd/containerd.sock
-image-endpoint: unix:///run/containerd/containerd.sock
+runtime-endpoint: unix:///run/crio/crio.sock
+image-endpoint: unix:///run/crio/crio.sock
 timeout: 10
 debug: false
 EOF
 
 echo "crictl installed and configured successfully"
 
-# Install kubelet, kubectl, and kubeadm
+# Add Kubernetes apt repository
 curl -fsSL https://pkgs.k8s.io/core:/stable:/$KUBERNETES_VERSION/deb/Release.key |
-    gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+    sudo gpg --dearmor --yes -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 
 echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/$KUBERNETES_VERSION/deb/ /" |
-    tee /etc/apt/sources.list.d/kubernetes.list
+    sudo tee /etc/apt/sources.list.d/kubernetes.list
 
 sudo apt-get update -y
 sudo apt-get install -y kubelet="$KUBERNETES_INSTALL_VERSION" kubectl="$KUBERNETES_INSTALL_VERSION" kubeadm="$KUBERNETES_INSTALL_VERSION"
@@ -111,10 +105,10 @@ sudo apt-get update -y
 # Install jq, a command-line JSON processor
 sudo apt-get install -y jq
 
-# Retrieve the node IP via the default route (works regardless of interface name)
-local_ip="$(ip --json route get 8.8.8.8 | jq -r '.[0].prefsrc')"
+# Retrieve the local IP address of the eth1 interface and set it for kubelet
+local_ip="$(ip --json addr show eth1 | jq -r '.[0].addr_info[] | select(.family == "inet") | .local')"
 
 # Write the local IP address to the kubelet default configuration file
-cat > /etc/default/kubelet << EOF
+cat <<EOF | sudo tee /etc/default/kubelet
 KUBELET_EXTRA_ARGS=--node-ip=$local_ip
 EOF
