@@ -5,7 +5,7 @@
 
 **Q: How much does the CKA exam cost?**
 
-A: $395 USD. Use coupon code **MM26CCCT** at [kube.promo/cka](https://kube.promo/cka) for a discount.
+A: $445 USD. Use coupon code **MM26CCCT** at [kube.promo/cka](https://kube.promo/cka) for a discount.
 
 **Q: What is the passing score for the CKA exam?**
 
@@ -60,7 +60,7 @@ The **Certified Kubernetes Administrator (CKA)** certification is designed to en
 
 ## How much does the exam cost?
 
-**$395 USD** (single exam). Bundle prices vary. Check the [Linux Foundation Training & Certification Catalog](https://training.linuxfoundation.org/) for current pricing.
+**$445 USD** (single exam). Bundle prices vary. Check the [Linux Foundation Training & Certification Catalog](https://training.linuxfoundation.org/) for current pricing.
 
 > [!TIP]
 > **Discount codes** are frequently available. Check the repo [README.md](./README.md) for current coupon codes.
@@ -98,9 +98,9 @@ The exam consists of **15–20 performance-based tasks** to be completed entirel
 
 | Exam | Kubernetes Version |
 |------|--------------------|
-| **CKA** | **v1.35** |
-| **CKAD** | v1.35 |
-| **CKS** | v1.34 |
+| **CKA** | **v1.37** |
+| **CKAD** | v1.37 |
+| **CKS** | v1.35 |
 
 > [!NOTE]
 > The exam environment is aligned with the most recent Kubernetes minor version within approximately **4–8 weeks** of the official K8s release date. Check the [LF instructions page](https://docs.linuxfoundation.org/tc-docs/certification/tips-cka-and-ckad) for the latest confirmed version.
