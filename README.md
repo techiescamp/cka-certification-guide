@@ -157,7 +157,7 @@ nodeRegistration:
 ---
 apiVersion: kubeadm.k8s.io/v1beta4
 kind: ClusterConfiguration
-kubernetesVersion: "1.35.0"
+kubernetesVersion: "1.37.0"
 controlPlaneEndpoint: "172.30.1.2:6443"
 networking:
   podSubnet: "10.244.0.0/16"
@@ -1005,7 +1005,7 @@ k apply -f deploy.yaml
 | **Duration** | 2 hours |
 | **Tasks** | 15–20 performance-based |
 | **Passing Score** | 66% |
-| **Kubernetes Version** | v1.35 |
+| **Kubernetes Version** | v1.37 |
 | **Results** | Emailed within 24 hours |
 | **Retake** | 1 free retake included |
 
@@ -1077,7 +1077,7 @@ gg / G       → Top / Bottom         /pattern → Search
 
 **Q: What Kubernetes version is the CKA exam on in 2026?**
 
-A: Kubernetes v1.35. This guide targets v1.35 specifically, matching the current exam environment.
+A: Kubernetes v1.37. This guide targets v1.37 specifically, matching the current exam environment.
 
 **Q: What is the passing score for the CKA exam?**
 
@@ -1195,14 +1195,14 @@ kubectl get events -n <ns> --sort-by='.lastTimestamp'
 Contributions are welcome. Please follow these guidelines.
 
 - **Bug reports / corrections**: Open an issue describing the error and the correct information with a source link.
-- **Content additions**: Open a pull request with your changes. Keep additions focused on CKA v1.35 exam scope.
+- **Content additions**: Open a pull request with your changes. Keep additions focused on CKA v1.37 exam scope.
 - **Typo / formatting fixes**: Pull requests welcome, no issue needed.
 
 ### Pull Request Guidelines
 
 1. Fork the repo and create a branch from `main`.
 2. Keep each PR scoped to one topic or fix.
-3. Verify all commands against Kubernetes v1.35.
+3. Verify all commands against Kubernetes v1.37.
 4. Link to official Kubernetes docs or CNCF curriculum when adding new content.
 
 > 📄 Full guide: [CONTRIBUTING.md](./CONTRIBUTING.md)
