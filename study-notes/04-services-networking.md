@@ -106,12 +106,17 @@ metadata:
 ```
 
 ```bash
-# Verify endpoints are populated
-kubectl get endpoints <svc-name>
-# If empty → selector doesn't match pod labels
+# Inspect all EndpointSlices for the Service in the same namespace
+kubectl get endpointslices -n <namespace> \
+  -l kubernetes.io/service-name=<svc-name> -o yaml
+kubectl get service <svc-name> -n <namespace> -o yaml
+kubectl get pods -n <namespace> -o wide --show-labels
+# Check selector matches, addresses, ports, and endpoints[].conditions.ready.
 ```
 
 ---
+
+The legacy Endpoints API (`kubectl get endpoints` / `ep`) is deprecated since v1.33. A Service may have multiple EndpointSlices; inspect all matching slices. Missing addresses can indicate selector mismatches; unready endpoints require Pod/readiness investigation. Follow the [EndpointSlice troubleshooting lab](../lessons/endpointslices/README.md) and [official documentation](https://kubernetes.io/docs/concepts/services-networking/endpoint-slices/).
 
 ## DNS in Kubernetes
 
@@ -263,8 +268,10 @@ Ingress manages external HTTP/HTTPS access to services.
 
 ### Requirements
 
-- An **Ingress Controller** must be installed (nginx, traefik, Istio, etc.)
+- Install **Traefik** using the [Ingress lab](../ingress/README.md); the example uses its `traefik` IngressClass.
 - Then create **Ingress resources** to define routing rules
+
+Community Ingress NGINX retired in March 2026 ([official notice](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/)). Ingress itself remains in scope. The following routes preserve paths: `api-svc` must serve `/api`; there is no controller-specific rewrite.
 
 ### Basic Ingress
 
@@ -273,10 +280,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: my-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik
   rules:
   - host: myapp.example.com
     http:
@@ -347,7 +352,7 @@ kind: Gateway
 metadata:
   name: my-gateway
 spec:
-  gatewayClassName: nginx
+  gatewayClassName: cka-traefik
   listeners:
   - name: http
     port: 80
@@ -374,6 +379,10 @@ spec:
 ```
 
 ---
+
+### Complete HTTP and HTTPS Lab
+
+Follow the [Gateway API lab](../lessons/gateway-api/README.md) to install compatible CRDs and a controller, deploy a backend, configure HTTP and HTTPS listeners with a certificate Secret, check Gateway/HTTPRoute status, send requests, and clean up. The example above uses the lab’s `cka-traefik` GatewayClass; create the referenced `api-svc` backend before using that illustrative route.
 
 ## CoreDNS Configuration
 
@@ -419,8 +428,10 @@ kubectl get configmap coredns -n kube-system -o yaml
 | Mode | How it Works |
 |------|-------------|
 | `iptables` (default) | Uses iptables rules for packet forwarding |
-| `ipvs` | Uses IPVS (IP Virtual Server) — better for large clusters |
-| `userspace` | Deprecated — poor performance |
+| `nftables` | Stable since v1.33; Linux kernel 5.13+ required; check CNI compatibility |
+| `ipvs` | Deprecated since v1.35; use nftables where supported |
+
+The README uses `iptables` as the default for the Linux labs. Before selecting `nftables`, check `uname -r`, CNI support, firewall rules, and NodePort behavior (primary node addresses by default). Validate Service connectivity after changing modes. These examples have not been run on every lab operating system. See [official proxy-mode guidance](https://kubernetes.io/docs/reference/networking/virtual-ips/).
 
 ---
 

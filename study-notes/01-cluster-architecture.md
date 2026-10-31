@@ -14,9 +14,10 @@ A: A `Role` grants permissions within a single namespace. A `ClusterRole` grants
 2. [RBAC (Role-Based Access Control)](#rbac-role-based-access-control)
 3. [ServiceAccounts](#serviceaccounts)
 4. [kubeadm Cluster Lifecycle](#kubeadm-cluster-lifecycle)
-5. [Extension Interfaces](#extension-interfaces)
-6. [Custom Resource Definitions (CRDs)](#custom-resource-definitions-crds)
-7. [Helm & Kustomize](#helm--kustomize)
+5. [Highly Available Control Plane](#highly-available-control-plane)
+6. [Extension Interfaces](#extension-interfaces)
+7. [Custom Resource Definitions (CRDs)](#custom-resource-definitions-crds)
+8. [Helm & Kustomize](#helm--kustomize)
 
 
 ---
@@ -44,7 +45,7 @@ A: A `Role` grants permissions within a single namespace. A `ClusterRole` grants
 | Component | Role |
 |-----------|------|
 | `kubelet` | Agent on each node — ensures containers run as specified |
-| `kube-proxy` | Maintains network rules (iptables/ipvs) for services |
+| `kube-proxy` | Maintains Service forwarding rules using iptables or nftables; IPVS is deprecated since v1.35 |
 | Container Runtime | Runs containers (containerd, CRI-O) |
 
 
@@ -137,6 +138,21 @@ spec:
 5. Restart kubelet
 6. `kubectl uncordon <worker>`
 
+
+---
+
+## Highly Available Control Plane
+
+Use three control-plane nodes with a shared API endpoint behind a TCP load balancer. A highly available load balancer or managed endpoint avoids a single point of failure at the entry point.
+
+| Topology | Placement | Tradeoff |
+|----------|-----------|----------|
+| Stacked etcd | One etcd member on each control-plane node | Fewer machines; losing a node affects both API and etcd capacity |
+| External etcd | Separate etcd nodes | Independent failure domains; more machines and certificate management |
+
+A three-member etcd cluster needs two healthy members for quorum. Join extra control-plane nodes with `kubeadm join --control-plane` and the shared endpoint, discovery hash, token, and certificate key from initialization. Test API access through the load balancer while one control-plane VM is powered off, then restore it before testing another node.
+
+The [HA control-plane lab](../lessons/ha-control-plane/README.md) provides load-balancer configuration, init/join commands, and failure checks. See [kubeadm HA documentation](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/high-availability/).
 
 ---
 

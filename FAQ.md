@@ -1,7 +1,7 @@
 # CKA Exam FAQ 2026 — Cost, Format, Passing Score, Retake Policy & Requirements
 
 > Official answers sourced from the [Linux Foundation CKA/CKAD/CKS FAQ](https://docs.linuxfoundation.org/tc-docs/certification/faq-cka-ckad-cks).
-> Last verified: April 2026.
+> Last verified: October 31, 2026 — checked sections (CKS prerequisite, scoring, exam versions, allowed resources, and renewal). Other FAQ details were not checked in this update.
 
 **Q: How much does the CKA exam cost?**
 
@@ -9,7 +9,7 @@ A: $445 USD. Use coupon code **MM26CCCT** at [kube.promo/cka](https://kube.promo
 
 **Q: What is the passing score for the CKA exam?**
 
-A: 66%. Partial credit applies — you earn points for incomplete but partially correct answers.
+A: 66%.
 
 **Q: Is there a free retake for the CKA exam?**
 
@@ -17,7 +17,7 @@ A: Yes. One free retake is included with every purchase. It must be scheduled wi
 
 **Q: How is the CKA exam scored?**
 
-A: Auto-scored immediately on submission. Results are emailed within 24 hours. Each task has a point value; partial credit is awarded for partially correct solutions.
+A: Exams are scored automatically upon completion. Results are normally emailed within 24 hours, barring exceptions or technical difficulties.
 
 ---
 
@@ -54,7 +54,7 @@ The **Certified Kubernetes Administrator (CKA)** certification is designed to en
 |--------------|-------|-------------|
 | **CKA** | Cluster administration, infrastructure, operations | None |
 | **CKAD** | Application design, build, deploy on Kubernetes | None |
-| **CKS** | Container & Kubernetes security | Must hold a valid CKA |
+| **CKS** | Container & Kubernetes security | Must have taken and passed the CKA exam |
 
 ---
 
@@ -88,9 +88,7 @@ The exam consists of **15–20 performance-based tasks** to be completed entirel
 
 ## How is the exam scored?
 
-- Exams are scored **automatically** upon completion.
-- A score report will be emailed within **24 hours** from the time the exam was completed.
-- Barring technical exceptions, results are prompt.
+Exams are scored automatically upon completion. Results are normally emailed within 24 hours, barring exceptions or technical difficulties.
 
 ---
 
@@ -109,15 +107,14 @@ The exam consists of **15–20 performance-based tasks** to be completed entirel
 
 ## What resources are allowed during the exam?
 
-You may open **one additional browser tab** pointing to any of these official sites:
+Use the **browser inside the exam VM** to access:
 
-- **[kubernetes.io/docs](https://kubernetes.io/docs)** — Official Kubernetes documentation
-- **[kubernetes.io/blog](https://kubernetes.io/blog)** — Kubernetes blog
-- **[helm.sh/docs](https://helm.sh/docs)** — Helm documentation
+- [Kubernetes documentation](https://kubernetes.io/docs/) and [blog](https://kubernetes.io/blog/).
+- [Helm documentation](https://helm.sh/docs/).
+- [Gateway API documentation](https://gateway-api.sigs.k8s.io/) (CKA only).
+- Task-specific documentation linked in the exam's **Quick Reference** box.
 
-> [!WARNING]
-> No other external websites, printed notes, books, or personal notes are permitted.
-> See the official [Allowed Resources page](https://docs.linuxfoundation.org/tc-docs/certification/certification-resources-allowed#certified-kubernetes-administrator-cka-and-certified-kubernetes-application-developer-ckad) for the authoritative list.
+Documentation search is allowed, but do not open external search results. You may also review installed distribution documentation and use distribution packages in the exam terminal. Personal notes, books, and unlisted external resources are not permitted. See the [official allowed-resources policy](https://docs.linuxfoundation.org/tc-docs/certification/certification-resources-allowed).
 
 ---
 
@@ -211,6 +208,7 @@ The exam defaults to the language detected in your browser. You can switch langu
 
 - Retake and pass the exam **before** the expiration date.
 - The renewed certification will be valid for a further **2 years** from the date the exam is passed.
+- Under the [CARE programme](https://training.linuxfoundation.org/care-program/), earning or renewing CKS on or after **June 18, 2026** automatically extends an eligible CKA certification to the new CKS expiry date. You must have previously earned CKA; current and expired credentials qualify. Passing CKS before that date does not qualify for this extension. Allow a few days for processing; if you used different LF accounts, contact support for manual linking.
 
 ---
 

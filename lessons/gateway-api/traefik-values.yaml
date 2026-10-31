@@ -1,0 +1,29 @@
+fullnameOverride: cka-gateway
+providers:
+  kubernetesIngress:
+    enabled: false
+  kubernetesCRD:
+    enabled: false
+  kubernetesGateway:
+    enabled: true
+    experimentalChannel: false
+ingressClass:
+  enabled: false
+gateway:
+  enabled: false
+gatewayClass:
+  enabled: false
+service:
+  spec:
+    type: ClusterIP
+ports:
+  web:
+    port: 80
+    exposedPort: 80
+  websecure:
+    port: 443
+    exposedPort: 443
+securityContext:
+  capabilities:
+    drop: [ALL]
+    add: [NET_BIND_SERVICE]

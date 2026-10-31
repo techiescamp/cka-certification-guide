@@ -66,6 +66,7 @@ Use code **TREATS35CT** to save up to 45% on the following bundles:
 | 5 | 📦 [Use Helm and Kustomize to install cluster components](#use-helm-and-kustomize-to-install-cluster-components) |
 | 6 | 🔌 [Understand extension interfaces (CNI, CSI, CRI, etc.)](#understand-extension-interfaces-cni-csi-cri-etc) |
 | 7 | 🧩 [Understand CRDs, install and configure operators](#understand-crds-install-and-configure-operators) |
+| 8 | [Configure a highly available control plane](#configure-a-highly-available-control-plane) |
 
 ---
 
@@ -187,7 +188,7 @@ rotateCertificates: true
 ---
 apiVersion: kubeproxy.config.k8s.io/v1alpha1
 kind: KubeProxyConfiguration
-mode: "ipvs"
+mode: "iptables" # Supported Linux default; see kube-proxy notes for nftables requirements
 clusterCIDR: "10.244.0.0/16"
 conntrack:
   maxPerCore: 32768
@@ -216,6 +217,10 @@ kubeadm join ....
 
 ### Manage the lifecycle of Kubernetes clusters.
 > [Perform Cluster Version upgrade Using Kubeadm](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55120133) : Managing the lifecycle involves upgrading clusters, managing control plane nodes, and ensuring consistency across versions.
+
+### Configure a highly available control plane
+
+Use multiple control-plane nodes behind a load balancer with a shared API endpoint. Compare stacked etcd with external etcd, join additional control-plane nodes, and check API access when one node fails. Follow the [HA control-plane lab](./lessons/ha-control-plane/README.md) and [architecture notes](./study-notes/01-cluster-architecture.md#highly-available-control-plane).
 
 ### Understand extension interfaces (CNI, CSI, CRI, etc.).
 > Container Runtime Interface (CRI) : Kubernetes uses the CRI to communicate with container runtimes.
@@ -251,7 +256,7 @@ curl -O https://raw.githubusercontent.com/projectcalico/calico/v3.31.3/manifests
 kubectl -n kube-system get pod -l component=kube-controller-manager -o yaml | grep -i cluster-cidr
 
 # Modify the Custom Resource manifest with the cluster CIDR
-vi custom-resource.yaml
+vi custom-resources.yaml
 ```
 
 ```yaml
@@ -272,7 +277,7 @@ spec:
 
 ```bash
 # Apply the Custom Resource manifest
-k apply -f custom-resource.yaml
+k apply -f custom-resources.yaml
 
 # Validate the Pod and Node status
 k get po -A
@@ -603,8 +608,18 @@ k create cm <configmap-name> --from-literal=<key1>=<value1> --from-literal=<key2
 # Create configmap from a file
 k create cm <configmap-name> --from-file=<file-name>
 
-# Create an immutable configmap
-k create cm <configmap-name> --from-literal=<key>=<value> --immutable
+```
+
+Create an immutable ConfigMap with `immutable: true` (save as `immutable-configmap.yaml` and run `kubectl apply -f immutable-configmap.yaml`):
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: immutable-settings
+immutable: true
+data:
+  environment: lab
 ```
 
 > [Secrets](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55993473) : Remember that Secrets are base64-encoded and not encrypted and they are for storing sensitive data.
@@ -621,11 +636,30 @@ k create secret tls <secret-name> --cert=tls.crt --key=tls.key
 > [Autoscaling Workloads](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/58713870) : Practice setting up Horizontal Pod Autoscaler (HPA).
 
 ```bash
-# Using autoscaling (--cpu-percent is required for HPA to function)
+# Create an HPA targeting 80% CPU utilisation
 k autoscale deploy <deployment-name> --min=2 --max=5 --cpu-percent=80
 ```
 
-> [Admission Controllers Reference](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/) : Use admission controllers to enforce policies such as resource quotas, pod security policies, and image validation.
+This CPU-utilisation example requires CPU requests on the workload containers and a working resource metrics API (usually provided by Metrics Server). Check `kubectl top pods` and `kubectl describe hpa` if metrics are unavailable.
+
+### Pod Security Admission
+
+[Pod Security Admission](https://kubernetes.io/docs/concepts/security/pod-security-admission/) applies Pod Security Standards through namespace labels. PodSecurityPolicy was removed in v1.25. Use a dedicated practice namespace:
+
+```bash
+kubectl create namespace admission-lab
+kubectl label namespace admission-lab \
+  pod-security.kubernetes.io/enforce=baseline \
+  pod-security.kubernetes.io/enforce-version=latest \
+  pod-security.kubernetes.io/warn=restricted \
+  pod-security.kubernetes.io/warn-version=latest
+# Expected: admission rejects a privileged Pod (server dry-run does not create it).
+kubectl run privileged-test -n admission-lab --image=busybox:1.37 \
+  --privileged --restart=Never --dry-run=server -- sleep 60
+kubectl delete namespace admission-lab
+```
+
+`enforce` rejects violations; `warn` reports them without rejecting them. Set the policy version to your cluster minor version when you want the same rules each time. `latest` uses the rules for the API server version.
 
 ---
 
@@ -637,14 +671,14 @@ Following are the subtopics under Storage
 > [Storage Classes](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55786335) : Understand the difference between default storage class and other classes.
 
 ```yaml
-# Example storage class manifest file
+# Static local storage: manually create matching local PVs with node affinity
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: local-storage
 provisioner: kubernetes.io/no-provisioner
 volumeBindingMode: WaitForFirstConsumer
-reclaimPolicy: Delete
+reclaimPolicy: Retain
 ```
 
 ```bash
@@ -655,13 +689,25 @@ k get sc
 k describe sc <storageclass-name>
 ```
 
-> Dynamic Volume Provisioning : Understand which type of persistent storage is supported (like AWS EBS, GCE Persistent Disks) and practice using them.
+`kubernetes.io/no-provisioner` does not create volumes dynamically. For dynamic local provisioning, install Rancher Local Path Provisioner first, then use its provisioner name:
+
+```yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: cka-local-path
+provisioner: rancher.io/local-path
+volumeBindingMode: WaitForFirstConsumer
+reclaimPolicy: Delete
+```
+
+Follow the [dynamic-storage lab](./lessons/dynamic-storage/README.md) for installation, a PVC and consumer Pod, persistence checks, and cleanup. Local-path storage is tied to a node; it is not replicated HA storage. See [StorageClasses](https://kubernetes.io/docs/concepts/storage/storage-classes/).
 
 ### Configure volume types, access modes and reclaim policies.
 
 > [Volumes](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55791431) : Understand which type of persistent storage is supported (like AWS EBS, GCE Persistent Disks) and practice using them.
 
-> [Persistent Volumes](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55792087) : Remember the different reclaim policies: Retain, Delete, and Recycle. Understand access modes like ReadWriteOnce, ReadOnlyMany.
+> [Persistent Volumes](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55792087) : Understand **Retain** (manual reclamation) and **Delete** (remove backing storage where supported). **Recycle is deprecated**; use dynamic provisioning instead. Understand access modes like ReadWriteOnce, ReadOnlyMany.
 
 ```yaml
 # Create a Persistent Volume
@@ -771,9 +817,11 @@ k expose deploy <deployment-name> --name=<service-name> --port=<port> --target-p
 # List services
 k get svc
 
-# List service endpoints
-k get ep
+# Inspect Service backends using EndpointSlices
+k get endpointslices -l kubernetes.io/service-name=<service-name> -o yaml
 ```
+
+The legacy Endpoints API (`kubectl get endpoints` / `ep`) is deprecated since v1.33. Use [EndpointSlice troubleshooting practice](./lessons/endpointslices/README.md) to inspect selectors, addresses, ports, and readiness.
 
 ### Use the Gateway API to manage Ingress traffic.
 > [Gateway API](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/61100920) : The Gateway API provides more flexibility and extensibility compared to traditional Ingress. Use it when you need advanced traffic routing, such as assigning multiple gateways with different capabilities to different services.
@@ -786,17 +834,12 @@ metadata:
   name: frontend-gateway
   namespace: frontend
 spec:
-  gatewayClassName: [GATEWAY_CLASS_NAME]
+  gatewayClassName: cka-traefik
   listeners:
   - name: http
     protocol: HTTP
     port: 80
-    hostname: "[HOST_NAME]"
-    tls:
-      mode: Terminate
-      certificateRefs:
-        - kind: Secret
-          name: [TLS_SECRET_NAME]
+    hostname: "app.example.com"
 
 ---
 # Create a HTTPRoute to map the routing rules.
@@ -807,34 +850,56 @@ metadata:
   namespace: frontend
 spec:
   parentRefs:
-    - name: [GATEWAY_NAME]
+    - name: frontend-gateway
   rules:
     - matches:
         - path:
             type: PathPrefix
             value: /
       backendRefs:
-        - name: [SERVICE_NAME]
+        - name: frontend-service
           port: 80
 ```
+
+For HTTPS, use a separate Gateway with TLS termination. Create `frontend-tls` as a TLS Secret in the `frontend` namespace and reference this Gateway from an HTTPRoute:
+
+```yaml
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: frontend-https
+  namespace: frontend
+spec:
+  gatewayClassName: cka-traefik
+  listeners:
+  - name: https
+    protocol: HTTPS
+    port: 443
+    hostname: app.example.com
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - kind: Secret
+        name: frontend-tls
+```
+
+Both examples require Gateway API CRDs and a controller managing the named GatewayClass. See the [complete HTTP/HTTPS lab](./lessons/gateway-api/README.md) for prerequisites, backend creation, verification, and cleanup, and the [Gateway API TLS guide](https://gateway-api.sigs.k8s.io/guides/user-guides/tls/).
 
 ### Know how to use Ingress controllers and Ingress resources.
 > [Ingress](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/56659356) : Practice creating Ingress resources with different rules to route traffic to services based on hostnames and paths. You can also define multiple services under a single Ingress resource by utilizing both path-based and host-based rules.
 
 ```yaml
-# Example manifest file to create ingress object
+# Traefik Ingress: install the controller using ingress/README.md first
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: example-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  ingressClassName: nginx-example
+  ingressClassName: traefik
   rules:
   - http:
       paths:
-      - path: /examplepath
+      - path: /
         pathType: Prefix
         backend:
           service:
@@ -850,6 +915,8 @@ k get ing
 # Describe an ingress resource
 k describe ing <ingress-name>
 ```
+
+Use the maintained Traefik controller in the [Ingress lab](./ingress/README.md). Paths are passed to the backend unchanged; this example needs no rewrite annotation. Community Ingress NGINX retired in March 2026 ([official notice](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/)); the Kubernetes Ingress API remains a study topic.
 
 ### Understand and use CoreDNS.
 > [CoreDNS](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55120286) : CoreDNS is used for service discovery within the Kubernetes cluster. Familiarize yourself with modifying the Corefile configuration to add custom DNS behaviors like forwarding queries for specific domains outside the cluster.

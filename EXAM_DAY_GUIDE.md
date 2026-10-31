@@ -112,12 +112,14 @@ exit
 
 ### Allowed Resources During Exam
 
-You may open **one additional browser tab** pointing to:
-- `https://kubernetes.io/docs`
-- `https://kubernetes.io/blog`
-- `https://helm.sh/docs`
+Use the **browser inside the exam VM** to access:
 
-No other websites, notes, or books are allowed.
+- [Kubernetes documentation](https://kubernetes.io/docs/) and [blog](https://kubernetes.io/blog/).
+- [Helm documentation](https://helm.sh/docs/).
+- [Gateway API documentation](https://gateway-api.sigs.k8s.io/) (CKA only).
+- Task-specific documentation linked in the exam's **Quick Reference** box.
+
+Documentation search is allowed, but do not open external search results. You may also review installed distribution documentation and use distribution packages in the exam terminal. Personal notes, books, and unlisted external resources are not permitted. See the [official allowed-resources policy](https://docs.linuxfoundation.org/tc-docs/certification/certification-resources-allowed).
 
 ---
 
@@ -159,7 +161,7 @@ The exam is **2 hours** for 15–20 tasks.
 |----------|--------|
 | **Budget per task** | ~6–8 minutes on average |
 | **Skip and return** | Flag hard questions, return after easier ones |
-| **Partial credit** | Exists — incomplete answers still score points |
+| **Task requirements** | Complete and verify each requested requirement |
 | **High-weight tasks** | Do these first if confident |
 | **Cluster upgrade** | Time-consuming — plan carefully |
 | **Verify your work** | Always run `kubectl get`/`describe` to confirm |
@@ -305,7 +307,7 @@ cat /etc/kubernetes/manifests/kube-apiserver.yaml
 
 ## 📚 Kubernetes Docs Bookmarks
 
-One browser tab allowed. Know these paths:
+Use the browser inside the exam VM. Know these paths:
 
 | Topic | URL Path |
 |-------|----------|
@@ -331,7 +333,7 @@ Use `Ctrl+F` in Firefox to search within any docs page.
 | Not verifying work | After every task, run `k get`/`describe` to confirm |
 | Editing wrong file | Double-check paths: `/etc/kubernetes/manifests/` |
 | Accidentally closing tab | Use `Ctrl+Alt+W` — see keyboard shortcuts table above |
-| Running out of time | Skip, flag, come back — partial credit beats nothing |
+| Running out of time | Skip, flag, and return to unfinished tasks |
 | Tabs in YAML | Always use 2 spaces, never tabs |
 | Forgetting `--restart=Never` | Required for one-off pods: `k run test --image=busybox --restart=Never` |
 

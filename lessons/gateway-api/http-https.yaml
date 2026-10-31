@@ -1,0 +1,55 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: GatewayClass
+metadata:
+  name: cka-traefik
+spec:
+  controllerName: traefik.io/gateway-controller
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: web
+  namespace: gateway-lab
+spec:
+  gatewayClassName: cka-traefik
+  listeners:
+  - name: http
+    protocol: HTTP
+    port: 80
+    hostname: app.example.com
+    allowedRoutes:
+      namespaces:
+        from: Same
+  - name: https
+    protocol: HTTPS
+    port: 443
+    hostname: app.example.com
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - kind: Secret
+        name: app-tls
+    allowedRoutes:
+      namespaces:
+        from: Same
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: web
+  namespace: gateway-lab
+spec:
+  parentRefs:
+  - name: web
+    sectionName: http
+  - name: web
+    sectionName: https
+  hostnames: [app.example.com]
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: web
+      port: 80

@@ -1,0 +1,24 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: cka-local-path
+provisioner: rancher.io/local-path
+volumeBindingMode: WaitForFirstConsumer
+reclaimPolicy: Delete
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: storage-lab
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: data
+  namespace: storage-lab
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: cka-local-path
+  resources:
+    requests:
+      storage: 1Gi

@@ -1,3 +1,4 @@
+# LEGACY: Community Ingress NGINX retired March 2026. Use ingress/README.md for the maintained Traefik lab.
 apiVersion: v1
 kind: Namespace
 metadata:

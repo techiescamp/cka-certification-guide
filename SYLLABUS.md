@@ -10,7 +10,7 @@ A: The exam has 15–20 tasks total, weighted by domain percentage. Troubleshoot
 
 A: Start with Troubleshooting (30%) — it has the most exam weight. Then Cluster Architecture (25%), Services & Networking (20%), Workloads & Scheduling (15%), and Storage (10%) last.
 
-The Certified Kubernetes Administrator (CKA) exam covers 5 domains tested on Kubernetes v1.35. The exam is 2 hours, performance-based (no multiple choice), and requires a passing score of 66%.
+The Certified Kubernetes Administrator (CKA) exam covers 5 domains tested on Kubernetes v1.37. The exam is 2 hours, performance-based (no multiple choice), and requires a passing score of 66%.
 
 ---
 
