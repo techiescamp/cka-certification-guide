@@ -14,11 +14,11 @@ If you plan to use this repo as a reference, please hit the star. Thanks!
 
 ## CKA Exam Coupon (Expires Today)
 
-To save a flat 35% on CKA exam registration, use the following coupon code.
+To save a flat 30% on CKA exam registration, use the following coupon code.
 > [!IMPORTANT]
-> **Coupon:** Use code **TREATS35CT** at [kube.promo/cka](https://kube.promo/cka)
+> **Coupon:** Use code **DCUBE30** at [kube.promo/cka](https://kube.promo/cka)
 
-Use code **TREATS35CT** to save up to 45% on the following bundles:
+Use code **DCUBE30** to save up to 35% on the following bundles:
 
 - CKA + CKAD: [kube.promo/cka-ckad](https://kube.promo/cka-ckad)
 - CKA + CKS Bundle: [kube.promo/bundle](https://kube.promo/bundle)
@@ -29,7 +29,7 @@ Use code **TREATS35CT** to save up to 45% on the following bundles:
 ## 📚 CKA Exam Detailed Study Guide
 
 > [!NOTE]
-> If you are looking for a structured course to learn Kubernetes and prepare for the CKA exam, check out the [Complete Kubernetes and CKA course](https://courses.devopscube.com/p/certified-kubernetes-administrator-course). Use code **TREATS35CT** to get a 35% discount.
+> If you are looking for a structured course to learn Kubernetes and prepare for the CKA exam, check out the [Complete Kubernetes and CKA course](https://courses.devopscube.com/p/certified-kubernetes-administrator-course). Use code **DCUBE30** to get a 30% discount.
 
 <details>
 <summary><strong>Syllabus and Study Notes</strong></summary>
