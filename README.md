@@ -834,7 +834,7 @@ metadata:
   name: frontend-gateway
   namespace: frontend
 spec:
-  gatewayClassName: cka-traefik
+  gatewayClassName: nginx-gateway-class
   listeners:
   - name: http
     protocol: HTTP
@@ -870,7 +870,7 @@ metadata:
   name: frontend-https
   namespace: frontend
 spec:
-  gatewayClassName: cka-traefik
+  gatewayClassName: nginx-gateway-class
   listeners:
   - name: https
     protocol: HTTPS

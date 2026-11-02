@@ -352,7 +352,7 @@ kind: Gateway
 metadata:
   name: my-gateway
 spec:
-  gatewayClassName: cka-traefik
+  gatewayClassName: nginx-gateway-class
   listeners:
   - name: http
     port: 80
@@ -382,7 +382,7 @@ spec:
 
 ### Complete HTTP and HTTPS Lab
 
-Follow the [Gateway API lab](../lessons/gateway-api/README.md) to install compatible CRDs and a controller, deploy a backend, configure HTTP and HTTPS listeners with a certificate Secret, check Gateway/HTTPRoute status, send requests, and clean up. The example above uses the lab’s `cka-traefik` GatewayClass; create the referenced `api-svc` backend before using that illustrative route.
+Follow the [Gateway API lab](../lessons/gateway-api/README.md) to install compatible CRDs and a controller, deploy a backend, configure HTTP and HTTPS listeners with a certificate Secret, check Gateway/HTTPRoute status, send requests, and clean up. The example above uses the lab’s `nginx-gateway-class` GatewayClass; create the referenced `api-svc` backend before using that illustrative route.
 
 ## CoreDNS Configuration
 

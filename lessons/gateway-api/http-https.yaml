@@ -1,9 +1,14 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: GatewayClass
 metadata:
-  name: cka-traefik
+  name: nginx-gateway-class
 spec:
-  controllerName: traefik.io/gateway-controller
+  controllerName: gateway.nginx.org/nginx-gateway-controller
+  parametersRef:
+    group: gateway.nginx.org
+    kind: NginxProxy
+    name: ngf-proxy-config
+    namespace: nginx-gateway
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
@@ -11,7 +16,7 @@ metadata:
   name: web
   namespace: gateway-lab
 spec:
-  gatewayClassName: cka-traefik
+  gatewayClassName: nginx-gateway-class
   listeners:
   - name: http
     protocol: HTTP

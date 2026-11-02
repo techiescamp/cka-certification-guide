@@ -1,25 +1,25 @@
 # Gateway API: HTTP and HTTPS lab
 
-Run these commands from the repository root on a Linux Kubernetes cluster created for practice. You need Helm 3+, kubectl, curl, and an OpenSSL version that supports `-addext`. This lab uses Traefik. It does not need the older NGINX Gateway Fabric scenarios in this directory. Use a cluster without another Traefik Gateway controller to avoid two controllers trying to manage the same GatewayClass.
+Run these commands from the repository root on a Linux Kubernetes cluster created for practice. You need Helm 3+, kubectl, curl, and an OpenSSL version that supports `-addext`.
+
+This lab uses the repository's existing **NGINX Gateway Fabric 2.0.1** chart. It keeps the same controller and GatewayClass as the existing scenarios. Use a fresh practice cluster for this lab. Its GatewayClass and release names are also used by the existing scenarios, so do not run them together in a shared cluster.
 
 ## Controller and CRDs
 
-The [Traefik Gateway provider documentation](https://doc.traefik.io/traefik/reference/install-configuration/providers/kubernetes/kubernetes-gateway/) specifies the Standard-channel Gateway API CRDs. Install them before the controller:
+Install Gateway API 1.3.0 CRDs before the controller, as in the existing scenarios. Do not downgrade CRDs in a shared cluster. See the [NGINX Gateway Fabric installation guide](https://docs.nginx.com/nginx-gateway-fabric/install/helm/) for the installation flow; this lab uses the versions already bundled in this repository.
 
 ```bash
-kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.6.3/standard-install.yaml
+kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.3.0/standard-install.yaml
 kubectl wait --for=condition=Established crd/gateways.gateway.networking.k8s.io crd/httproutes.gateway.networking.k8s.io --timeout=60s
-helm repo add traefik https://traefik.github.io/charts
-helm repo update
-helm upgrade --install cka-gateway traefik/traefik --version 42.2.0 -n gateway-system \
-  --create-namespace -f lessons/gateway-api/traefik-values.yaml --wait --timeout 5m
+helm upgrade --install ngf ./helm-charts/nginx-gateway-fabric -n nginx-gateway \
+  --create-namespace --set nginx.service.type=ClusterIP --wait --timeout 5m
 kubectl create namespace gateway-lab
 kubectl -n gateway-lab create deployment web --image=nginx:stable
 kubectl -n gateway-lab expose deployment web --port=80
 kubectl -n gateway-lab rollout status deployment/web --timeout=180s
 ```
 
-The values file makes Traefik listen on ports 80 and 443, matching the Gateway listeners. `NET_BIND_SERVICE` allows it to use these low port numbers without running as root. The lab uses a ClusterIP Service and port-forward, so you do not need a cloud load balancer. The chart creates the controller permissions (RBAC). You create the GatewayClass and Gateway in the next step.
+The chart creates the controller and an `NginxProxy` named `ngf-proxy-config`. The GatewayClass below refers to that configuration. NGINX Gateway Fabric creates a separate NGINX data-plane Deployment and Service for the Gateway. This lab uses a ClusterIP Service and port-forward, so it does not need a cloud load balancer.
 
 ## TLS and routing
 
@@ -33,8 +33,9 @@ openssl req -x509 -newkey rsa:2048 -nodes -days 1 \
 kubectl -n gateway-lab create secret tls app-tls \
   --cert="$CERT_DIR/tls.crt" --key="$CERT_DIR/tls.key"
 kubectl apply -f lessons/gateway-api/http-https.yaml
-kubectl wait --for=condition=Accepted gatewayclass/cka-traefik --timeout=120s
+kubectl wait --for=condition=Accepted gatewayclass/nginx-gateway-class --timeout=120s
 kubectl -n gateway-lab wait --for=condition=Programmed gateway/web --timeout=120s
+kubectl -n gateway-lab rollout status deployment/web-nginx-gateway-class --timeout=180s
 kubectl -n gateway-lab get gateway web -o yaml
 kubectl -n gateway-lab get httproute web -o yaml
 ```
@@ -46,7 +47,10 @@ Check the listener conditions and the status of each HTTPRoute parent. `Accepted
 In a separate terminal, run:
 
 ```bash
-kubectl -n gateway-system port-forward service/cka-gateway 8080:80 8443:443
+# Find the Service created for Gateway "web".
+kubectl -n gateway-lab get services
+# Use that Service name (web-nginx-gateway-class in this lab).
+kubectl -n gateway-lab port-forward service/web-nginx-gateway-class 8080:80 8443:443
 ```
 
 In the original terminal (where `CERT_DIR` is set):
@@ -58,17 +62,17 @@ curl --fail --cacert "$CERT_DIR/tls.crt" \
 kubectl -n gateway-lab get endpointslices -l kubernetes.io/service-name=web -o yaml
 ```
 
-Both requests should return the NGINX welcome page. `--resolve` sends the request to the local port while keeping the correct TLS server name. `--cacert` tells curl to trust your test certificate and still check it. If routing fails, inspect Gateway/HTTPRoute conditions, Secret name, Service port, EndpointSlice readiness, and controller logs with `kubectl -n gateway-system logs deployment/cka-gateway`.
+Both requests should return the NGINX welcome page. `--resolve` sends the request to the local port while keeping the correct TLS server name. `--cacert` tells curl to trust your test certificate and still check it. If routing fails, inspect Gateway/HTTPRoute conditions, Secret name, Service port, EndpointSlice readiness, and controller logs with `kubectl -n nginx-gateway logs deployment/ngf-nginx-gateway-fabric`.
 
 ## Cleanup
 
-Stop port-forward with Ctrl+C. In the original terminal:
+Stop port-forward with Ctrl+C. In the original terminal, remove the lab resources. Uninstall the controller only if you installed it for this lab and no other Gateways use it:
 
 ```bash
 kubectl delete -f lessons/gateway-api/http-https.yaml
 kubectl delete namespace gateway-lab
-helm uninstall cka-gateway -n gateway-system
-kubectl delete namespace gateway-system
+helm uninstall ngf -n nginx-gateway
+kubectl delete namespace nginx-gateway
 rm -f "$CERT_DIR/tls.key" "$CERT_DIR/tls.crt"
 rmdir "$CERT_DIR"
 ```
@@ -76,5 +80,7 @@ rmdir "$CERT_DIR"
 Keep cluster-wide Gateway API CRDs if any other controller uses them. On an otherwise empty practice cluster, remove the lab-installed CRDs with:
 
 ```bash
-kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.6.3/standard-install.yaml
+kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.3.0/standard-install.yaml
 ```
+
+See the [sandbox test results](../VALIDATION.md) for the tested versions and remaining limits.
