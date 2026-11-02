@@ -1,4 +1,4 @@
-# LEGACY: Community Ingress NGINX retired March 2026. Use ingress/README.md for the maintained Traefik lab.
+# LEGACY: Community Ingress NGINX retired March 2026. Do not install this manifest. Use ingress/README.md for the maintained F5 NGINX Ingress Controller lab.
 apiVersion: v1
 kind: Namespace
 metadata:

@@ -4,7 +4,7 @@ metadata:
   name: webserver-ingress
   namespace: default
 spec:
-  ingressClassName: traefik
+  ingressClassName: nginx
   rules:
   - host: "test.local" # placeholder
     http:

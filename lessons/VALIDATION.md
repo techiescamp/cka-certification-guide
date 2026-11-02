@@ -9,7 +9,7 @@ Runtime checks ran on November 1, 2026. This report was finalized on November 2,
 - A separate kubeconfig. No tests ran against the existing EKS cluster.
 - NGINX Gateway Fabric **2.0.1**, using the chart already in this repository, with Gateway API CRDs **1.3.0**.
 - Rancher Local Path Provisioner **0.0.37**.
-- Traefik chart **42.2.0** was tested only for the separate Ingress lab. Gateway API uses NGINX Gateway Fabric.
+- The current Ingress lab uses the F5 NGINX Ingress Controller. Its sandbox test is still pending.
 
 ## Results
 
@@ -19,7 +19,7 @@ Runtime checks ran on November 1, 2026. This report was finalized on November 2,
 | Gateway HTTP | Passed; returned the NGINX welcome page |
 | Gateway HTTPS | Passed; curl trusted the test certificate and checked its hostname without `-k` |
 | HTTPRoute status | Both HTTP and HTTPS parents reported `Accepted=True` and `ResolvedRefs=True` |
-| Ingress routing | Passed; a request with `Host: test.local` reached the backend |
+| Ingress routing | Not rechecked after replacing the former controller in the lab; the current F5 NGINX Ingress Controller lab still needs a sandbox run |
 | EndpointSlices | Passed; the wrong selector removed backend addresses, and repairing it restored HTTP traffic |
 | Pod Security Admission | Passed; baseline policy rejected a privileged Pod in a server dry-run |
 | Immutable ConfigMap | Passed; creation worked and changing its data was rejected |
@@ -38,4 +38,4 @@ Runtime checks ran on November 1, 2026. This report was finalized on November 2,
 
 ## Remaining checks
 
-Repeat CPU-metric and load-driven HPA scaling checks with a working Metrics Server, then run the complete cleanup sequence. The original sandbox was unavailable when this report was finalized, so these checks are still open. Do not treat this report as a full pass for every lab.
+Run the current F5 NGINX Ingress Controller lab in a sandbox and check traffic and cleanup. Repeat CPU-metric and load-driven HPA scaling checks with a working Metrics Server, then run the complete cleanup sequence. The original sandbox was unavailable when this report was finalized, so these checks are still open. Do not treat this report as a full pass for every lab.

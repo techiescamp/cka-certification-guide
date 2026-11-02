@@ -268,10 +268,10 @@ Ingress manages external HTTP/HTTPS access to services.
 
 ### Requirements
 
-- Install **Traefik** using the [Ingress lab](../ingress/README.md); the example uses its `traefik` IngressClass.
-- Then create **Ingress resources** to define routing rules
+- Install an Ingress Controller and use the `IngressClass` it provides. The [Ingress lab](../ingress/README.md) uses the F5 NGINX Ingress Controller and class `nginx`.
+- Then create **Ingress resources** to define routing rules.
 
-Community Ingress NGINX retired in March 2026 ([official notice](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/)). Ingress itself remains in scope. The following routes preserve paths: `api-svc` must serve `/api`; there is no controller-specific rewrite.
+The community Ingress NGINX project retired in March 2026 ([official notice](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/)). Ingress remains in scope. The F5 NGINX Ingress Controller used in the lab is a separate project. The routes below preserve paths: `api-svc` must serve `/api`.
 
 ### Basic Ingress
 
@@ -281,7 +281,7 @@ kind: Ingress
 metadata:
   name: my-ingress
 spec:
-  ingressClassName: traefik
+  ingressClassName: nginx
   rules:
   - host: myapp.example.com
     http:
