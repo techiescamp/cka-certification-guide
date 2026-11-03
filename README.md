@@ -889,13 +889,13 @@ Both examples require Gateway API CRDs and a controller managing the named Gatew
 > [Ingress](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/56659356) : Practice creating Ingress resources with different rules to route traffic to services based on hostnames and paths. You can also define multiple services under a single Ingress resource by utilizing both path-based and host-based rules.
 
 ```yaml
-# F5 NGINX Ingress Controller: install it using ingress/README.md first
+# Kubernetes Ingress API example. Use the IngressClass provided by your controller.
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: example-ingress
 spec:
-  ingressClassName: nginx
+  ingressClassName: nginx # Example class; use the class provided by your controller.
   rules:
   - http:
       paths:
@@ -916,7 +916,7 @@ k get ing
 k describe ing <ingress-name>
 ```
 
-The [Ingress lab](./ingress/README.md) uses F5 NGINX Ingress Controller and routes paths unchanged. The community Ingress NGINX project retired in March 2026 ([official notice](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/)). F5 NGINX Ingress Controller is a separate project.
+Ingress resources need a controller that supports the Ingress API. The runnable traffic-routing lab in this repository uses NGINX Gateway Fabric with Gateway API resources. Follow the [NGINX Gateway Fabric lab](./lessons/gateway-api/README.md).
 
 ### Understand and use CoreDNS.
 > [CoreDNS](https://courses.devopscube.com/courses/certified-kubernetes-administrator-course/lectures/55120286) : CoreDNS is used for service discovery within the Kubernetes cluster. Familiarize yourself with modifying the Corefile configuration to add custom DNS behaviors like forwarding queries for specific domains outside the cluster.

@@ -268,10 +268,10 @@ Ingress manages external HTTP/HTTPS access to services.
 
 ### Requirements
 
-- Install an Ingress Controller and use the `IngressClass` it provides. The [Ingress lab](../ingress/README.md) uses the F5 NGINX Ingress Controller and class `nginx`.
+- Use an `IngressClass` supported by the Ingress Controller on your cluster.
 - Then create **Ingress resources** to define routing rules.
 
-The community Ingress NGINX project retired in March 2026 ([official notice](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/)). Ingress remains in scope. The F5 NGINX Ingress Controller used in the lab is a separate project. The routes below preserve paths: `api-svc` must serve `/api`.
+Ingress remains a CKA topic. An Ingress Controller must support the Ingress API to route these resources. The runnable routing lab in this repository uses NGINX Gateway Fabric with Gateway API resources; see the [Gateway API lab](../lessons/gateway-api/README.md). The routes below preserve paths: `api-svc` must serve `/api`.
 
 ### Basic Ingress
 
@@ -281,7 +281,7 @@ kind: Ingress
 metadata:
   name: my-ingress
 spec:
-  ingressClassName: nginx
+  ingressClassName: nginx # Example class; use the class provided by your controller.
   rules:
   - host: myapp.example.com
     http:
