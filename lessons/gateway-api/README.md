@@ -82,5 +82,3 @@ Keep cluster-wide Gateway API CRDs if any other controller uses them. On an othe
 ```bash
 kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.3.0/standard-install.yaml
 ```
-
-See the [sandbox test results](../VALIDATION.md) for the tested versions and remaining limits.
