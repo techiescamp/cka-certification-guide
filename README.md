@@ -12,7 +12,7 @@ This detailed study guide includes tips and practical examples to help you ace t
 ## Hit the Star! :star:
 If you plan to use this repo as a reference, please hit the star. Thanks!
 
-## CKA Exam Coupon (Expires Today)
+## [40% OFF] CKA Exam Coupon (Expires Soon)
 
 To save a flat 40% on CKA exam registration, use the following coupon code.
 > [!IMPORTANT]
