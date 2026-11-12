@@ -1,6 +1,6 @@
-# 35 CKA Practice Questions with Solutions — Kubernetes v1.35 Exam Scenarios 📝
+# 35 CKA Practice Questions with Solutions — Kubernetes v1.37 Exam Scenarios 📝
 
-> 35 exam-style scenario questions with full solutions covering all 5 CKA exam domains (Kubernetes v1.35).
+> 35 exam-style scenario questions with full solutions covering all 5 CKA exam domains (Kubernetes v1.37).
 > Try each question before reading the solution. Difficulty rated per question.
 
 **Q: How hard are these compared to the real CKA exam?**
