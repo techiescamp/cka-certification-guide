@@ -5,7 +5,7 @@ metadata:
 type: Opaque
 stringData:
   POSTGRES_USER: postgres
-  POSTGRES_PASSWORD: [PASSWORD]
+  POSTGRES_PASSWORD: "postgres123"  # demo only, change before real use
   POSTGRES_DB: staffdb
 ---
 apiVersion: v1
