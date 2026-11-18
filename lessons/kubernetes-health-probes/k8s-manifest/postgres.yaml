@@ -5,8 +5,8 @@ metadata:
 type: Opaque
 stringData:
   POSTGRES_USER: postgres
-  POSTGRES_PASSWORD: "postgres123"  # demo only, change before real use
-  POSTGRES_DB: staffdb
+  POSTGRES_PASSWORD: "postgres123"
+  POSTGRES_DB: ordersdb
 ---
 apiVersion: v1
 kind: Service
@@ -18,7 +18,7 @@ spec:
   ports:
     - port: 5432
       targetPort: 5432
-  clusterIP: None  # Headless service for StatefulSet
+  clusterIP: None
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -56,6 +56,22 @@ spec:
             limits:
               memory: "512Mi"
               cpu: "500m"
+          livenessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB" -h 127.0.0.1
+            periodSeconds: 10
+            failureThreshold: 6
+          readinessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB" -h 127.0.0.1
+            periodSeconds: 10
+            failureThreshold: 4
   volumeClaimTemplates:
     - metadata:
         name: postgres-storage

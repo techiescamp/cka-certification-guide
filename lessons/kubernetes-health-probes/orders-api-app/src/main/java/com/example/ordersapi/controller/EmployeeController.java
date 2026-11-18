@@ -1,7 +1,7 @@
-package com.example.staffregistry.controller;
+package com.example.ordersapi.controller;
 
-import com.example.staffregistry.service.EmployeeService;
-import com.example.staffregistry.service.DatabaseConnectionService;
+import com.example.ordersapi.service.EmployeeService;
+import com.example.ordersapi.service.DatabaseConnectionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +70,7 @@ public class EmployeeController {
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Staff Registry</title>
+                <title>Orders API</title>
                 <link rel="preconnect" href="https://fonts.googleapis.com">
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
                 <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -379,7 +379,7 @@ public class EmployeeController {
             <body>
 
             <nav>
-                <a href="/" class="nav-brand">&lt;Staff<span>Registry</span> /&gt;</a>
+                <a href="/" class="nav-brand">&lt;Orders<span>API</span> /&gt;</a>
                 <div class="nav-links">
                     <button class="active" onclick="void(0)">Home</button>
                     <button onclick="openModal('onboard-modal')">Add Employee</button>
@@ -389,7 +389,7 @@ public class EmployeeController {
             </nav>
 
             <div class="hero">
-                <h1 class="hero-title">Staff Registry &amp;<br><span class="accent">Team</span> Directory</h1>
+                <h1 class="hero-title">Orders API &amp;<br><span class="accent">Team</span> Directory</h1>
                 <p class="hero-sub">Add new hires, keep every profile up to date, and find anyone by role, skill or office. One source of truth for your whole organization.</p>
                 <button class="hero-btn" onclick="openModal('onboard-modal')">Add Employee &rarr;</button>
             </div>

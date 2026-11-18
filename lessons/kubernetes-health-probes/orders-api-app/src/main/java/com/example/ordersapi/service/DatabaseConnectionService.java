@@ -1,6 +1,6 @@
-package com.example.staffregistry.service;
+package com.example.ordersapi.service;
 
-import com.example.staffregistry.model.ConnectionLog;
+import com.example.ordersapi.model.ConnectionLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.example.staffregistry.service;
+package com.example.ordersapi.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
