@@ -42,9 +42,9 @@ sudo vagrant up
 Once the VMs are up, you can login to the VMs using the VM names.
 
 ```
-vagrant ssh controlplane
-vagrant ssh node01
-vagrant ssh node02
+sudo vagrant ssh controlplane
+sudo vagrant ssh node01
+sudo vagrant ssh node02
 ```
 
 ## Halt the VMs
@@ -52,7 +52,7 @@ vagrant ssh node02
 When you are not using the setup, you can halt the VMS to free up the CPU and memory in your system using the halt command.
 
 ```
-vagrant halt
+sudo vagrant halt
 ```
 
 ## Destroy the setup
@@ -60,7 +60,7 @@ vagrant halt
 You can destroy the VMs usin the following command.
 
 ```
-vagrant destroy -f
+sudo vagrant destroy -f
 ```
 
 ## Accessing The Shared Folder

@@ -2,25 +2,19 @@
 
 set -e
 
-echo "🧨 Deleting HTTPRoute (if applied)..."
+echo "🧨 Deleting HTTPRoute 'web-route' from 'gateway-ns'..."
 kubectl delete -f ~/gateway/httproute.yaml --ignore-not-found
 
-echo "🧨 Deleting backend Deployment and Service..."
+echo "🧨 Deleting NGINX backend deployment and service from 'backend-ns'..."
 kubectl delete deployment backend -n backend-ns --ignore-not-found
 kubectl delete service backend-service -n backend-ns --ignore-not-found
 
-echo "🧨 Deleting Gateway..."
-kubectl delete gateway web-gateway -n gateway-ns --ignore-not-found
+echo "🧨 Deleting namespaces 'gateway-ns' and 'backend-ns'..."
+kubectl delete namespace gateway-ns --ignore-not-found
+kubectl delete namespace backend-ns --ignore-not-found
 
-echo "🧨 Deleting ReferenceGrant (if created)..."
-kubectl delete referencegrant allow-cross-ns -n backend-ns --ignore-not-found
+echo "🧹 Cleaning up local 'httproute.yaml' file..."
+rm -f ~/gateway/httproute.yaml
+rmdir --ignore-fail-on-non-empty ~/gateway || true
 
-echo "🧨 Deleting Namespaces..."
-kubectl delete ns gateway-ns --ignore-not-found
-kubectl delete ns backend-ns --ignore-not-found
-
-echo "🧹 Cleaning up local files..."
-rm -f dev-values.yaml
-rm -rf ~/gateway
-
-echo "✅ Scenario cleanup complete. Gateway API CRDs and NGINX Gateway Fabric remain installed."
+echo "✅ Cleanup complete! CRDs, repo, Helm release, and GatewayClass are untouched."

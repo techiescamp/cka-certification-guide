@@ -1,12 +1,12 @@
 ## Install Latest VirtualBox
 
-> Note: You should have admin permission in your workstation to make Virtaualbox work.
+> Note: You should have admin permission in your workstation to make VirtualBox work.
 
 Download and install virtual box from https://www.virtualbox.org/wiki/Downloads
 
 ## Install Vagrant
 
-Install Vagrant followin insructions from https://developer.hashicorp.com/vagrant/downloads
+Install Vagrant following instructions from https://developer.hashicorp.com/vagrant/downloads
 
 ## Restart the System
 
@@ -37,7 +37,7 @@ Check the vm status using the following command. You should see three VMs in run
 vagrant status
 ```
 
-Once the VMs are up, you cna login to the VMs using the VM names.
+Once the VMs are up, you can login to the VMs using the VM names.
 
 ```
 vagrant ssh controlplane
@@ -55,7 +55,7 @@ vagrant halt
 
 ## Destroy the setup
 
-You can destroy the VMs usin the following command.
+You can destroy the VMs using the following command.
 
 ```
 vagrant destroy -f

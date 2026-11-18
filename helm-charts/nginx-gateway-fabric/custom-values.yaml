@@ -1,0 +1,10 @@
+nginx: 
+  service: 
+    type: NodePort
+    nodePorts:
+    - port: 32000
+      listenerPort: 80
+    - port: 32500
+      listenerPort: 8080
+    - port: 32443
+      listenerPort: 443
