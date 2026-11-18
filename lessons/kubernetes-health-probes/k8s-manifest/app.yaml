@@ -52,30 +52,28 @@ spec:
             limits:
               memory: "512Mi"
               cpu: "500m"
-
-          # STARTUP PROBE
-          # Gives the JVM up to 30 x 10s = 300s to boot before liveness takes over.
           startupProbe:
             httpGet:
               path: /actuator/health/liveness
               port: 8080
-            timeoutSeconds: 5
-            failureThreshold: 30
-
-          # LIVENESS PROBE
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 5
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
               port: 8080
-            timeoutSeconds: 5
-
-          # READINESS PROBE
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            failureThreshold: 4
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
               port: 8080
+            initialDelaySeconds: 5
             periodSeconds: 5
-            timeoutSeconds: 3
+            failureThreshold: 4
+            successThreshold: 2
 ---
 apiVersion: v1
 kind: Service

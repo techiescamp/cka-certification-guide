@@ -5,7 +5,7 @@ metadata:
 type: Opaque
 stringData:
   POSTGRES_USER: postgres
-  POSTGRES_PASSWORD: "postgres123"  # demo only, change before real use
+  POSTGRES_PASSWORD: "postgres123"
   POSTGRES_DB: ordersdb
 ---
 apiVersion: v1
@@ -18,7 +18,7 @@ spec:
   ports:
     - port: 5432
       targetPort: 5432
-  clusterIP: None  # Headless service for StatefulSet
+  clusterIP: None
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -56,26 +56,15 @@ spec:
             limits:
               memory: "512Mi"
               cpu: "500m"
-
-          # pg_isready checks the server is accepting connections.
-          # -h 127.0.0.1 forces TCP: during first-run initdb the image starts a
-          # temporary server on the Unix socket only, so a TCP check stays
-          # "not ready" until the real server is up.
-
-          # LIVENESS PROBE
-          # initialDelaySeconds covers first-run initdb; failureThreshold 6 (60s)
-          # avoids restarting Postgres during a slow WAL recovery.
           livenessProbe:
             exec:
               command:
                 - sh
                 - -c
                 - pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB" -h 127.0.0.1 -p 5432
-            initialDelaySeconds: 30
-            timeoutSeconds: 5
+            initialDelaySeconds: 5
+            periodSeconds: 5
             failureThreshold: 6
-
-          # READINESS PROBE
           readinessProbe:
             exec:
               command:
@@ -84,7 +73,7 @@ spec:
                 - pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB" -h 127.0.0.1 -p 5432
             initialDelaySeconds: 5
             periodSeconds: 5
-            timeoutSeconds: 3
+            failureThreshold: 6
   volumeClaimTemplates:
     - metadata:
         name: postgres-storage
