@@ -1,4 +1,4 @@
-# Staff Registry
+# Orders API
 
 A small Spring Boot app with a PostgreSQL database, deployed on Kubernetes.
 

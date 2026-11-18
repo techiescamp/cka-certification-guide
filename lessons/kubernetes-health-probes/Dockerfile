@@ -1,8 +1,8 @@
 # Build stage
-FROM eclipse-temurin:25-jdk-alpine AS build
+FROM --platform=$BUILDPLATFORM eclipse-temurin:25-jdk-alpine AS build
 WORKDIR /app
-COPY staff-registry-app/pom.xml .
-COPY staff-registry-app/src ./src
+COPY orders-api-app/pom.xml .
+COPY orders-api-app/src ./src
 
 # Install Maven
 RUN apk add --no-cache maven

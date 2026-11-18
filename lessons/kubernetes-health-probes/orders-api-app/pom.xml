@@ -13,10 +13,10 @@
     </parent>
 
     <groupId>com.example</groupId>
-    <artifactId>staff-registry</artifactId>
+    <artifactId>orders-api</artifactId>
     <version>1.0.0</version>
-    <name>staff-registry</name>
-    <description>Staff Registry: employee directory with PostgreSQL and health probes</description>
+    <name>orders-api</name>
+    <description>Orders API: employee directory with PostgreSQL and health probes</description>
 
     <properties>
         <java.version>25</java.version>
