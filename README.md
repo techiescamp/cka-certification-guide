@@ -12,13 +12,13 @@ This detailed study guide includes tips and practical examples to help you ace t
 ## Hit the Star! :star:
 If you plan to use this repo as a reference, please hit the star. Thanks!
 
-## [40% OFF] CKA Exam Coupon (Expires Soon)
+## [30% OFF] CKA Exam Coupon (Expires Soon)
 
-To save a flat 40% on CKA exam registration, use the following coupon code.
+To save a flat 30% on CKA exam registration, use the following coupon code.
 > [!IMPORTANT]
-> **Coupon:** Use code **40KUBE26CT** at [kube.promo/cka](https://kube.promo/cka)
+> **Coupon:** Use code **DCUBE30** at [kube.promo/cka](https://kube.promo/cka)
 
-Use code **40KUBE26CT** to save up to 47% on the following bundles:
+Use code **DCUBE30** to save up to 35% on the following bundles:
 
 - CKA + CKAD: [kube.promo/cka-ckad](https://kube.promo/cka-ckad)
 - CKA + CKS Bundle: [kube.promo/bundle](https://kube.promo/bundle)
