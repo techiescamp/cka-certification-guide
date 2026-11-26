@@ -20,12 +20,23 @@ PYEOF
 echo "==> Provisioning VMs with $(basename "$COMMON")"
 echo ""
 
+failed=()
+
 while read -r name; do
     echo "--- $name"
-    multipass transfer "$COMMON" "$name:/tmp/common.sh"
-    multipass exec "$name" -- sudo bash /tmp/common.sh
-    echo "--- $name done"
+    if multipass transfer "$COMMON" "$name:/tmp/common.sh" &&
+        multipass exec "$name" -- sudo bash /tmp/common.sh < /dev/null; then
+        echo "--- $name done"
+    else
+        echo "--- $name FAILED"
+        failed+=("$name")
+    fi
     echo ""
 done < <(parse_vm_names)
+
+if [ ${#failed[@]} -gt 0 ]; then
+    echo "==> Provisioning failed on: ${failed[*]}. Fix the issue and re-run ./provision.sh"
+    exit 1
+fi
 
 echo "==> All nodes provisioned."

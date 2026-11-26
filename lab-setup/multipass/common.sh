@@ -10,6 +10,41 @@ CRIO_VERSION="v1.36"
 CRICTL_VERSION="v1.37.0"
 KUBERNETES_INSTALL_VERSION="1.37.0-1.1"
 
+dns_ok() {
+    getent hosts ports.ubuntu.com >/dev/null 2>&1
+}
+
+ensure_dns() {
+    if dns_ok; then
+        return 0
+    fi
+
+    echo "DNS resolution is failing — switching to public DNS resolvers"
+    sudo mkdir -p /etc/systemd/resolved.conf.d
+    cat <<EOF | sudo tee /etc/systemd/resolved.conf.d/99-public-dns.conf
+[Resolve]
+DNS=1.1.1.1 8.8.8.8
+FallbackDNS=9.9.9.9 8.8.4.4
+EOF
+    sudo systemctl restart systemd-resolved
+
+    local attempt
+    for attempt in {1..15}; do
+        if dns_ok; then
+            echo "DNS resolution restored"
+            return 0
+        fi
+        sleep 2
+    done
+
+    echo "ERROR: DNS resolution still failing after applying public resolvers." >&2
+    echo "Check the host network (a VPN or firewall can break Multipass NAT)," >&2
+    echo "then re-run provision.sh." >&2
+    return 1
+}
+
+ensure_dns
+
 # Disable swap
 sudo swapoff -a
 
@@ -105,8 +140,9 @@ sudo apt-get update -y
 # Install jq, a command-line JSON processor
 sudo apt-get install -y jq
 
-# Retrieve the local IP address of the eth1 interface and set it for kubelet
-local_ip="$(ip --json addr show eth1 | jq -r '.[0].addr_info[] | select(.family == "inet") | .local')"
+# Retrieve the local IP address of the primary interface and set it for kubelet
+primary_if="$(ip --json route show default | jq -r '.[0].dev')"
+local_ip="$(ip --json addr show "$primary_if" | jq -r '.[0].addr_info[] | select(.family == "inet") | .local')"
 
 # Write the local IP address to the kubelet default configuration file
 cat <<EOF | sudo tee /etc/default/kubelet
