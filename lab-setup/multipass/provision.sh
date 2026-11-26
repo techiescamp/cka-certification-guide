@@ -25,7 +25,7 @@ failed=()
 while read -r name; do
     echo "--- $name"
     if multipass transfer "$COMMON" "$name:/tmp/common.sh" &&
-        multipass exec "$name" -- sudo bash /tmp/common.sh; then
+        multipass exec "$name" -- sudo bash /tmp/common.sh < /dev/null; then
         echo "--- $name done"
     else
         echo "--- $name FAILED"
